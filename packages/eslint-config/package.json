@@ -1,0 +1,17 @@
+{
+  "name": "@stage-locker/eslint-config",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ESLint configuration for Stage Locker",
+  "license": "MIT",
+  "exports": {
+    ".": "./eslint.config.js",
+    "./create-config": "./create-config.js"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^4.13.1",
+    "eslint": "^9.27.0",
+    "eslint-plugin-format": "^1.0.1"
+  }
+}

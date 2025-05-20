@@ -1,0 +1,87 @@
+{
+  "page": {
+    "home": {
+      "title": "Início",
+      "description": "Esta é a página inicial"
+    }
+  },
+  "common": {
+    "home": "Início",
+    "login": "Entrar",
+    "logout": "Sair",
+    "register": "Registrar",
+    "forgotPassword": "Esqueci a minha senha",
+    "resetPassword": "Redefinir senha"
+  },
+  "languageSwitcher": {
+    "selectLanguage": "Selecionar Idioma"
+  },
+  "loginForm": {
+    "title": "Entrar",
+    "description": "Insira o seu email e senha para aceder à sua conta.",
+    "email": {
+      "label": "Email",
+      "placeholder": "joaosilva@mail.com",
+      "invalid": "Por favor, insira um endereço de email válido."
+    },
+    "password": {
+      "label": "Senha",
+      "placeholder": "******",
+      "forgot": "Esqueceu a sua senha?",
+      "min": "A senha deve ter pelo menos 6 caracteres",
+      "alphanumeric": "A senha deve ser alfanumérica"
+    },
+    "submit": "Entrar",
+    "signupPrompt": "Não tem uma conta?",
+    "signupLink": "Criar conta",
+    "error": {
+      "generic": "Erro ao enviar o formulário. Por favor, tente novamente."
+    },
+    "success": {
+      "generic": "Login com sucesso. A redirecionar..."
+    }
+  },
+  "registerForm": {
+    "title": "Criar Conta",
+    "description": "Crie uma nova conta preenchendo as informações abaixo.",
+    "email": {
+      "label": "Email",
+      "placeholder": "joaosilva@mail.com",
+      "invalid": "Por favor, insira um endereço de email válido."
+    },
+    "password": {
+      "label": "Senha",
+      "placeholder": "******",
+      "min": "A senha deve ter pelo menos 6 caracteres",
+      "alphanumeric": "A senha deve ser alfanumérica"
+    },
+    "confirmPassword": {
+      "label": "Confirmar Senha",
+      "placeholder": "******",
+      "match": "As senhas devem coincidir"
+    },
+    "submit": "Criar Conta",
+    "loginPrompt": "Já tem uma conta?",
+    "loginLink": "Entrar",
+    "error": {
+      "generic": "Erro ao enviar o formulário. Por favor, tente novamente."
+    }
+  },
+  "forgotPasswordForm": {
+    "title": "Recuperar Senha",
+    "description": "Insira o seu email para receber um link de redefinição de senha.",
+    "email": {
+      "label": "Email",
+      "placeholder": "joaosilva@mail.com",
+      "invalid": "Por favor, insira um endereço de email válido."
+    },
+    "submit": "Enviar link de redefinição",
+    "signupPrompt": "Não tem uma conta?",
+    "signupLink": "Criar conta",
+    "loginPrompt": "Lembrou-se da sua senha?",
+    "loginLink": "Entrar",
+    "error": {
+      "generic": "Erro ao enviar o formulário. Por favor, tente novamente."
+    }
+  }
+}

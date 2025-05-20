@@ -1,0 +1,29 @@
+{
+  "name": "@stage-locker/api-client",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "API client for Stage Locker",
+  "license": "MIT",
+  "private": true,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "rm -rf dist && tsc",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@stage-locker/eslint-config": "workspace:^",
+    "zod": "^3.24.4"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}

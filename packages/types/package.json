@@ -1,0 +1,31 @@
+{
+  "name": "@stage-locker/types",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Shared types for Stage Locker",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc",
+    "generate-api-types": "openapi-zod-client http://localhost:9999/api/v1/doc --output src/api/generated/api.ts --template src/api/generated/schemas-and-types.hbs --group-strategy tag"
+  },
+  "dependencies": {
+    "zod": "^3.24.4"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^4.13.1",
+    "eslint": "^9.27.0",
+    "eslint-plugin-format": "^1.0.1",
+    "openapi-zod-client": "^1.18.3",
+    "typescript": "^5.8.3"
+  }
+}

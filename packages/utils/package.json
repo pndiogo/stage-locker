@@ -1,0 +1,28 @@
+{
+  "name": "@stage-locker/utils",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Utility functions for Stage Locker",
+  "license": "MIT",
+  "private": true,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "rm -rf dist && tsc",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "isomorphic-dompurify": "^2.24.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}

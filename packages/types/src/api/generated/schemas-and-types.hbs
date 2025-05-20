@@ -1,0 +1,93 @@
+import { z } from "zod";
+
+{{#if imports}}
+{{#each imports}}
+import { {{{@key}}} } from "./{{{this}}}"
+{{/each}}
+{{/if}}
+
+{{#if types}}
+{{#each types}}
+{{{this}}};
+{{/each}}
+{{/if}}
+
+// --- Request Body Schemas and Types ---
+// Define constants individual export
+{{#each schemas}}
+// Note: The description for this request body ({{@key}}) is typically found where it's used as an endpoint parameter.
+const {{@key}} = {{{this}}}; // e.g., const postAuthSignup_Body = z.object(...);
+export type {{@key}}Type = z.infer<typeof {{@key}}>; // Export the TS type
+{{/each}}
+
+// Export a map of these request body Zod schemas
+{{#ifNotEmptyObj schemas}}
+export const requestBodySchemas = {
+{{#each schemas}}
+  "{{@key}}": {{@key}}, // Refer to the constant defined above
+{{/each}}
+};
+{{/ifNotEmptyObj}}
+
+// --- Endpoint-specific Schemas and Types (Responses and Parameters) ---
+{{#each endpoints}}
+/**
+ * {{method}} {{path}}
+ * {{#if description}}{{description}}{{else}}No description available for this endpoint.{{/if}}
+ */
+// Response Schema and Type for {{alias}}
+export const {{alias}}_ResponseSchema = {{{response}}};
+export type {{alias}}_ResponseType = z.infer<typeof {{alias}}_ResponseSchema>;
+
+// Error Response Schemas and Types for {{alias}}
+{{#each errors}}
+export const {{../alias}}_{{status}}_ErrorResponseSchema = {{{schema}}};
+export type {{../alias}}_{{status}}_ErrorResponseType = z.infer<typeof {{../alias}}_{{status}}_ErrorResponseSchema>;
+{{/each}}
+
+// Parameters Schema and Type for {{alias}}
+{{#if parameters.length}}
+export const {{alias}}_ParametersSchema = z.object({
+  {{#each parameters}}
+  /** {{#if description}}{{description}}{{else}}Parameter: {{name}}{{/if}} */
+  "{{name}}": {{{schema}}}{{#unless @last}},{{/unless}}
+  {{/each}}
+});
+export type {{alias}}_ParametersType = z.infer<typeof {{alias}}_ParametersSchema>;
+{{/if}}
+{{/each}}
+
+// --- API Schemas Grouped by Tag ---
+// This utilizes the endpointsGroups object provided by openapi-zod-client when a group-strategy is used.
+export const apiSchemasByTag = {
+{{#each endpointsGroups}}
+  "{{@key}}": { // @key is the tag name (e.g., "Auth", "Index")
+    endpoints: {
+    {{#each this.endpoints}} // 'this.endpoints' is the array of endpoint objects for the current tag
+      "{{alias}}": {
+        {{#if parameters.length}}
+        parametersSchema: {{alias}}_ParametersSchema, // Schema for all parameters
+        {{/if}}
+        {{#each parameters}} {{! Iterate over parameters of the current endpoint to find the body }}
+          {{#ifeq type "Body"}}
+        requestBodySchema: {{{schema}}}, // Schema name (e.g., postSignup_Body) or inline Zod definition
+          {{/ifeq}}
+        {{/each}}
+        responses: {
+          {{#if response}} // This checks if a main success response schema exists
+          successSchema: {{alias}}_ResponseSchema,     // Schema for success response
+          {{/if}}
+          {{#if errors.length}} // Check if there are any error responses defined
+          "errors": {
+            {{#each errors}} // Iterate over error responses
+            "{{status}}Schema": {{../alias}}_{{status}}_ErrorResponseSchema, // Schema for this error status
+            {{/each}}
+          }
+          {{/if}}
+        }
+      }{{#unless @last}},{{/unless}}
+    {{/each}}
+    }
+  }{{#unless @last}},{{/unless}}
+{{/each}}
+};

@@ -1,0 +1,617 @@
+import { z } from "zod";
+
+// --- Request Body Schemas and Types ---
+// Define constants individual export
+// Note: The description for this request body (postSignup_Body) is typically found where it's used as an endpoint parameter.
+const postSignup_Body = z
+  .object({
+    email: z.string().email(),
+    password: z.string().min(8).max(128).regex(/[A-Z]/),
+  })
+  .passthrough(); // e.g., const postAuthSignup_Body = z.object(...);
+export type postSignup_BodyType = z.infer<typeof postSignup_Body>; // Export the TS type
+// Note: The description for this request body (postLogin_Body) is typically found where it's used as an endpoint parameter.
+const postLogin_Body = z
+  .object({ email: z.string().email(), password: z.string() })
+  .passthrough(); // e.g., const postAuthSignup_Body = z.object(...);
+export type postLogin_BodyType = z.infer<typeof postLogin_Body>; // Export the TS type
+// Note: The description for this request body (postResetPassword_Body) is typically found where it's used as an endpoint parameter.
+const postResetPassword_Body = z
+  .object({
+    token: z.string().min(1),
+    newPassword: z.string().min(8).max(128).regex(/[A-Z]/),
+  })
+  .passthrough(); // e.g., const postAuthSignup_Body = z.object(...);
+export type postResetPassword_BodyType = z.infer<typeof postResetPassword_Body>; // Export the TS type
+
+// Export a map of these request body Zod schemas
+export const requestBodySchemas = {
+  postSignup_Body: postSignup_Body, // Refer to the constant defined above
+  postLogin_Body: postLogin_Body, // Refer to the constant defined above
+  postResetPassword_Body: postResetPassword_Body, // Refer to the constant defined above
+};
+
+// --- Endpoint-specific Schemas and Types (Responses and Parameters) ---
+/**
+ * get /
+ * No description available for this endpoint.
+ */
+// Response Schema and Type for get
+export const get_ResponseSchema = z
+  .object({ message: z.string() })
+  .passthrough();
+export type get_ResponseType = z.infer<typeof get_ResponseSchema>;
+
+// Error Response Schemas and Types for get
+
+// Parameters Schema and Type for get
+/**
+ * post /auth/auth/login
+ * Login a user
+ */
+// Response Schema and Type for postLogin
+export const postLogin_ResponseSchema = z
+  .object({ id: z.string(), email: z.string(), token: z.string() })
+  .passthrough();
+export type postLogin_ResponseType = z.infer<typeof postLogin_ResponseSchema>;
+
+// Error Response Schemas and Types for postLogin
+export const postLogin_401_ErrorResponseSchema = z
+  .object({ message: z.string() })
+  .passthrough();
+export type postLogin_401_ErrorResponseType = z.infer<
+  typeof postLogin_401_ErrorResponseSchema
+>;
+export const postLogin_404_ErrorResponseSchema = z
+  .object({ message: z.string() })
+  .passthrough();
+export type postLogin_404_ErrorResponseType = z.infer<
+  typeof postLogin_404_ErrorResponseSchema
+>;
+export const postLogin_422_ErrorResponseSchema = z
+  .object({
+    success: z.boolean(),
+    error: z
+      .object({
+        issues: z.array(
+          z
+            .object({
+              code: z.string(),
+              path: z.array(z.union([z.string(), z.number()])),
+              message: z.string().optional(),
+            })
+            .passthrough()
+        ),
+        name: z.string(),
+      })
+      .passthrough(),
+  })
+  .passthrough();
+export type postLogin_422_ErrorResponseType = z.infer<
+  typeof postLogin_422_ErrorResponseSchema
+>;
+
+// Parameters Schema and Type for postLogin
+export const postLogin_ParametersSchema = z.object({
+  /** The user to log in */
+  body: postLogin_Body,
+});
+export type postLogin_ParametersType = z.infer<
+  typeof postLogin_ParametersSchema
+>;
+/**
+ * post /auth/auth/reset-password
+ * Reset a user&#x27;s password
+ */
+// Response Schema and Type for postResetPassword
+export const postResetPassword_ResponseSchema = z
+  .object({ message: z.string() })
+  .passthrough();
+export type postResetPassword_ResponseType = z.infer<
+  typeof postResetPassword_ResponseSchema
+>;
+
+// Error Response Schemas and Types for postResetPassword
+export const postResetPassword_401_ErrorResponseSchema = z
+  .object({ message: z.string() })
+  .passthrough();
+export type postResetPassword_401_ErrorResponseType = z.infer<
+  typeof postResetPassword_401_ErrorResponseSchema
+>;
+export const postResetPassword_404_ErrorResponseSchema = z
+  .object({ message: z.string() })
+  .passthrough();
+export type postResetPassword_404_ErrorResponseType = z.infer<
+  typeof postResetPassword_404_ErrorResponseSchema
+>;
+export const postResetPassword_422_ErrorResponseSchema = z
+  .object({
+    success: z.boolean(),
+    error: z
+      .object({
+        issues: z.array(
+          z
+            .object({
+              code: z.string(),
+              path: z.array(z.union([z.string(), z.number()])),
+              message: z.string().optional(),
+            })
+            .passthrough()
+        ),
+        name: z.string(),
+      })
+      .passthrough(),
+  })
+  .passthrough();
+export type postResetPassword_422_ErrorResponseType = z.infer<
+  typeof postResetPassword_422_ErrorResponseSchema
+>;
+
+// Parameters Schema and Type for postResetPassword
+export const postResetPassword_ParametersSchema = z.object({
+  /** The user to reset the password */
+  body: postResetPassword_Body,
+});
+export type postResetPassword_ParametersType = z.infer<
+  typeof postResetPassword_ParametersSchema
+>;
+/**
+ * post /auth/auth/send-password-reset-email
+ * Send a password reset email to a user
+ */
+// Response Schema and Type for postSendPasswordResetEmail
+export const postSendPasswordResetEmail_ResponseSchema = z.void();
+export type postSendPasswordResetEmail_ResponseType = z.infer<
+  typeof postSendPasswordResetEmail_ResponseSchema
+>;
+
+// Error Response Schemas and Types for postSendPasswordResetEmail
+export const postSendPasswordResetEmail_422_ErrorResponseSchema = z
+  .object({
+    success: z.boolean(),
+    error: z
+      .object({
+        issues: z.array(
+          z
+            .object({
+              code: z.string(),
+              path: z.array(z.union([z.string(), z.number()])),
+              message: z.string().optional(),
+            })
+            .passthrough()
+        ),
+        name: z.string(),
+      })
+      .passthrough(),
+  })
+  .passthrough();
+export type postSendPasswordResetEmail_422_ErrorResponseType = z.infer<
+  typeof postSendPasswordResetEmail_422_ErrorResponseSchema
+>;
+export const postSendPasswordResetEmail_429_ErrorResponseSchema = z
+  .object({ message: z.string() })
+  .passthrough();
+export type postSendPasswordResetEmail_429_ErrorResponseType = z.infer<
+  typeof postSendPasswordResetEmail_429_ErrorResponseSchema
+>;
+export const postSendPasswordResetEmail_500_ErrorResponseSchema = z
+  .object({ message: z.string() })
+  .passthrough();
+export type postSendPasswordResetEmail_500_ErrorResponseType = z.infer<
+  typeof postSendPasswordResetEmail_500_ErrorResponseSchema
+>;
+
+// Parameters Schema and Type for postSendPasswordResetEmail
+export const postSendPasswordResetEmail_ParametersSchema = z.object({
+  /** The user to send the password reset email */
+  body: z.object({ email: z.string().email() }).passthrough(),
+});
+export type postSendPasswordResetEmail_ParametersType = z.infer<
+  typeof postSendPasswordResetEmail_ParametersSchema
+>;
+/**
+ * post /auth/auth/send-verification-email
+ * Send a verification email to a user
+ */
+// Response Schema and Type for postSendVerificationEmail
+export const postSendVerificationEmail_ResponseSchema = z.void();
+export type postSendVerificationEmail_ResponseType = z.infer<
+  typeof postSendVerificationEmail_ResponseSchema
+>;
+
+// Error Response Schemas and Types for postSendVerificationEmail
+export const postSendVerificationEmail_400_ErrorResponseSchema = z
+  .object({ message: z.string() })
+  .passthrough();
+export type postSendVerificationEmail_400_ErrorResponseType = z.infer<
+  typeof postSendVerificationEmail_400_ErrorResponseSchema
+>;
+export const postSendVerificationEmail_404_ErrorResponseSchema = z
+  .object({ message: z.string() })
+  .passthrough();
+export type postSendVerificationEmail_404_ErrorResponseType = z.infer<
+  typeof postSendVerificationEmail_404_ErrorResponseSchema
+>;
+export const postSendVerificationEmail_422_ErrorResponseSchema = z
+  .object({
+    success: z.boolean(),
+    error: z
+      .object({
+        issues: z.array(
+          z
+            .object({
+              code: z.string(),
+              path: z.array(z.union([z.string(), z.number()])),
+              message: z.string().optional(),
+            })
+            .passthrough()
+        ),
+        name: z.string(),
+      })
+      .passthrough(),
+  })
+  .passthrough();
+export type postSendVerificationEmail_422_ErrorResponseType = z.infer<
+  typeof postSendVerificationEmail_422_ErrorResponseSchema
+>;
+export const postSendVerificationEmail_429_ErrorResponseSchema = z
+  .object({ message: z.string() })
+  .passthrough();
+export type postSendVerificationEmail_429_ErrorResponseType = z.infer<
+  typeof postSendVerificationEmail_429_ErrorResponseSchema
+>;
+export const postSendVerificationEmail_500_ErrorResponseSchema = z
+  .object({ message: z.string() })
+  .passthrough();
+export type postSendVerificationEmail_500_ErrorResponseType = z.infer<
+  typeof postSendVerificationEmail_500_ErrorResponseSchema
+>;
+
+// Parameters Schema and Type for postSendVerificationEmail
+export const postSendVerificationEmail_ParametersSchema = z.object({
+  /** The user to send the verification email */
+  body: z.object({ email: z.string().email() }).passthrough(),
+});
+export type postSendVerificationEmail_ParametersType = z.infer<
+  typeof postSendVerificationEmail_ParametersSchema
+>;
+/**
+ * post /auth/auth/signup
+ * Create a new user
+ */
+// Response Schema and Type for postSignup
+export const postSignup_ResponseSchema = z
+  .object({ id: z.string(), email: z.string() })
+  .passthrough();
+export type postSignup_ResponseType = z.infer<typeof postSignup_ResponseSchema>;
+
+// Error Response Schemas and Types for postSignup
+export const postSignup_400_ErrorResponseSchema = z
+  .object({ message: z.string() })
+  .passthrough();
+export type postSignup_400_ErrorResponseType = z.infer<
+  typeof postSignup_400_ErrorResponseSchema
+>;
+export const postSignup_422_ErrorResponseSchema = z
+  .object({
+    success: z.boolean(),
+    error: z
+      .object({
+        issues: z.array(
+          z
+            .object({
+              code: z.string(),
+              path: z.array(z.union([z.string(), z.number()])),
+              message: z.string().optional(),
+            })
+            .passthrough()
+        ),
+        name: z.string(),
+      })
+      .passthrough(),
+  })
+  .passthrough();
+export type postSignup_422_ErrorResponseType = z.infer<
+  typeof postSignup_422_ErrorResponseSchema
+>;
+export const postSignup_500_ErrorResponseSchema = z
+  .object({ message: z.string() })
+  .passthrough();
+export type postSignup_500_ErrorResponseType = z.infer<
+  typeof postSignup_500_ErrorResponseSchema
+>;
+
+// Parameters Schema and Type for postSignup
+export const postSignup_ParametersSchema = z.object({
+  /** The user to create */
+  body: postSignup_Body,
+});
+export type postSignup_ParametersType = z.infer<
+  typeof postSignup_ParametersSchema
+>;
+/**
+ * get /auth/auth/user/:id
+ * Get a user by id
+ */
+// Response Schema and Type for getUser
+export const getUser_ResponseSchema = z
+  .object({ id: z.string(), email: z.string() })
+  .passthrough();
+export type getUser_ResponseType = z.infer<typeof getUser_ResponseSchema>;
+
+// Error Response Schemas and Types for getUser
+export const getUser_401_ErrorResponseSchema = z
+  .object({ message: z.string() })
+  .passthrough();
+export type getUser_401_ErrorResponseType = z.infer<
+  typeof getUser_401_ErrorResponseSchema
+>;
+export const getUser_403_ErrorResponseSchema = z
+  .object({ message: z.string() })
+  .passthrough();
+export type getUser_403_ErrorResponseType = z.infer<
+  typeof getUser_403_ErrorResponseSchema
+>;
+export const getUser_404_ErrorResponseSchema = z
+  .object({ message: z.string() })
+  .passthrough();
+export type getUser_404_ErrorResponseType = z.infer<
+  typeof getUser_404_ErrorResponseSchema
+>;
+export const getUser_422_ErrorResponseSchema = z
+  .object({
+    success: z.boolean(),
+    error: z
+      .object({
+        issues: z.array(
+          z
+            .object({
+              code: z.string(),
+              path: z.array(z.union([z.string(), z.number()])),
+              message: z.string().optional(),
+            })
+            .passthrough()
+        ),
+        name: z.string(),
+      })
+      .passthrough(),
+  })
+  .passthrough();
+export type getUser_422_ErrorResponseType = z.infer<
+  typeof getUser_422_ErrorResponseSchema
+>;
+
+// Parameters Schema and Type for getUser
+export const getUser_ParametersSchema = z.object({
+  /** Parameter: id */
+  id: z.string().uuid(),
+  /** Parameter: Authorization */
+  Authorization: z.string(),
+});
+export type getUser_ParametersType = z.infer<typeof getUser_ParametersSchema>;
+/**
+ * get /auth/auth/verify-email
+ * Verify a user&#x27;s email
+ */
+// Response Schema and Type for postVerifyEmail
+export const postVerifyEmail_ResponseSchema = z.void();
+export type postVerifyEmail_ResponseType = z.infer<
+  typeof postVerifyEmail_ResponseSchema
+>;
+
+// Error Response Schemas and Types for postVerifyEmail
+export const postVerifyEmail_400_ErrorResponseSchema = z
+  .object({ message: z.string() })
+  .passthrough();
+export type postVerifyEmail_400_ErrorResponseType = z.infer<
+  typeof postVerifyEmail_400_ErrorResponseSchema
+>;
+export const postVerifyEmail_401_ErrorResponseSchema = z
+  .object({ message: z.string() })
+  .passthrough();
+export type postVerifyEmail_401_ErrorResponseType = z.infer<
+  typeof postVerifyEmail_401_ErrorResponseSchema
+>;
+export const postVerifyEmail_404_ErrorResponseSchema = z
+  .object({ message: z.string() })
+  .passthrough();
+export type postVerifyEmail_404_ErrorResponseType = z.infer<
+  typeof postVerifyEmail_404_ErrorResponseSchema
+>;
+
+// Parameters Schema and Type for postVerifyEmail
+export const postVerifyEmail_ParametersSchema = z.object({
+  /** Parameter: token */
+  token: z.string(),
+});
+export type postVerifyEmail_ParametersType = z.infer<
+  typeof postVerifyEmail_ParametersSchema
+>;
+/**
+ * get /health
+ * No description available for this endpoint.
+ */
+// Response Schema and Type for getHealth
+export const getHealth_ResponseSchema = z
+  .object({ message: z.string() })
+  .passthrough();
+export type getHealth_ResponseType = z.infer<typeof getHealth_ResponseSchema>;
+
+// Error Response Schemas and Types for getHealth
+
+// Parameters Schema and Type for getHealth
+
+// --- API Schemas Grouped by Tag ---
+// This utilizes the endpointsGroups object provided by openapi-zod-client when a group-strategy is used.
+export const apiSchemasByTag = {
+  Index: {
+    // @key is the tag name (e.g., "Auth", "Index")
+    endpoints: {
+      // 'this.endpoints' is the array of endpoint objects for the current tag
+      get: {
+        responses: {
+          // This checks if a main success response schema exists
+          successSchema: get_ResponseSchema, // Schema for success response
+        },
+      },
+    },
+  },
+  Health: {
+    // @key is the tag name (e.g., "Auth", "Index")
+    endpoints: {
+      // 'this.endpoints' is the array of endpoint objects for the current tag
+      getHealth: {
+        responses: {
+          // This checks if a main success response schema exists
+          successSchema: getHealth_ResponseSchema, // Schema for success response
+        },
+      },
+    },
+  },
+  Auth: {
+    // @key is the tag name (e.g., "Auth", "Index")
+    endpoints: {
+      // 'this.endpoints' is the array of endpoint objects for the current tag
+      postSignup: {
+        parametersSchema: postSignup_ParametersSchema, // Schema for all parameters
+
+        requestBodySchema: postSignup_Body, // Schema name (e.g., postSignup_Body) or inline Zod definition
+        responses: {
+          // This checks if a main success response schema exists
+          successSchema: postSignup_ResponseSchema, // Schema for success response
+          // Check if there are any error responses defined
+          errors: {
+            // Iterate over error responses
+            "400Schema": postSignup_400_ErrorResponseSchema, // Schema for this error status
+            // Iterate over error responses
+            "422Schema": postSignup_422_ErrorResponseSchema, // Schema for this error status
+            // Iterate over error responses
+            "500Schema": postSignup_500_ErrorResponseSchema, // Schema for this error status
+          },
+        },
+      },
+      // 'this.endpoints' is the array of endpoint objects for the current tag
+      postLogin: {
+        parametersSchema: postLogin_ParametersSchema, // Schema for all parameters
+
+        requestBodySchema: postLogin_Body, // Schema name (e.g., postSignup_Body) or inline Zod definition
+        responses: {
+          // This checks if a main success response schema exists
+          successSchema: postLogin_ResponseSchema, // Schema for success response
+          // Check if there are any error responses defined
+          errors: {
+            // Iterate over error responses
+            "401Schema": postLogin_401_ErrorResponseSchema, // Schema for this error status
+            // Iterate over error responses
+            "404Schema": postLogin_404_ErrorResponseSchema, // Schema for this error status
+            // Iterate over error responses
+            "422Schema": postLogin_422_ErrorResponseSchema, // Schema for this error status
+          },
+        },
+      },
+      // 'this.endpoints' is the array of endpoint objects for the current tag
+      postVerifyEmail: {
+        parametersSchema: postVerifyEmail_ParametersSchema, // Schema for all parameters
+
+        responses: {
+          // This checks if a main success response schema exists
+          successSchema: postVerifyEmail_ResponseSchema, // Schema for success response
+          // Check if there are any error responses defined
+          errors: {
+            // Iterate over error responses
+            "400Schema": postVerifyEmail_400_ErrorResponseSchema, // Schema for this error status
+            // Iterate over error responses
+            "401Schema": postVerifyEmail_401_ErrorResponseSchema, // Schema for this error status
+            // Iterate over error responses
+            "404Schema": postVerifyEmail_404_ErrorResponseSchema, // Schema for this error status
+          },
+        },
+      },
+      // 'this.endpoints' is the array of endpoint objects for the current tag
+      postSendVerificationEmail: {
+        parametersSchema: postSendVerificationEmail_ParametersSchema, // Schema for all parameters
+
+        requestBodySchema: z
+          .object({ email: z.string().email() })
+          .passthrough(), // Schema name (e.g., postSignup_Body) or inline Zod definition
+        responses: {
+          // This checks if a main success response schema exists
+          successSchema: postSendVerificationEmail_ResponseSchema, // Schema for success response
+          // Check if there are any error responses defined
+          errors: {
+            // Iterate over error responses
+            "400Schema": postSendVerificationEmail_400_ErrorResponseSchema, // Schema for this error status
+            // Iterate over error responses
+            "404Schema": postSendVerificationEmail_404_ErrorResponseSchema, // Schema for this error status
+            // Iterate over error responses
+            "422Schema": postSendVerificationEmail_422_ErrorResponseSchema, // Schema for this error status
+            // Iterate over error responses
+            "429Schema": postSendVerificationEmail_429_ErrorResponseSchema, // Schema for this error status
+            // Iterate over error responses
+            "500Schema": postSendVerificationEmail_500_ErrorResponseSchema, // Schema for this error status
+          },
+        },
+      },
+      // 'this.endpoints' is the array of endpoint objects for the current tag
+      postSendPasswordResetEmail: {
+        parametersSchema: postSendPasswordResetEmail_ParametersSchema, // Schema for all parameters
+
+        requestBodySchema: z
+          .object({ email: z.string().email() })
+          .passthrough(), // Schema name (e.g., postSignup_Body) or inline Zod definition
+        responses: {
+          // This checks if a main success response schema exists
+          successSchema: postSendPasswordResetEmail_ResponseSchema, // Schema for success response
+          // Check if there are any error responses defined
+          errors: {
+            // Iterate over error responses
+            "422Schema": postSendPasswordResetEmail_422_ErrorResponseSchema, // Schema for this error status
+            // Iterate over error responses
+            "429Schema": postSendPasswordResetEmail_429_ErrorResponseSchema, // Schema for this error status
+            // Iterate over error responses
+            "500Schema": postSendPasswordResetEmail_500_ErrorResponseSchema, // Schema for this error status
+          },
+        },
+      },
+      // 'this.endpoints' is the array of endpoint objects for the current tag
+      postResetPassword: {
+        parametersSchema: postResetPassword_ParametersSchema, // Schema for all parameters
+
+        requestBodySchema: postResetPassword_Body, // Schema name (e.g., postSignup_Body) or inline Zod definition
+        responses: {
+          // This checks if a main success response schema exists
+          successSchema: postResetPassword_ResponseSchema, // Schema for success response
+          // Check if there are any error responses defined
+          errors: {
+            // Iterate over error responses
+            "401Schema": postResetPassword_401_ErrorResponseSchema, // Schema for this error status
+            // Iterate over error responses
+            "404Schema": postResetPassword_404_ErrorResponseSchema, // Schema for this error status
+            // Iterate over error responses
+            "422Schema": postResetPassword_422_ErrorResponseSchema, // Schema for this error status
+          },
+        },
+      },
+      // 'this.endpoints' is the array of endpoint objects for the current tag
+      getUser: {
+        parametersSchema: getUser_ParametersSchema, // Schema for all parameters
+
+        responses: {
+          // This checks if a main success response schema exists
+          successSchema: getUser_ResponseSchema, // Schema for success response
+          // Check if there are any error responses defined
+          errors: {
+            // Iterate over error responses
+            "401Schema": getUser_401_ErrorResponseSchema, // Schema for this error status
+            // Iterate over error responses
+            "403Schema": getUser_403_ErrorResponseSchema, // Schema for this error status
+            // Iterate over error responses
+            "404Schema": getUser_404_ErrorResponseSchema, // Schema for this error status
+            // Iterate over error responses
+            "422Schema": getUser_422_ErrorResponseSchema, // Schema for this error status
+          },
+        },
+      },
+    },
+  },
+};

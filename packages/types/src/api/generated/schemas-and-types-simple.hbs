@@ -1,0 +1,68 @@
+import { z } from "zod";
+
+{{#if imports}}
+{{#each imports}}
+import { {{{@key}}} } from "./{{{this}}}"
+{{/each}}
+{{/if}}
+
+{{#if types}}
+{{#each types}}
+{{{this}}};
+{{/each}}
+{{/if}}
+
+// --- Request Body Schemas and Types ---
+// Define constants individual export
+{{#each schemas}}
+// Note: The description for this request body ({{@key}}) is typically found where it's used as an endpoint parameter.
+const {{@key}} = {{{this}}}; // e.g., const postAuthSignup_Body = z.object(...);
+export type {{@key}}Type = z.infer<typeof {{@key}}>; // Export the TS type
+{{/each}}
+
+// Export a map of these request body Zod schemas
+{{#ifNotEmptyObj schemas}}
+export const requestBodySchemas = {
+{{#each schemas}}
+  "{{@key}}": {{@key}}, // Refer to the constant defined above
+{{/each}}
+};
+{{/ifNotEmptyObj}}
+
+// --- Endpoint-specific Schemas and Types (Responses and Parameters) ---
+{{#each endpoints}}
+/**
+ * {{method}} {{path}}
+ * {{#if description}}{{description}}{{else}}No description available for this endpoint.{{/if}}
+ */
+// Response Schema and Type for {{alias}}
+export const {{alias}}_ResponseSchema = {{{response}}};
+export type {{alias}}_ResponseType = z.infer<typeof {{alias}}_ResponseSchema>;
+
+// Parameters Schema and Type for {{alias}}
+{{#if parameters.length}}
+export const {{alias}}_ParametersSchema = z.object({
+  {{#each parameters}}
+  /** {{#if description}}{{description}}{{else}}Parameter: {{name}}{{/if}} */
+  "{{name}}": {{{schema}}}{{#unless @last}},{{/unless}}
+  {{/each}}
+});
+export type {{alias}}_ParametersType = z.infer<typeof {{alias}}_ParametersSchema>;
+{{/if}}
+{{/each}}
+
+// --- Grouped Response Schemas Map ---
+export const responseSchemas = {
+{{#each endpoints}}
+  "{{alias}}": {{alias}}_ResponseSchema,
+{{/each}}
+};
+
+// --- Grouped Parameter Schemas Map ---
+export const parameterSchemas = {
+{{#each endpoints}}
+{{#if parameters.length}}
+  "{{alias}}": {{alias}}_ParametersSchema,
+{{/if}}
+{{/each}}
+};

@@ -1,0 +1,87 @@
+{
+  "page": {
+    "home": {
+      "title": "Home",
+      "description": "This is the home page"
+    }
+  },
+  "common": {
+    "home": "Home",
+    "login": "Login",
+    "logout": "Logout",
+    "register": "Register",
+    "forgotPassword": "Forgot your password?",
+    "resetPassword": "Reset password"
+  },
+  "languageSwitcher": {
+    "selectLanguage": "Select Language"
+  },
+  "loginForm": {
+    "title": "Login",
+    "description": "Enter your email and password to login to your account.",
+    "email": {
+      "label": "Email",
+      "placeholder": "johndoe@mail.com",
+      "invalid": "Please enter a valid email address."
+    },
+    "password": {
+      "label": "Password",
+      "placeholder": "******",
+      "forgot": "Forgot your password?",
+      "min": "Password must be at least 6 characters long",
+      "alphanumeric": "Password must be alphanumeric"
+    },
+    "submit": "Login",
+    "signupPrompt": "Don't have an account?",
+    "signupLink": "Sign up",
+    "error": {
+      "generic": "Failed to submit the form. Please try again."
+    },
+    "success": {
+      "generic": "Login successful. Redirecting..."
+    }
+  },
+  "registerForm": {
+    "title": "Sign Up",
+    "description": "Create a new account by filling in the information below.",
+    "email": {
+      "label": "Email",
+      "placeholder": "johndoe@mail.com",
+      "invalid": "Please enter a valid email address."
+    },
+    "password": {
+      "label": "Password",
+      "placeholder": "******",
+      "min": "Password must be at least 6 characters long",
+      "alphanumeric": "Password must be alphanumeric"
+    },
+    "confirmPassword": {
+      "label": "Confirm Password",
+      "placeholder": "******",
+      "match": "Passwords must match"
+    },
+    "submit": "Sign Up",
+    "loginPrompt": "Already have an account?",
+    "loginLink": "Login",
+    "error": {
+      "generic": "Failed to submit the form. Please try again."
+    }
+  },
+  "forgotPasswordForm": {
+    "title": "Forgot Password",
+    "description": "Enter your email address to receive a password reset link.",
+    "email": {
+      "label": "Email",
+      "placeholder": "johndoe@mail.com",
+      "invalid": "Please enter a valid email address."
+    },
+    "submit": "Send Reset Link",
+    "signupPrompt": "Don't have an account?",
+    "signupLink": "Sign up",
+    "loginPrompt": "Remembered your password?",
+    "loginLink": "Login",
+    "error": {
+      "generic": "Failed to submit the form. Please try again."
+    }
+  }
+}

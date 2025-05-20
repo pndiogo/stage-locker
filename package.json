@@ -7,7 +7,9 @@
     "dev": "pnpm run -r --parallel --aggregate-output dev",
     "build": "pnpm run -r build",
     "build:web": "pnpm --filter './packages/**' build && pnpm --filter @stage-locker/web build",
+    "install:web": "pnpm --filter './packages/**' install && pnpm --filter @stage-locker/web install",
     "build:api": "pnpm --filter './packages/**' build && pnpm --filter @stage-locker/api build",
+    "install:api": "pnpm --filter './packages/**' install && pnpm --filter @stage-locker/api install",
     "test": "pnpm run -r --parallel test",
     "lint": "pnpm run -r --parallel lint",
     "deploy": "pnpm build && pnpm run -r deploy"

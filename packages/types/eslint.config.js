@@ -1,3 +1,10 @@
-import createConfig from "./create-config.js";
+import config from "@stage-locker/eslint-config/create-config";
 
-export default createConfig();
+export default config({
+  rules: {
+    "unicorn/filename-case": ["error", {
+      case: "kebabCase",
+      ignore: ["README.md"],
+    }],
+  },
+});

@@ -21,10 +21,6 @@ export default function createConfig(options, ...userConfigs) {
       "perfectionist/sort-imports": ["error", {
         tsconfigRootDir: ".",
       }],
-      "unicorn/filename-case": ["error", {
-        case: "kebabCase",
-        ignore: ["README.md"],
-      }],
     },
   }, ...userConfigs);
 }

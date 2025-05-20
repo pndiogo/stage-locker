@@ -1,3 +1,6 @@
-import config from "@stage-locker/eslint-config";
+import createConfig from "@stage-locker/eslint-config/create-config";
 
-export default config;
+export default createConfig({
+  react: true,
+  ignores: ["src/components/ui/**"],
+});

@@ -1,5 +1,3 @@
-"use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
@@ -7,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { z } from "zod";
 
-import { useLogin } from "@/web/api/auth/hooks/useLogin";
+import { useLogin } from "@/web/api/auth/login/useLogin";
 import { Button } from "@/web/components/ui/button";
 import {
   Card,

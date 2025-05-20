@@ -34,9 +34,9 @@ if (rootElement && !rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <StrictMode>
-      <TanstackQuery.Provider>
+      <TanstackQuery>
         <RouterProvider router={router} />
-      </TanstackQuery.Provider>
+      </TanstackQuery>
     </StrictMode>,
   );
 }

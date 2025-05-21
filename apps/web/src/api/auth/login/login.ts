@@ -1,21 +1,14 @@
-import type { postLogin_BodyType, postLogin_ResponseType } from "@stage-locker/types";
-
 import { apiClient } from "@stage-locker/api-client";
-import { apiSchemasByTag } from "@stage-locker/types";
 import { sanitizeAndTrimObject } from "@stage-locker/utils";
 
+import type { RequestParams } from "@/web/types/api";
+import type { LoginRequestBody, LoginResponseSuccess } from "@/web/types/auth";
+
 import { env } from "@/web/env";
+import { LoginRequestBodySchema, LoginResponseSuccessSchema } from "@/web/schemas/auth";
 
-type LoginResponseSuccess = postLogin_ResponseType;
-
-type RequestParams<B = unknown, Q = unknown, P = unknown> = {
-  body?: B;
-  query?: Q;
-  path?: P;
-};
-
-export async function loginRequest({ body }: RequestParams<postLogin_BodyType>): Promise<LoginResponseSuccess> {
-  const parsed = apiSchemasByTag.Auth.endpoints.postLogin.requestBodySchema.safeParse(sanitizeAndTrimObject(body));
+export async function loginRequest({ body }: RequestParams<LoginRequestBody>): Promise<LoginResponseSuccess> {
+  const parsed = LoginRequestBodySchema.safeParse(sanitizeAndTrimObject(body));
 
   if (!parsed.success) {
     throw new Error(`Invalid input: ${JSON.stringify(parsed.error.flatten())}`);
@@ -24,7 +17,7 @@ export async function loginRequest({ body }: RequestParams<postLogin_BodyType>):
   const [data, error] = await apiClient<LoginResponseSuccess>(`${env.VITE_API_PATH}/auth/login`, {
     method: "POST",
     body: JSON.stringify(parsed.data),
-  }, apiSchemasByTag.Auth.endpoints.postLogin.responses.successSchema);
+  }, LoginResponseSuccessSchema);
 
   if (error) {
     if (error.status === 401) {

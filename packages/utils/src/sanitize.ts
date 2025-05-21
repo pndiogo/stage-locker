@@ -9,9 +9,11 @@ export function sanitizeAndTrimObject<T extends Record<string, any>>(obj: T): T 
     const value = obj[key];
     if (typeof value === "string") {
       result[key] = DOMPurify.sanitize(value).trim();
-    } else if (value && typeof value === "object") {
+    }
+    else if (value && typeof value === "object") {
       result[key] = sanitizeAndTrimObject(value);
-    } else {
+    }
+    else {
       result[key] = value;
     }
   }

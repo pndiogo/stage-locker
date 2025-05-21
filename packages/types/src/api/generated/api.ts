@@ -26,9 +26,9 @@ export type postResetPassword_BodyType = z.infer<typeof postResetPassword_Body>;
 
 // Export a map of these request body Zod schemas
 export const requestBodySchemas = {
-  postSignup_Body: postSignup_Body, // Refer to the constant defined above
-  postLogin_Body: postLogin_Body, // Refer to the constant defined above
-  postResetPassword_Body: postResetPassword_Body, // Refer to the constant defined above
+  postSignup_Body, // Refer to the constant defined above
+  postLogin_Body, // Refer to the constant defined above
+  postResetPassword_Body, // Refer to the constant defined above
 };
 
 // --- Endpoint-specific Schemas and Types (Responses and Parameters) ---
@@ -80,7 +80,7 @@ export const postLogin_422_ErrorResponseSchema = z
               path: z.array(z.union([z.string(), z.number()])),
               message: z.string().optional(),
             })
-            .passthrough()
+            .passthrough(),
         ),
         name: z.string(),
       })
@@ -136,7 +136,7 @@ export const postResetPassword_422_ErrorResponseSchema = z
               path: z.array(z.union([z.string(), z.number()])),
               message: z.string().optional(),
             })
-            .passthrough()
+            .passthrough(),
         ),
         name: z.string(),
       })
@@ -178,7 +178,7 @@ export const postSendPasswordResetEmail_422_ErrorResponseSchema = z
               path: z.array(z.union([z.string(), z.number()])),
               message: z.string().optional(),
             })
-            .passthrough()
+            .passthrough(),
         ),
         name: z.string(),
       })
@@ -244,7 +244,7 @@ export const postSendVerificationEmail_422_ErrorResponseSchema = z
               path: z.array(z.union([z.string(), z.number()])),
               message: z.string().optional(),
             })
-            .passthrough()
+            .passthrough(),
         ),
         name: z.string(),
       })
@@ -304,7 +304,7 @@ export const postSignup_422_ErrorResponseSchema = z
               path: z.array(z.union([z.string(), z.number()])),
               message: z.string().optional(),
             })
-            .passthrough()
+            .passthrough(),
         ),
         name: z.string(),
       })
@@ -370,7 +370,7 @@ export const getUser_422_ErrorResponseSchema = z
               path: z.array(z.union([z.string(), z.number()])),
               message: z.string().optional(),
             })
-            .passthrough()
+            .passthrough(),
         ),
         name: z.string(),
       })

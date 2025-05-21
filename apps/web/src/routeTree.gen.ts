@@ -1,7 +1,4 @@
-/* eslint-disable ts/consistent-type-definitions */
-/* eslint-disable ts/ban-ts-comment */
-/* eslint-disable perfectionist/sort-imports */
-/* eslint-disable style/indent-binary-ops */
+/* eslint-disable */
 
 // @ts-nocheck
 
@@ -13,153 +10,153 @@
 
 // Import Routes
 
-import { Route as rootRoute } from "./routes/__root";
-import { Route as SignupImport } from "./routes/signup";
-import { Route as LoginImport } from "./routes/login";
-import { Route as ForgotPasswordImport } from "./routes/forgot-password";
-import { Route as IndexImport } from "./routes/index";
-import { Route as DemoTanstackQueryImport } from "./routes/demo.tanstack-query";
+import { Route as rootRoute } from './routes/__root'
+import { Route as SignupImport } from './routes/signup'
+import { Route as LoginImport } from './routes/login'
+import { Route as ForgotPasswordImport } from './routes/forgot-password'
+import { Route as IndexImport } from './routes/index'
+import { Route as DemoTanstackQueryImport } from './routes/demo.tanstack-query'
 
 // Create/Update Routes
 
 const SignupRoute = SignupImport.update({
-  id: "/signup",
-  path: "/signup",
+  id: '/signup',
+  path: '/signup',
   getParentRoute: () => rootRoute,
-} as any);
+} as any)
 
 const LoginRoute = LoginImport.update({
-  id: "/login",
-  path: "/login",
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRoute,
-} as any);
+} as any)
 
 const ForgotPasswordRoute = ForgotPasswordImport.update({
-  id: "/forgot-password",
-  path: "/forgot-password",
+  id: '/forgot-password',
+  path: '/forgot-password',
   getParentRoute: () => rootRoute,
-} as any);
+} as any)
 
 const IndexRoute = IndexImport.update({
-  id: "/",
-  path: "/",
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRoute,
-} as any);
+} as any)
 
 const DemoTanstackQueryRoute = DemoTanstackQueryImport.update({
-  id: "/demo/tanstack-query",
-  path: "/demo/tanstack-query",
+  id: '/demo/tanstack-query',
+  path: '/demo/tanstack-query',
   getParentRoute: () => rootRoute,
-} as any);
+} as any)
 
 // Populate the FileRoutesByPath interface
 
-declare module "@tanstack/react-router" {
+declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    "/": {
-      id: "/";
-      path: "/";
-      fullPath: "/";
-      preLoaderRoute: typeof IndexImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/forgot-password": {
-      id: "/forgot-password";
-      path: "/forgot-password";
-      fullPath: "/forgot-password";
-      preLoaderRoute: typeof ForgotPasswordImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/login": {
-      id: "/login";
-      path: "/login";
-      fullPath: "/login";
-      preLoaderRoute: typeof LoginImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/signup": {
-      id: "/signup";
-      path: "/signup";
-      fullPath: "/signup";
-      preLoaderRoute: typeof SignupImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/demo/tanstack-query": {
-      id: "/demo/tanstack-query";
-      path: "/demo/tanstack-query";
-      fullPath: "/demo/tanstack-query";
-      preLoaderRoute: typeof DemoTanstackQueryImport;
-      parentRoute: typeof rootRoute;
-    };
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordImport
+      parentRoute: typeof rootRoute
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginImport
+      parentRoute: typeof rootRoute
+    }
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupImport
+      parentRoute: typeof rootRoute
+    }
+    '/demo/tanstack-query': {
+      id: '/demo/tanstack-query'
+      path: '/demo/tanstack-query'
+      fullPath: '/demo/tanstack-query'
+      preLoaderRoute: typeof DemoTanstackQueryImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
 // Create and export the route tree
 
 export interface FileRoutesByFullPath {
-  "/": typeof IndexRoute;
-  "/forgot-password": typeof ForgotPasswordRoute;
-  "/login": typeof LoginRoute;
-  "/signup": typeof SignupRoute;
-  "/demo/tanstack-query": typeof DemoTanstackQueryRoute;
+  '/': typeof IndexRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/signup': typeof SignupRoute
+  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
 }
 
 export interface FileRoutesByTo {
-  "/": typeof IndexRoute;
-  "/forgot-password": typeof ForgotPasswordRoute;
-  "/login": typeof LoginRoute;
-  "/signup": typeof SignupRoute;
-  "/demo/tanstack-query": typeof DemoTanstackQueryRoute;
+  '/': typeof IndexRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/signup': typeof SignupRoute
+  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
 }
 
 export interface FileRoutesById {
-  "__root__": typeof rootRoute;
-  "/": typeof IndexRoute;
-  "/forgot-password": typeof ForgotPasswordRoute;
-  "/login": typeof LoginRoute;
-  "/signup": typeof SignupRoute;
-  "/demo/tanstack-query": typeof DemoTanstackQueryRoute;
+  __root__: typeof rootRoute
+  '/': typeof IndexRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/signup': typeof SignupRoute
+  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
 }
 
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath;
+  fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-  | "/"
-  | "/forgot-password"
-  | "/login"
-  | "/signup"
-  | "/demo/tanstack-query";
-  fileRoutesByTo: FileRoutesByTo;
-  to: "/" | "/forgot-password" | "/login" | "/signup" | "/demo/tanstack-query";
+    | '/'
+    | '/forgot-password'
+    | '/login'
+    | '/signup'
+    | '/demo/tanstack-query'
+  fileRoutesByTo: FileRoutesByTo
+  to: '/' | '/forgot-password' | '/login' | '/signup' | '/demo/tanstack-query'
   id:
-  | "__root__"
-  | "/"
-  | "/forgot-password"
-  | "/login"
-  | "/signup"
-  | "/demo/tanstack-query";
-  fileRoutesById: FileRoutesById;
+    | '__root__'
+    | '/'
+    | '/forgot-password'
+    | '/login'
+    | '/signup'
+    | '/demo/tanstack-query'
+  fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute;
-  ForgotPasswordRoute: typeof ForgotPasswordRoute;
-  LoginRoute: typeof LoginRoute;
-  SignupRoute: typeof SignupRoute;
-  DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute;
+  IndexRoute: typeof IndexRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
+  LoginRoute: typeof LoginRoute
+  SignupRoute: typeof SignupRoute
+  DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute,
-  ForgotPasswordRoute,
-  LoginRoute,
-  SignupRoute,
-  DemoTanstackQueryRoute,
-};
+  IndexRoute: IndexRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
+  LoginRoute: LoginRoute,
+  SignupRoute: SignupRoute,
+  DemoTanstackQueryRoute: DemoTanstackQueryRoute,
+}
 
 export const routeTree = rootRoute
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>();
+  ._addFileTypes<FileRouteTypes>()
 
 /* ROUTE_MANIFEST_START
 {

@@ -9,6 +9,9 @@
     ".": "./eslint.config.js",
     "./create-config": "./create-config.js"
   },
+  "scripts": {
+    "lint": "eslint ."
+  },
   "devDependencies": {
     "@antfu/eslint-config": "^4.13.2",
     "eslint": "^9.27.0",

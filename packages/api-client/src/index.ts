@@ -1,35 +1,36 @@
-import { ZodSchema } from "zod";
+import type { ZodSchema } from "zod";
 
-export interface ApiError {
+export type ApiError = {
   status: number;
   message: string;
   details?: unknown;
-}
+};
 
 type RequestInfo = string | Request;
 
 export async function apiClient<T>(
   input: RequestInfo,
   init: RequestInit | undefined,
-  schema?: ZodSchema<T>
+  schema?: ZodSchema<T>,
 ): Promise<[T | null, ApiError | null]> {
   try {
     const res = await fetch(input, init);
 
     if (!res.ok) {
-      let details: unknown = undefined;
+      let details: unknown;
       try {
         details = await res.json();
-      } catch { }
+      }
+      catch { }
       return [
         null,
         {
           status: res.status,
           message:
-            typeof details === "object" &&
-              details !== null &&
-              "message" in details &&
-              typeof (details as any).message === "string"
+            typeof details === "object"
+            && details !== null
+            && "message" in details
+            && typeof (details as any).message === "string"
               ? (details as any).message
               : res.statusText || "Unknown error",
           details,
@@ -55,7 +56,8 @@ export async function apiClient<T>(
     }
 
     return [json as T, null];
-  } catch (e) {
+  }
+  catch (e) {
     return [
       null,
       {

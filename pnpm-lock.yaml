@@ -253,6 +253,9 @@ importers:
         specifier: ^3.25.17
         version: 3.25.17
     devDependencies:
+      eslint:
+        specifier: ^9.27.0
+        version: 9.27.0(jiti@2.4.2)
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
@@ -271,10 +274,16 @@ importers:
 
   packages/types:
     dependencies:
+      '@stage-locker/eslint-config':
+        specifier: workspace:^
+        version: link:../eslint-config
       zod:
         specifier: ^3.25.17
         version: 3.25.17
     devDependencies:
+      eslint:
+        specifier: ^9.27.0
+        version: 9.27.0(jiti@2.4.2)
       openapi-zod-client:
         specifier: ^1.18.3
         version: 1.18.3(react@19.1.0)
@@ -284,10 +293,16 @@ importers:
 
   packages/utils:
     dependencies:
+      '@stage-locker/eslint-config':
+        specifier: workspace:^
+        version: link:../eslint-config
       isomorphic-dompurify:
         specifier: ^2.25.0
         version: 2.25.0
     devDependencies:
+      eslint:
+        specifier: ^9.27.0
+        version: 9.27.0(jiti@2.4.2)
       typescript:
         specifier: ^5.8.3
         version: 5.8.3

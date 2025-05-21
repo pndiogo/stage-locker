@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@stage-locker/eslint-config": "workspace:^",
-    "zod": "^3.24.4"
+    "zod": "^3.25.17"
   },
   "devDependencies": {
     "typescript": "^5.8.3"

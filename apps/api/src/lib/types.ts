@@ -7,7 +7,7 @@ import type { users } from "@/api/db/schema/auth";
 
 export type User = InferSelectModel<typeof users>;
 
-export interface AppEnv {
+export type AppEnv = {
   Variables: {
     logger: PinoLogger;
     user: User;

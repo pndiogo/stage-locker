@@ -11,7 +11,7 @@ export default function configureOpenAPI(app: AppOpenAPI) {
     info: {
       version: packageJson.version,
       title: "Stage Locker API V1",
-    }
+    },
   });
 
   app.get(

@@ -20,7 +20,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "isomorphic-dompurify": "^2.24.0"
+    "isomorphic-dompurify": "^2.25.0"
   },
   "devDependencies": {
     "typescript": "^5.8.3"

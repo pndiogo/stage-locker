@@ -2,12 +2,12 @@ import { sign, verify } from "hono/jwt";
 
 import env from "@/api/env";
 
-interface JWTPayload {
+type JWTPayload = {
   exp?: number;
   nbf?: number;
   iat?: number;
   [key: string]: unknown;
-}
+};
 
 export async function generateLoginJWT({ sub }: JWTPayload) {
   const payload = {

@@ -3,7 +3,7 @@ import * as HttpStatusCodes from "stoker/http-status-codes";
 import { jsonContent, jsonContentRequired } from "stoker/openapi/helpers";
 import { createErrorSchema, IdUUIDParamsSchema } from "stoker/openapi/schemas";
 
-import { insertUserchema, loginRequestSchema, loginResponseSchema, selectUserSchema } from "@/api/db/schema/auth";
+import { insertUserSchema, loginRequestSchema, loginResponseSchema, selectUserSchema } from "@/api/db/schema/auth";
 import { badRequestSchema, forbiddenSchema, internalServerErrorSchema, notFoundSchema, tooManyRequestsSchema, unauthorizedSchema } from "@/api/lib/constants";
 import { passwordSchema, tokenSchema } from "@/api/lib/schemas";
 import { authenticate, verifyUserStatus } from "@/api/middlewares/authenticate";
@@ -20,7 +20,7 @@ export const signup = createRoute({
   summary: "Create a new user",
   request: {
     body: jsonContentRequired(
-      insertUserchema,
+      insertUserSchema,
       "The user to create",
     ),
   },
@@ -30,7 +30,7 @@ export const signup = createRoute({
       "The created user",
     ),
     [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
-      createErrorSchema(insertUserchema),
+      createErrorSchema(insertUserSchema),
       "The validation error(s)",
     ),
     [HttpStatusCodes.BAD_REQUEST]: jsonContent(
@@ -191,7 +191,7 @@ export const resetPassword = createRoute({
       "User not found",
     ),
     [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
-      createErrorSchema(insertUserchema),
+      createErrorSchema(insertUserSchema),
       "The validation error(s)",
     ),
   },

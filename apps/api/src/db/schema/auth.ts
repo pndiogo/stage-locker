@@ -22,14 +22,12 @@ export const users = sqliteTable("user", {
     .$onUpdate(() => new Date()),
 });
 
-// todo rename
 export const selectUserSchema = createSelectSchema(users).pick({
   id: true,
   email: true,
 });
 
-// todo rename
-export const insertUserchema = createInsertSchema(users)
+export const insertUserSchema = createInsertSchema(users)
   .pick({
     email: true,
     password: true,

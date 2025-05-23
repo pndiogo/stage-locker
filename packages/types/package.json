@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@stage-locker/eslint-config": "workspace:^",
-    "zod": "^3.25.17"
+    "zod": "^3.25.23"
   },
   "devDependencies": {
     "eslint": "^9.27.0",

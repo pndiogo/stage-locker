@@ -24,6 +24,7 @@ import {
 } from "@/web/components/ui/form";
 import { Input } from "@/web/components/ui/input";
 import { PasswordInput } from "@/web/components/ui/password-input";
+import { Routes } from "@/web/types/router";
 
 // Todo: Improve schema with additional validation rules for password
 function LoginForm() {
@@ -112,7 +113,7 @@ function LoginForm() {
                           {t("loginForm.password.label")}
                         </FormLabel>
                         <Link
-                          to="/forgot-password"
+                          to={Routes.FORGOT_PASSWORD}
                           className="ml-auto inline-block text-sm underline"
                         >
                           {t("loginForm.password.forgot")}
@@ -139,7 +140,7 @@ function LoginForm() {
           <div className="mt-4 text-center text-sm">
             {t("loginForm.registerPrompt")}
             {" "}
-            <Link to="/register" className="underline">
+            <Link to={Routes.REGISTER} className="underline">
               {t("loginForm.registerLink")}
             </Link>
           </div>

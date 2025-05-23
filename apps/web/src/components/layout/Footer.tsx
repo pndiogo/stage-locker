@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 
 import { Separator } from "@/web/components/ui/separator";
+import { Routes } from "@/web/types/router";
 
 function Footer() {
   const { t } = useTranslation();
@@ -12,10 +13,10 @@ function Footer() {
       <div>
         <ul>
           <li>
-            <Link to="/login">{t("common.login")}</Link>
+            <Link to={Routes.LOGIN}>{t("common.login")}</Link>
           </li>
           <li>
-            <Link to="/register">{t("common.register")}</Link>
+            <Link to={Routes.REGISTER}>{t("common.register")}</Link>
           </li>
         </ul>
       </div>

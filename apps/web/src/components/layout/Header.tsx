@@ -1,6 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 
+import { Routes } from "@/web/types/router";
+
 import { LanguageSwitcher } from "./LanguageSwitcher";
 
 function Header() {
@@ -9,7 +11,7 @@ function Header() {
     <header className="pb-2 flex gap-2 justify-between">
       <nav className="flex flex-row items-center justify-between w-full">
         <div className="font-bold">
-          <Link to="/">{t("common.home")}</Link>
+          <Link to={Routes.ROOT}>{t("common.home")}</Link>
         </div>
         <div>
           <LanguageSwitcher />

@@ -22,6 +22,7 @@ import {
   FormMessage,
 } from "@/web/components/ui/form";
 import { Input } from "@/web/components/ui/input";
+import { Routes } from "@/web/types/router";
 
 function ForgotPasswordForm() {
   const { t, i18n } = useTranslation();
@@ -108,14 +109,14 @@ function ForgotPasswordForm() {
           <div className="mt-4 text-center text-sm">
             {t("forgotPasswordForm.registerPrompt")}
             {" "}
-            <Link to="/register" className="underline">
+            <Link to={Routes.REGISTER} className="underline">
               {t("forgotPasswordForm.registerLink")}
             </Link>
           </div>
           <div className="mt-4 text-center text-sm">
             {t("forgotPasswordForm.loginPrompt")}
             {" "}
-            <Link to="/login" className="underline">
+            <Link to={Routes.LOGIN} className="underline">
               {t("forgotPasswordForm.loginLink")}
             </Link>
           </div>

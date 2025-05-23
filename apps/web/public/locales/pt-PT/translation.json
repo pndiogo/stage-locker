@@ -32,8 +32,8 @@
       "alphanumeric": "A senha deve ser alfanumérica"
     },
     "submit": "Entrar",
-    "signupPrompt": "Não tem uma conta?",
-    "signupLink": "Criar conta",
+    "registerPrompt": "Não tem uma conta?",
+    "registerLink": "Criar conta",
     "error": {
       "generic": "Erro ao enviar o formulário. Por favor, tente novamente."
     },
@@ -76,8 +76,8 @@
       "invalid": "Por favor, insira um endereço de email válido."
     },
     "submit": "Enviar link de redefinição",
-    "signupPrompt": "Não tem uma conta?",
-    "signupLink": "Criar conta",
+    "registerPrompt": "Não tem uma conta?",
+    "registerLink": "Criar conta",
     "loginPrompt": "Lembrou-se da sua senha?",
     "loginLink": "Entrar",
     "error": {

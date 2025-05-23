@@ -15,7 +15,7 @@ function Footer() {
             <Link to="/login">{t("common.login")}</Link>
           </li>
           <li>
-            <Link to="/signup">{t("common.register")}</Link>
+            <Link to="/register">{t("common.register")}</Link>
           </li>
         </ul>
       </div>

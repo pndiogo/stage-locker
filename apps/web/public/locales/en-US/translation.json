@@ -32,8 +32,8 @@
       "alphanumeric": "Password must be alphanumeric"
     },
     "submit": "Login",
-    "signupPrompt": "Don't have an account?",
-    "signupLink": "Sign up",
+    "registerPrompt": "Don't have an account?",
+    "registerLink": "Register",
     "error": {
       "generic": "Failed to submit the form. Please try again."
     },
@@ -42,7 +42,7 @@
     }
   },
   "registerForm": {
-    "title": "Sign Up",
+    "title": "Register",
     "description": "Create a new account by filling in the information below.",
     "email": {
       "label": "Email",
@@ -60,7 +60,7 @@
       "placeholder": "******",
       "match": "Passwords must match"
     },
-    "submit": "Sign Up",
+    "submit": "Register",
     "loginPrompt": "Already have an account?",
     "loginLink": "Login",
     "error": {
@@ -76,8 +76,8 @@
       "invalid": "Please enter a valid email address."
     },
     "submit": "Send Reset Link",
-    "signupPrompt": "Don't have an account?",
-    "signupLink": "Sign up",
+    "registerPrompt": "Don't have an account?",
+    "registerLink": "Register",
     "loginPrompt": "Remembered your password?",
     "loginLink": "Login",
     "error": {

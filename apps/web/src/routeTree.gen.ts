@@ -121,20 +121,20 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
-    | '/forgot-password'
-    | '/login'
-    | '/signup'
-    | '/demo/tanstack-query'
+  | '/'
+  | '/forgot-password'
+  | '/login'
+  | '/signup'
+  | '/demo/tanstack-query'
   fileRoutesByTo: FileRoutesByTo
   to: '/' | '/forgot-password' | '/login' | '/signup' | '/demo/tanstack-query'
   id:
-    | '__root__'
-    | '/'
-    | '/forgot-password'
-    | '/login'
-    | '/signup'
-    | '/demo/tanstack-query'
+  | '__root__'
+  | '/'
+  | '/forgot-password'
+  | '/login'
+  | '/signup'
+  | '/demo/tanstack-query'
   fileRoutesById: FileRoutesById
 }
 

@@ -73,6 +73,10 @@ export const verifyEmail = createRoute({
       notFoundSchema,
       "User not found",
     ),
+    [HttpStatusCodes.INTERNAL_SERVER_ERROR]: jsonContent(
+      internalServerErrorSchema,
+      "Internal server error",
+    ),
   },
 });
 
@@ -194,6 +198,10 @@ export const resetPassword = createRoute({
       createErrorSchema(insertUserSchema),
       "The validation error(s)",
     ),
+    [HttpStatusCodes.INTERNAL_SERVER_ERROR]: jsonContent(
+      internalServerErrorSchema,
+      "Internal server error",
+    ),
   },
 });
 
@@ -204,7 +212,7 @@ export const login = createRoute({
   operationId: "postLogin",
   description: "Login a user",
   summary: "Login a user",
-  middleware: [verifyUserStatus], // Limit to 3 requests per 5 minutes
+  middleware: [verifyUserStatus], // TODO Limit to 3 requests per 5 minutes?
   request: {
     body: jsonContentRequired(
       loginRequestSchema,
@@ -216,9 +224,13 @@ export const login = createRoute({
       loginResponseSchema,
       "The logged in user",
     ),
-    [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
-      createErrorSchema(loginRequestSchema),
-      "The validation error(s)",
+    [HttpStatusCodes.BAD_REQUEST]: jsonContent(
+      badRequestSchema,
+      "Invalid request",
+    ),
+    [HttpStatusCodes.FORBIDDEN]: jsonContent(
+      forbiddenSchema,
+      "Account is not activated",
     ),
     [HttpStatusCodes.NOT_FOUND]: jsonContent(
       notFoundSchema,
@@ -227,6 +239,14 @@ export const login = createRoute({
     [HttpStatusCodes.UNAUTHORIZED]: jsonContent(
       unauthorizedSchema,
       "Invalid credentials",
+    ),
+    [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
+      createErrorSchema(loginRequestSchema),
+      "The validation error(s)",
+    ),
+    [HttpStatusCodes.INTERNAL_SERVER_ERROR]: jsonContent(
+      internalServerErrorSchema,
+      "Internal server error",
     ),
   },
 });
@@ -265,6 +285,10 @@ export const getUser = createRoute({
     [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
       createErrorSchema(IdUUIDParamsSchema),
       "Invalid id error",
+    ),
+    [HttpStatusCodes.INTERNAL_SERVER_ERROR]: jsonContent(
+      internalServerErrorSchema,
+      "Internal server error",
     ),
   },
 });

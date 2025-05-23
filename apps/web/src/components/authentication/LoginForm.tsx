@@ -62,7 +62,7 @@ function LoginForm() {
         toast.success(t("loginForm.success.generic"));
       },
       onError: (error) => {
-        console.error("Login error", error);
+        console.error("Login error: ", error);
         toast.error(t("loginForm.error.generic"));
       },
     });

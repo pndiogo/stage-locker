@@ -26,27 +26,27 @@ export type postResetPassword_BodyType = z.infer<typeof postResetPassword_Body>;
 
 // Export a map of these request body Zod schemas
 export const requestBodySchemas = {
-  postSignup_Body, // Refer to the constant defined above
-  postLogin_Body, // Refer to the constant defined above
-  postResetPassword_Body, // Refer to the constant defined above
+  postSignup_Body: postSignup_Body, // Refer to the constant defined above
+  postLogin_Body: postLogin_Body, // Refer to the constant defined above
+  postResetPassword_Body: postResetPassword_Body, // Refer to the constant defined above
 };
 
 // --- Endpoint-specific Schemas and Types (Responses and Parameters) ---
 /**
- * get /
+ * get /api/v1/
  * No description available for this endpoint.
  */
-// Response Schema and Type for get
-export const get_ResponseSchema = z
+// Response Schema and Type for getApiv1
+export const getApiv1_ResponseSchema = z
   .object({ message: z.string() })
   .passthrough();
-export type get_ResponseType = z.infer<typeof get_ResponseSchema>;
+export type getApiv1_ResponseType = z.infer<typeof getApiv1_ResponseSchema>;
 
-// Error Response Schemas and Types for get
+// Error Response Schemas and Types for getApiv1
 
-// Parameters Schema and Type for get
+// Parameters Schema and Type for getApiv1
 /**
- * post /auth/auth/login
+ * post /api/v1/auth/login
  * Login a user
  */
 // Response Schema and Type for postLogin
@@ -56,11 +56,23 @@ export const postLogin_ResponseSchema = z
 export type postLogin_ResponseType = z.infer<typeof postLogin_ResponseSchema>;
 
 // Error Response Schemas and Types for postLogin
+export const postLogin_400_ErrorResponseSchema = z
+  .object({ message: z.string() })
+  .passthrough();
+export type postLogin_400_ErrorResponseType = z.infer<
+  typeof postLogin_400_ErrorResponseSchema
+>;
 export const postLogin_401_ErrorResponseSchema = z
   .object({ message: z.string() })
   .passthrough();
 export type postLogin_401_ErrorResponseType = z.infer<
   typeof postLogin_401_ErrorResponseSchema
+>;
+export const postLogin_403_ErrorResponseSchema = z
+  .object({ message: z.string() })
+  .passthrough();
+export type postLogin_403_ErrorResponseType = z.infer<
+  typeof postLogin_403_ErrorResponseSchema
 >;
 export const postLogin_404_ErrorResponseSchema = z
   .object({ message: z.string() })
@@ -80,7 +92,7 @@ export const postLogin_422_ErrorResponseSchema = z
               path: z.array(z.union([z.string(), z.number()])),
               message: z.string().optional(),
             })
-            .passthrough(),
+            .passthrough()
         ),
         name: z.string(),
       })
@@ -89,6 +101,12 @@ export const postLogin_422_ErrorResponseSchema = z
   .passthrough();
 export type postLogin_422_ErrorResponseType = z.infer<
   typeof postLogin_422_ErrorResponseSchema
+>;
+export const postLogin_500_ErrorResponseSchema = z
+  .object({ message: z.string() })
+  .passthrough();
+export type postLogin_500_ErrorResponseType = z.infer<
+  typeof postLogin_500_ErrorResponseSchema
 >;
 
 // Parameters Schema and Type for postLogin
@@ -100,7 +118,7 @@ export type postLogin_ParametersType = z.infer<
   typeof postLogin_ParametersSchema
 >;
 /**
- * post /auth/auth/reset-password
+ * post /api/v1/auth/reset-password
  * Reset a user&#x27;s password
  */
 // Response Schema and Type for postResetPassword
@@ -136,7 +154,7 @@ export const postResetPassword_422_ErrorResponseSchema = z
               path: z.array(z.union([z.string(), z.number()])),
               message: z.string().optional(),
             })
-            .passthrough(),
+            .passthrough()
         ),
         name: z.string(),
       })
@@ -145,6 +163,12 @@ export const postResetPassword_422_ErrorResponseSchema = z
   .passthrough();
 export type postResetPassword_422_ErrorResponseType = z.infer<
   typeof postResetPassword_422_ErrorResponseSchema
+>;
+export const postResetPassword_500_ErrorResponseSchema = z
+  .object({ message: z.string() })
+  .passthrough();
+export type postResetPassword_500_ErrorResponseType = z.infer<
+  typeof postResetPassword_500_ErrorResponseSchema
 >;
 
 // Parameters Schema and Type for postResetPassword
@@ -156,7 +180,7 @@ export type postResetPassword_ParametersType = z.infer<
   typeof postResetPassword_ParametersSchema
 >;
 /**
- * post /auth/auth/send-password-reset-email
+ * post /api/v1/auth/send-password-reset-email
  * Send a password reset email to a user
  */
 // Response Schema and Type for postSendPasswordResetEmail
@@ -178,7 +202,7 @@ export const postSendPasswordResetEmail_422_ErrorResponseSchema = z
               path: z.array(z.union([z.string(), z.number()])),
               message: z.string().optional(),
             })
-            .passthrough(),
+            .passthrough()
         ),
         name: z.string(),
       })
@@ -210,7 +234,7 @@ export type postSendPasswordResetEmail_ParametersType = z.infer<
   typeof postSendPasswordResetEmail_ParametersSchema
 >;
 /**
- * post /auth/auth/send-verification-email
+ * post /api/v1/auth/send-verification-email
  * Send a verification email to a user
  */
 // Response Schema and Type for postSendVerificationEmail
@@ -244,7 +268,7 @@ export const postSendVerificationEmail_422_ErrorResponseSchema = z
               path: z.array(z.union([z.string(), z.number()])),
               message: z.string().optional(),
             })
-            .passthrough(),
+            .passthrough()
         ),
         name: z.string(),
       })
@@ -276,7 +300,7 @@ export type postSendVerificationEmail_ParametersType = z.infer<
   typeof postSendVerificationEmail_ParametersSchema
 >;
 /**
- * post /auth/auth/signup
+ * post /api/v1/auth/signup
  * Create a new user
  */
 // Response Schema and Type for postSignup
@@ -304,7 +328,7 @@ export const postSignup_422_ErrorResponseSchema = z
               path: z.array(z.union([z.string(), z.number()])),
               message: z.string().optional(),
             })
-            .passthrough(),
+            .passthrough()
         ),
         name: z.string(),
       })
@@ -330,7 +354,7 @@ export type postSignup_ParametersType = z.infer<
   typeof postSignup_ParametersSchema
 >;
 /**
- * get /auth/auth/user/:id
+ * get /api/v1/auth/user/:id
  * Get a user by id
  */
 // Response Schema and Type for getUser
@@ -370,7 +394,7 @@ export const getUser_422_ErrorResponseSchema = z
               path: z.array(z.union([z.string(), z.number()])),
               message: z.string().optional(),
             })
-            .passthrough(),
+            .passthrough()
         ),
         name: z.string(),
       })
@@ -379,6 +403,12 @@ export const getUser_422_ErrorResponseSchema = z
   .passthrough();
 export type getUser_422_ErrorResponseType = z.infer<
   typeof getUser_422_ErrorResponseSchema
+>;
+export const getUser_500_ErrorResponseSchema = z
+  .object({ message: z.string() })
+  .passthrough();
+export type getUser_500_ErrorResponseType = z.infer<
+  typeof getUser_500_ErrorResponseSchema
 >;
 
 // Parameters Schema and Type for getUser
@@ -390,7 +420,7 @@ export const getUser_ParametersSchema = z.object({
 });
 export type getUser_ParametersType = z.infer<typeof getUser_ParametersSchema>;
 /**
- * get /auth/auth/verify-email
+ * get /api/v1/auth/verify-email
  * Verify a user&#x27;s email
  */
 // Response Schema and Type for postVerifyEmail
@@ -418,6 +448,12 @@ export const postVerifyEmail_404_ErrorResponseSchema = z
 export type postVerifyEmail_404_ErrorResponseType = z.infer<
   typeof postVerifyEmail_404_ErrorResponseSchema
 >;
+export const postVerifyEmail_500_ErrorResponseSchema = z
+  .object({ message: z.string() })
+  .passthrough();
+export type postVerifyEmail_500_ErrorResponseType = z.infer<
+  typeof postVerifyEmail_500_ErrorResponseSchema
+>;
 
 // Parameters Schema and Type for postVerifyEmail
 export const postVerifyEmail_ParametersSchema = z.object({
@@ -428,18 +464,20 @@ export type postVerifyEmail_ParametersType = z.infer<
   typeof postVerifyEmail_ParametersSchema
 >;
 /**
- * get /health
+ * get /api/v1/health
  * No description available for this endpoint.
  */
-// Response Schema and Type for getHealth
-export const getHealth_ResponseSchema = z
+// Response Schema and Type for getApiv1health
+export const getApiv1health_ResponseSchema = z
   .object({ message: z.string() })
   .passthrough();
-export type getHealth_ResponseType = z.infer<typeof getHealth_ResponseSchema>;
+export type getApiv1health_ResponseType = z.infer<
+  typeof getApiv1health_ResponseSchema
+>;
 
-// Error Response Schemas and Types for getHealth
+// Error Response Schemas and Types for getApiv1health
 
-// Parameters Schema and Type for getHealth
+// Parameters Schema and Type for getApiv1health
 
 // --- API Schemas Grouped by Tag ---
 // This utilizes the endpointsGroups object provided by openapi-zod-client when a group-strategy is used.
@@ -448,10 +486,10 @@ export const apiSchemasByTag = {
     // @key is the tag name (e.g., "Auth", "Index")
     endpoints: {
       // 'this.endpoints' is the array of endpoint objects for the current tag
-      get: {
+      getApiv1: {
         responses: {
           // This checks if a main success response schema exists
-          successSchema: get_ResponseSchema, // Schema for success response
+          successSchema: getApiv1_ResponseSchema, // Schema for success response
         },
       },
     },
@@ -460,10 +498,10 @@ export const apiSchemasByTag = {
     // @key is the tag name (e.g., "Auth", "Index")
     endpoints: {
       // 'this.endpoints' is the array of endpoint objects for the current tag
-      getHealth: {
+      getApiv1health: {
         responses: {
           // This checks if a main success response schema exists
-          successSchema: getHealth_ResponseSchema, // Schema for success response
+          successSchema: getApiv1health_ResponseSchema, // Schema for success response
         },
       },
     },
@@ -501,11 +539,17 @@ export const apiSchemasByTag = {
           // Check if there are any error responses defined
           errors: {
             // Iterate over error responses
+            "400Schema": postLogin_400_ErrorResponseSchema, // Schema for this error status
+            // Iterate over error responses
             "401Schema": postLogin_401_ErrorResponseSchema, // Schema for this error status
+            // Iterate over error responses
+            "403Schema": postLogin_403_ErrorResponseSchema, // Schema for this error status
             // Iterate over error responses
             "404Schema": postLogin_404_ErrorResponseSchema, // Schema for this error status
             // Iterate over error responses
             "422Schema": postLogin_422_ErrorResponseSchema, // Schema for this error status
+            // Iterate over error responses
+            "500Schema": postLogin_500_ErrorResponseSchema, // Schema for this error status
           },
         },
       },
@@ -524,6 +568,8 @@ export const apiSchemasByTag = {
             "401Schema": postVerifyEmail_401_ErrorResponseSchema, // Schema for this error status
             // Iterate over error responses
             "404Schema": postVerifyEmail_404_ErrorResponseSchema, // Schema for this error status
+            // Iterate over error responses
+            "500Schema": postVerifyEmail_500_ErrorResponseSchema, // Schema for this error status
           },
         },
       },
@@ -589,6 +635,8 @@ export const apiSchemasByTag = {
             "404Schema": postResetPassword_404_ErrorResponseSchema, // Schema for this error status
             // Iterate over error responses
             "422Schema": postResetPassword_422_ErrorResponseSchema, // Schema for this error status
+            // Iterate over error responses
+            "500Schema": postResetPassword_500_ErrorResponseSchema, // Schema for this error status
           },
         },
       },
@@ -609,6 +657,8 @@ export const apiSchemasByTag = {
             "404Schema": getUser_404_ErrorResponseSchema, // Schema for this error status
             // Iterate over error responses
             "422Schema": getUser_422_ErrorResponseSchema, // Schema for this error status
+            // Iterate over error responses
+            "500Schema": getUser_500_ErrorResponseSchema, // Schema for this error status
           },
         },
       },

@@ -249,6 +249,9 @@ importers:
       '@stage-locker/eslint-config':
         specifier: workspace:^
         version: link:../eslint-config
+      stoker:
+        specifier: ^1.4.2
+        version: 1.4.2(@asteasolutions/zod-to-openapi@7.3.0(zod@3.25.23))(@hono/zod-openapi@0.19.6(hono@4.7.10)(zod@3.25.23))(hono@4.7.10)(openapi3-ts@4.4.0)
       zod:
         specifier: ^3.25.23
         version: 3.25.23

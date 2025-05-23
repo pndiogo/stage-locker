@@ -7,4 +7,5 @@ export default config({
       ignore: ["README.md"],
     }],
   },
+  ignores: ["./src/api/generated/api.ts"],
 });

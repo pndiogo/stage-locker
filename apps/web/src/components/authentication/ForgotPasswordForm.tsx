@@ -107,10 +107,10 @@ function ForgotPasswordForm() {
             </form>
           </Form>
           <div className="mt-4 text-center text-sm">
-            {t("forgotPasswordForm.registerPrompt")}
+            {t("forgotPasswordForm.signupPrompt")}
             {" "}
-            <Link to={Routes.REGISTER} className="underline">
-              {t("forgotPasswordForm.registerLink")}
+            <Link to={Routes.SIGNUP} className="underline">
+              {t("forgotPasswordForm.signupLink")}
             </Link>
           </div>
           <div className="mt-4 text-center text-sm">

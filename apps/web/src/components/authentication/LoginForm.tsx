@@ -142,10 +142,10 @@ function LoginForm() {
             </form>
           </Form>
           <div className="mt-4 text-center text-sm">
-            {t("loginForm.registerPrompt")}
+            {t("loginForm.signupPrompt")}
             {" "}
-            <Link to={Routes.REGISTER} className="underline">
-              {t("loginForm.registerLink")}
+            <Link to={Routes.SIGNUP} className="underline">
+              {t("loginForm.signupLink")}
             </Link>
           </div>
         </CardContent>

@@ -16,7 +16,7 @@ function Footer() {
             <Link to={Routes.LOGIN}>{t("common.login")}</Link>
           </li>
           <li>
-            <Link to={Routes.REGISTER}>{t("common.register")}</Link>
+            <Link to={Routes.SIGNUP}>{t("common.signup")}</Link>
           </li>
         </ul>
       </div>

@@ -26,23 +26,23 @@ import { PasswordInput } from "@/web/components/ui/password-input";
 import { Routes } from "@/web/types/router";
 
 // Todo: Improve schema with additional validation rules for password
-function RegisterForm() {
+function SignupForm() {
   const { t, i18n } = useTranslation();
 
   const formSchema = z
     .object({
-      email: z.string().email({ message: t("registerForm.email.invalid") }),
+      email: z.string().email({ message: t("signupForm.email.invalid") }),
       password: z
         .string()
-        .min(6, { message: t("registerForm.password.min") })
+        .min(6, { message: t("signupForm.password.min") })
         .regex(/[a-z0-9]/i, {
-          message: t("registerForm.password.alphanumeric"),
+          message: t("signupForm.password.alphanumeric"),
         }),
       confirmPassword: z.string(),
     })
     .refine(data => data.password === data.confirmPassword, {
       path: ["confirmPassword"],
-      message: t("registerForm.confirmPassword.match"),
+      message: t("signupForm.confirmPassword.match"),
     });
 
   type FormSchema = z.infer<typeof formSchema>;
@@ -72,7 +72,7 @@ function RegisterForm() {
     }
     catch (error) {
       console.error("Form submission error", error);
-      toast.error(t("registerForm.error.generic"));
+      toast.error(t("signupForm.error.generic"));
     }
   }
 
@@ -80,8 +80,8 @@ function RegisterForm() {
     <div className="flex p-4 ">
       <Card className="mx-auto w-sm">
         <CardHeader>
-          <CardTitle className="text-2xl">{t("registerForm.title")}</CardTitle>
-          <CardDescription>{t("registerForm.description")}</CardDescription>
+          <CardTitle className="text-2xl">{t("signupForm.title")}</CardTitle>
+          <CardDescription>{t("signupForm.description")}</CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -94,12 +94,12 @@ function RegisterForm() {
                   render={({ field }) => (
                     <FormItem className="grid gap-2">
                       <FormLabel htmlFor="email">
-                        {t("registerForm.email.label")}
+                        {t("signupForm.email.label")}
                       </FormLabel>
                       <FormControl>
                         <Input
                           id="email"
-                          placeholder={t("registerForm.email.placeholder")}
+                          placeholder={t("signupForm.email.placeholder")}
                           type="email"
                           autoComplete="email"
                           {...field}
@@ -117,12 +117,12 @@ function RegisterForm() {
                   render={({ field }) => (
                     <FormItem className="grid gap-2">
                       <FormLabel htmlFor="password">
-                        {t("registerForm.password.label")}
+                        {t("signupForm.password.label")}
                       </FormLabel>
                       <FormControl>
                         <PasswordInput
                           id="password"
-                          placeholder={t("registerForm.password.placeholder")}
+                          placeholder={t("signupForm.password.placeholder")}
                           autoComplete="new-password"
                           {...field}
                         />
@@ -139,13 +139,13 @@ function RegisterForm() {
                   render={({ field }) => (
                     <FormItem className="grid gap-2">
                       <FormLabel htmlFor="confirmPassword">
-                        {t("registerForm.confirmPassword.label")}
+                        {t("signupForm.confirmPassword.label")}
                       </FormLabel>
                       <FormControl>
                         <PasswordInput
                           id="confirmPassword"
                           placeholder={t(
-                            "registerForm.confirmPassword.placeholder",
+                            "signupForm.confirmPassword.placeholder",
                           )}
                           autoComplete="new-password"
                           {...field}
@@ -157,16 +157,16 @@ function RegisterForm() {
                 />
 
                 <Button type="submit" className="w-full">
-                  {t("registerForm.submit")}
+                  {t("signupForm.submit")}
                 </Button>
               </div>
             </form>
           </Form>
           <div className="mt-4 text-center text-sm">
-            {t("registerForm.loginPrompt")}
+            {t("signupForm.loginPrompt")}
             {" "}
             <Link to={Routes.LOGIN} className="underline">
-              {t("registerForm.loginLink")}
+              {t("signupForm.loginLink")}
             </Link>
           </div>
         </CardContent>
@@ -175,4 +175,4 @@ function RegisterForm() {
   );
 }
 
-export { RegisterForm };
+export { SignupForm };

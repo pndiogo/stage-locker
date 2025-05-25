@@ -9,7 +9,7 @@
     "home": "Início",
     "login": "Entrar",
     "logout": "Sair",
-    "register": "Registrar",
+    "signup": "Registrar",
     "forgotPassword": "Esqueci a minha senha",
     "resetPassword": "Redefinir senha"
   },
@@ -32,8 +32,8 @@
       "alphanumeric": "A senha deve ser alfanumérica"
     },
     "submit": "Entrar",
-    "registerPrompt": "Não tem uma conta?",
-    "registerLink": "Criar conta",
+    "signupPrompt": "Não tem uma conta?",
+    "signupLink": "Criar conta",
     "error": {
       "generic": "Erro ao enviar o formulário. Por favor, tente novamente."
     },
@@ -41,7 +41,7 @@
       "generic": "Login com sucesso. A redirecionar..."
     }
   },
-  "registerForm": {
+  "signupForm": {
     "title": "Criar Conta",
     "description": "Crie uma nova conta preenchendo as informações abaixo.",
     "email": {
@@ -76,8 +76,8 @@
       "invalid": "Por favor, insira um endereço de email válido."
     },
     "submit": "Enviar link de redefinição",
-    "registerPrompt": "Não tem uma conta?",
-    "registerLink": "Criar conta",
+    "signupPrompt": "Não tem uma conta?",
+    "signupLink": "Criar conta",
     "loginPrompt": "Lembrou-se da sua senha?",
     "loginLink": "Entrar",
     "error": {

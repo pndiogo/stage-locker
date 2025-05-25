@@ -9,5 +9,5 @@ export const LoginResponseError404Schema = apiSchemasByTag.Auth.endpoints.postLo
 export const LoginResponseError422Schema = apiSchemasByTag.Auth.endpoints.postLogin.responses.errors["422Schema"];
 export const LoginResponseError500Schema = apiSchemasByTag.Auth.endpoints.postLogin.responses.errors["500Schema"];
 
-export const RegisterRequestBodySchema = apiSchemasByTag.Auth.endpoints.postSignup.requestBodySchema;
-export const RegisterResponseSuccessSchema = apiSchemasByTag.Auth.endpoints.postSignup.responses.successSchema;
+export const SignupRequestBodySchema = apiSchemasByTag.Auth.endpoints.postSignup.requestBodySchema;
+export const SignupResponseSuccessSchema = apiSchemasByTag.Auth.endpoints.postSignup.responses.successSchema;

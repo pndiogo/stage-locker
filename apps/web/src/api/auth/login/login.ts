@@ -2,12 +2,12 @@ import { apiClient, throwValidationError } from "@stage-locker/api-client";
 import { sanitizeAndTrimObject } from "@stage-locker/utils";
 
 import type { RequestParams } from "@/web/types/api";
-import type { LoginRequestBody, LoginResponseSuccess } from "@/web/types/auth";
+import type { LoginRequestBodyType, LoginResponseSuccessType } from "@/web/types/auth";
 
 import { env } from "@/web/env";
 import { LoginRequestBodySchema, LoginResponseError400Schema, LoginResponseError401Schema, LoginResponseError403Schema, LoginResponseError404Schema, LoginResponseError422Schema, LoginResponseError500Schema, LoginResponseSuccessSchema } from "@/web/schemas/auth";
 
-export async function loginRequest({ body }: RequestParams<LoginRequestBody>): Promise<LoginResponseSuccess> {
+export async function loginRequest({ body }: RequestParams<LoginRequestBodyType>): Promise<LoginResponseSuccessType> {
   const parsed = LoginRequestBodySchema.safeParse(sanitizeAndTrimObject(body));
 
   if (!parsed.success) {
@@ -15,7 +15,7 @@ export async function loginRequest({ body }: RequestParams<LoginRequestBody>): P
   }
 
   try {
-    const [data, error] = await apiClient<LoginResponseSuccess>(`${env.VITE_API_PATH}/auth/login`, {
+    const [data, error] = await apiClient<LoginResponseSuccessType>(`${env.VITE_API_PATH}/auth/login`, {
       method: "POST",
       body: JSON.stringify(parsed.data),
     }, LoginResponseSuccessSchema, {

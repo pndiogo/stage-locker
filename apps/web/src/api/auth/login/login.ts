@@ -14,25 +14,30 @@ export async function loginRequest({ body }: RequestParams<LoginRequestBody>): P
     throwValidationError(parsed.error);
   }
 
-  const [data, error] = await apiClient<LoginResponseSuccess>(`${env.VITE_API_PATH}/auth/login`, {
-    method: "POST",
-    body: JSON.stringify(parsed.data),
-  }, LoginResponseSuccessSchema, {
-    400: LoginResponseError400Schema,
-    401: LoginResponseError401Schema,
-    403: LoginResponseError403Schema,
-    404: LoginResponseError404Schema,
-    422: LoginResponseError422Schema,
-    500: LoginResponseError500Schema,
-  });
+  try {
+    const [data, error] = await apiClient<LoginResponseSuccess>(`${env.VITE_API_PATH}/auth/login`, {
+      method: "POST",
+      body: JSON.stringify(parsed.data),
+    }, LoginResponseSuccessSchema, {
+      400: LoginResponseError400Schema,
+      401: LoginResponseError401Schema,
+      403: LoginResponseError403Schema,
+      404: LoginResponseError404Schema,
+      422: LoginResponseError422Schema,
+      500: LoginResponseError500Schema,
+    });
 
-  if (error) {
+    if (error) {
+      throw throwValidationError(error);
+    }
+
+    if (!data) {
+      throw new Error("Login failed");
+    }
+
+    return data;
+  }
+  catch (error) {
     throw throwValidationError(error);
   }
-
-  if (!data) {
-    throw new Error("Login failed");
-  }
-
-  return data;
 }

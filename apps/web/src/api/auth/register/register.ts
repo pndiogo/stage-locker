@@ -1,4 +1,4 @@
-import { apiClient } from "@stage-locker/api-client";
+import { apiClient, throwValidationError } from "@stage-locker/api-client";
 import { sanitizeAndTrimObject } from "@stage-locker/utils";
 
 import type { RequestParams } from "@/web/types/api";
@@ -11,36 +11,26 @@ export async function registerRequest({ body }: RequestParams<RegisterRequestBod
   const parsed = RegisterRequestBodySchema.safeParse(sanitizeAndTrimObject(body));
 
   if (!parsed.success) {
-    throw new Error(`Invalid input: ${JSON.stringify(parsed.error.flatten())}`);
+    throwValidationError(parsed.error);
   }
 
-  const [data, error] = await apiClient<RegisterResponseSuccess>(`${env.VITE_API_PATH}/auth/register`, {
-    method: "POST",
-    body: JSON.stringify(parsed.data),
-  }, RegisterResponseSuccessSchema);
+  try {
+    const [data, error] = await apiClient<RegisterResponseSuccess>(`${env.VITE_API_PATH}/auth/register`, {
+      method: "POST",
+      body: JSON.stringify(parsed.data),
+    }, RegisterResponseSuccessSchema);
 
-  if (error) {
-    if (error.status === 401) {
-      throw new Error(error.message);
+    if (error) {
+      throw throwValidationError(error);
     }
-    if (error.status === 403) {
-      throw new Error("Account is not activated");
+
+    if (!data) {
+      throw new Error("Registration failed");
     }
-    if (error.status === 404) {
-      throw new Error("Account is not found");
-    }
-    if (error.status === 429) {
-      throw new Error("Too many requests, please try again later");
-    }
-    if (error.status === 500) {
-      throw new Error("Server error, please try again later");
-    }
-    throw new Error(error.message);
+
+    return data;
   }
-
-  if (!data) {
-    throw new Error("Login failed");
+  catch (error) {
+    throw throwValidationError(error);
   }
-
-  return data;
 }

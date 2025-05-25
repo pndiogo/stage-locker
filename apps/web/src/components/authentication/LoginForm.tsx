@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { getApiErrorDetails } from "@stage-locker/api-client";
 import { Link } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -64,6 +65,9 @@ function LoginForm() {
       onError: (error) => {
         console.error("Login error: ", error);
         toast.error(t("loginForm.error.generic"));
+
+        const details = getApiErrorDetails(error);
+        console.log("🚀 ~ onSubmit ~ details:", details);
       },
     });
   }

@@ -1,4 +1,4 @@
-import { apiClient, mapApiError } from "@stage-locker/api-client";
+import { apiClient, throwValidationError } from "@stage-locker/api-client";
 import { sanitizeAndTrimObject } from "@stage-locker/utils";
 
 import type { RequestParams } from "@/web/types/api";
@@ -11,7 +11,7 @@ export async function loginRequest({ body }: RequestParams<LoginRequestBody>): P
   const parsed = LoginRequestBodySchema.safeParse(sanitizeAndTrimObject(body));
 
   if (!parsed.success) {
-    throw new Error(`Invalid input: ${JSON.stringify(parsed.error.flatten())}`);
+    throwValidationError(parsed.error);
   }
 
   const [data, error] = await apiClient<LoginResponseSuccess>(`${env.VITE_API_PATH}/auth/login`, {
@@ -27,7 +27,7 @@ export async function loginRequest({ body }: RequestParams<LoginRequestBody>): P
   });
 
   if (error) {
-    throw mapApiError(error);
+    throw throwValidationError(error);
   }
 
   if (!data) {

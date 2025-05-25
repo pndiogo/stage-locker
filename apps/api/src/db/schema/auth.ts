@@ -56,7 +56,7 @@ export const selectUserSchema = z.object({
 //     password: passwordSchema,
 //   });
 
-export const insertUserSchema = z.object({ // Test with a simple one
+export const insertUserSchema = z.object({
   email: emailSchema, // emailSchema is from @hono/zod-openapi's z
   password: passwordSchema, // passwordSchema is from @hono/zod-openapi's z
 });

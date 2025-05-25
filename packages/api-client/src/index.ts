@@ -1,22 +1,119 @@
-import type { ZodSchema } from "zod";
-
-import * as HttpStatusCodes from "stoker/http-status-codes";
-import * as HttpStatusPhrases from "stoker/http-status-phrases";
-
-type ApiError = {
-  status: number;
-  message: string;
-  details?: unknown;
-};
+import type { ZodError, ZodFormattedError, ZodSchema } from "zod";
 
 type RequestInfo = string | Request;
+
+export type FormattedError = {
+  message: string;
+  details: {
+    fieldErrors?: Record<string, string[] | undefined>;
+    formErrors?: string[];
+    [key: string]: unknown;
+  };
+  status?: number;
+  isClientValidation?: boolean;
+  raw?: unknown;
+};
+
+export function formatError(error: unknown): FormattedError {
+  // 0. If already a FormattedError, return as is
+  if (
+    error
+    && typeof error === "object"
+    && "message" in error
+    && "details" in error
+  ) {
+    return error as FormattedError;
+  }
+
+  // 1. ZodError instance (client-side validation)
+  if (error && typeof error === "object" && "flatten" in error && typeof (error as any).flatten === "function") {
+    const zodError = error as ZodError<any>;
+    const flat = zodError.flatten();
+    return {
+      message: "Invalid input",
+      details: {
+        fieldErrors: flat.fieldErrors,
+        formErrors: flat.formErrors,
+      },
+      isClientValidation: true,
+      raw: error,
+    };
+  }
+
+  // 2. ZodFormattedError (from API or client)
+  if (
+    error
+    && typeof error === "object"
+    && "formErrors" in error
+    && "fieldErrors" in error
+  ) {
+    return {
+      message: "Invalid input",
+      details: {
+        fieldErrors: (error as any).fieldErrors,
+        formErrors: (error as any).formErrors,
+      },
+      raw: error,
+    };
+  }
+
+  // 3. API error object with .details (ApiError shape)
+  if (
+    error
+    && typeof error === "object"
+    && "details" in error
+    && (typeof (error as any).details === "object")
+  ) {
+    const details = (error as any).details;
+    if (details && "formErrors" in details && "fieldErrors" in details) {
+      return {
+        message: (error as any).message || "Invalid input",
+        details: {
+          fieldErrors: details.fieldErrors,
+          formErrors: details.formErrors,
+        },
+        status: (error as any).status,
+        raw: error,
+      };
+    }
+    if (details && "message" in details && typeof details.message === "string") {
+      return {
+        message: details.message,
+        details: {},
+        status: (error as any).status,
+        raw: error,
+      };
+    }
+  }
+
+  // 4. Plain { message: string } error (API or thrown)
+  if (
+    error
+    && typeof error === "object"
+    && "message" in error
+    && typeof (error as any).message === "string"
+  ) {
+    return {
+      message: (error as any).message,
+      details: {},
+      raw: error,
+    };
+  }
+
+  // 5. Fallback for unexpected errors
+  return {
+    message: "An unknown error occurred.",
+    details: {},
+    raw: error,
+  };
+}
 
 export async function apiClient<T>(
   input: RequestInfo,
   init: RequestInit | undefined,
   responseSuccessSchema?: ZodSchema<T>,
   responseErrorSchemas?: Record<number, ZodSchema<any>>,
-): Promise<[T | null, ApiError | null]> {
+): Promise<[T | null, FormattedError | null]> {
   try {
     const res = await fetch(input, init);
 
@@ -24,7 +121,6 @@ export async function apiClient<T>(
       let details: unknown;
       try {
         details = await res.json();
-
         if (responseErrorSchemas && responseErrorSchemas[res.status]) {
           const parsed = responseErrorSchemas[res.status].safeParse(details);
           if (parsed.success) {
@@ -33,32 +129,7 @@ export async function apiClient<T>(
         }
       }
       catch { }
-      return [
-        null,
-        {
-          status: res.status,
-          message:
-            // Prefer Zod validation error messages if present
-            typeof details === "object"
-              && details !== null
-              && "error" in details
-              && details.error
-              && Array.isArray((details.error as any).issues)
-              ? (details.error as any).issues.map(
-                (issue: any) =>
-                  `${issue.path?.join(".") ?? ""}: ${issue.message ?? "Validation error"}`,
-              ).join("; ")
-              // Otherwise, use a plain message if present
-              : typeof details === "object"
-                && details !== null
-                && "message" in details
-                && typeof (details as any).message === "string"
-                ? (details as any).message
-                // Fallback to status text or generic
-                : res.statusText || "Unknown error",
-          details,
-        },
-      ];
+      return [null, formatError({ ...(typeof details === "object" && details !== null ? details : {}), status: res.status })];
     }
 
     const json = await res.json();
@@ -66,14 +137,7 @@ export async function apiClient<T>(
     if (responseSuccessSchema) {
       const parsed = responseSuccessSchema.safeParse(json);
       if (!parsed.success) {
-        return [
-          null,
-          {
-            status: 0,
-            message: "Response validation failed",
-            details: parsed.error.flatten(),
-          },
-        ];
+        return [null, formatError(parsed.error)];
       }
       return [parsed.data, null];
     }
@@ -81,75 +145,23 @@ export async function apiClient<T>(
     return [json as T, null];
   }
   catch (e) {
-    return [
-      null,
-      {
-        status: 0,
-        message: e instanceof Error ? e.message : "Network error",
-      },
-    ];
+    return [null, formatError(e)];
   }
 }
 
-function formatApiErrorDetails(apiError: ApiError): string {
-  // Handle Zod validation error format
-  if (
-    apiError.details
-    && typeof apiError.details === "object"
-    && "error" in apiError.details
-    && apiError.details.error
-    && Array.isArray((apiError.details.error as any).issues)
-  ) {
-    const issues = (apiError.details.error as any).issues as Array<{ path: string[]; message?: string }>;
-    return issues
-      .map(
-        issue =>
-          `${issue.path.join(".")}: ${issue.message || "Validation error"}`,
-      )
-      .join("; ");
-  }
-
-  // Handle simple message
-  if (
-    apiError.details
-    && typeof apiError.details === "object"
-    && "message" in apiError.details
-    && typeof (apiError.details as any).message === "string"
-  ) {
-    return (apiError.details as any).message;
-  }
-
-  // Fallback to apiError.message or generic
-  if (apiError.message) {
-    return apiError.message;
-  }
-
-  if (apiError.status === 0) {
-    return "Network error. Please check your connection.";
-  }
-
-  return "No additional error details available.";
+export function throwValidationError(
+  error: ZodError<any> | ZodFormattedError<any> | unknown,
+): never {
+  throw formatError(error);
 }
 
-export function mapApiError(error: ApiError): string {
-  switch (error.status) {
-    case HttpStatusCodes.BAD_REQUEST:
-      return `${HttpStatusPhrases.BAD_REQUEST}. Details: ${formatApiErrorDetails(error)}`;
-    case HttpStatusCodes.UNAUTHORIZED:
-      return `${HttpStatusPhrases.UNAUTHORIZED}. Details: ${formatApiErrorDetails(error)}`;
-    case HttpStatusCodes.FORBIDDEN:
-      return `${HttpStatusPhrases.FORBIDDEN}. Details: ${formatApiErrorDetails(error)}`;
-    case HttpStatusCodes.NOT_FOUND:
-      return `${HttpStatusPhrases.NOT_FOUND}. Details: ${formatApiErrorDetails(error)}`;
-    case HttpStatusCodes.CONFLICT:
-      return `${HttpStatusPhrases.CONFLICT}. Details: ${formatApiErrorDetails(error)}`;
-    case HttpStatusCodes.UNPROCESSABLE_ENTITY:
-      return `${HttpStatusPhrases.UNPROCESSABLE_ENTITY}.  Details: ${formatApiErrorDetails(error)}`;
-    case HttpStatusCodes.TOO_MANY_REQUESTS:
-      return `${HttpStatusPhrases.TOO_MANY_REQUESTS}. Details: ${formatApiErrorDetails(error)}`;
-    case HttpStatusCodes.INTERNAL_SERVER_ERROR:
-      return `${HttpStatusPhrases.INTERNAL_SERVER_ERROR}. Details: ${formatApiErrorDetails(error)}`;
-    default:
-      return error.message || "An unknown error occurred.";
+export function getApiErrorDetails(error: unknown) {
+  if (
+    error
+    && typeof error === "object"
+    && "details" in error
+  ) {
+    return (error as any).details;
   }
+  return undefined;
 }

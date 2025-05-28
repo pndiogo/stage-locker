@@ -17,6 +17,9 @@ export async function signupRequest({ body }: RequestParams<SignupRequestBodyTyp
   try {
     const [data, error] = await apiClient<SignupResponseSuccessType>(`${env.VITE_API_PATH}/auth/signup`, {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(parsed.data),
     }, SignupResponseSuccessSchema);
 

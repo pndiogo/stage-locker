@@ -65,6 +65,9 @@
     "loginLink": "Login",
     "error": {
       "generic": "Failed to submit the form. Please try again."
+    },
+    "success": {
+      "generic": "Sign up successful."
     }
   },
   "forgotPasswordForm": {

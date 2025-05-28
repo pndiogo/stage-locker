@@ -1,10 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { getApiErrorDetails } from "@stage-locker/api-client";
 import { Link } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { z } from "zod";
 
+import { useSignup } from "@/web/api/auth/signup/useSignup";
 import { Button } from "@/web/components/ui/button";
 import {
   Card,
@@ -28,6 +30,7 @@ import { Routes } from "@/web/types/router";
 // Todo: Improve schema with additional validation rules for password
 function SignupForm() {
   const { t, i18n } = useTranslation();
+  const { signup } = useSignup();
 
   const formSchema = z
     .object({
@@ -62,13 +65,26 @@ function SignupForm() {
 
   async function onSubmit(values: FormSchema) {
     try {
-      // Assuming an async registration function
-      console.log(values);
-      toast(
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(values, null, 2)}</code>
-        </pre>,
-      );
+      console.log("🚀 ~ onSubmit ~ values:", values);
+      signup({ body: {
+        email: values.email,
+        password: values.password,
+      } }, {
+        onSuccess: (data) => {
+          console.log("Signup successful", data);
+          toast.success(t("signupForm.success.generic"));
+          form.reset();
+
+          // TODO: show message to check email for verification link
+        },
+        onError: (error) => {
+          console.error("Signup error: ", error);
+          toast.error(t("signupForm.error.generic"));
+
+          const details = getApiErrorDetails(error);
+          console.log("🚀 ~ onSubmit ~ error details:", details);
+        },
+      });
     }
     catch (error) {
       console.error("Form submission error", error);

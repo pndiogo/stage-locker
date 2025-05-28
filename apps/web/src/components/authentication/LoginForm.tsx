@@ -67,7 +67,7 @@ function LoginForm() {
         toast.error(t("loginForm.error.generic"));
 
         const details = getApiErrorDetails(error);
-        console.log("🚀 ~ onSubmit ~ details:", details);
+        console.log("🚀 ~ onSubmit ~ error details:", details);
       },
     });
   }

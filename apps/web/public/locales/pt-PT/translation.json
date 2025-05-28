@@ -65,6 +65,9 @@
     "loginLink": "Entrar",
     "error": {
       "generic": "Erro ao enviar o formulário. Por favor, tente novamente."
+    },
+    "success": {
+      "generic": "Conta criada com sucesso."
     }
   },
   "forgotPasswordForm": {

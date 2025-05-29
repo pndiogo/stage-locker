@@ -15,6 +15,27 @@
     "forgotPassword": {
       "title": "Recuperar Senha",
       "description": "Recuperar a sua senha."
+    },
+    "verifyEmail": {
+      "title": "Verificar Email",
+      "description": "Verificar endereço de email.",
+      "loading": {
+        "title": "A verificar o seu Email",
+        "description": "Por favor, aguarde enquanto verificamos o seu endereço de email."
+      },
+      "success": {
+        "title": "Email Verificado!",
+        "description": "Obrigado por verificar o seu endereço de email. Agora pode aceder à sua conta."
+      },
+      "error": {
+        "title": "Verificação Falhou",
+        "genericDescription": "Não conseguimos verificar o seu endereço de email.",
+        "genericMessage": "Falha ao verificar o seu endereço de email. Tente novamente ou solicite um novo email de verificação.",
+        "invalidDescription": "O link de verificação parece ser inválido.",
+        "invalidMessage": "Token inválido ou expirado. Por favor, solicite um novo email de verificação."
+      },
+      "linkRequestNew": "Solicitar novo email de verificação",
+      "linkHome": "Voltar ao início"
     }
   },
   "common": {

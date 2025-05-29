@@ -15,6 +15,27 @@
     "forgotPassword": {
       "title": "Forgot Password",
       "description": "Reset your password."
+    },
+    "verifyEmail": {
+      "title": "Verify Email",
+      "description": "Verify your email address.",
+      "loading": {
+        "title": "Verifying Your Email",
+        "description": "Please wait while we verify your email address."
+      },
+      "success": {
+        "title": "Email Verified!",
+        "description": "Thank you for verifying your email address. You can now access your account."
+      },
+      "error": {
+        "title": "Verification Failed",
+        "genericDescription": "We couldn't verify your email address.",
+        "genericMessage": "Failed to verify your email address. Try again or request a new verification email.",
+        "invalidDescription": "The verification link appears to be invalid.",
+        "invalidMessage": "Invalid or expired token. Please request a new verification email."
+      },
+      "linkRequestNew": "Request New Verification Email",
+      "linkHome": "Return to Home"
     }
   },
   "common": {

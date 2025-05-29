@@ -9,7 +9,7 @@ export type FormattedError = {
     formErrors?: string[];
     [key: string]: unknown;
   };
-  status?: number;
+  status: number;
   isClientValidation?: boolean;
   raw?: unknown;
 };
@@ -21,6 +21,10 @@ export function formatError(error: unknown): FormattedError {
     && typeof error === "object"
     && "message" in error
     && "details" in error
+    && "status" in error
+    && "raw" in error
+    && typeof (error as any).message === "string"
+    && typeof (error as any).details === "object"
   ) {
     return error as FormattedError;
   }
@@ -30,6 +34,7 @@ export function formatError(error: unknown): FormattedError {
     const zodError = error as ZodError<any>;
     const flat = zodError.flatten();
     return {
+      status: (error as any).status ?? 400,
       message: "Invalid input",
       details: {
         fieldErrors: flat.fieldErrors,
@@ -48,6 +53,7 @@ export function formatError(error: unknown): FormattedError {
     && "fieldErrors" in error
   ) {
     return {
+      status: (error as any).status ?? 400,
       message: "Invalid input",
       details: {
         fieldErrors: (error as any).fieldErrors,
@@ -67,20 +73,20 @@ export function formatError(error: unknown): FormattedError {
     const details = (error as any).details;
     if (details && "formErrors" in details && "fieldErrors" in details) {
       return {
+        status: (error as any).status,
         message: (error as any).message || "Invalid input",
         details: {
           fieldErrors: details.fieldErrors,
           formErrors: details.formErrors,
         },
-        status: (error as any).status,
         raw: error,
       };
     }
     if (details && "message" in details && typeof details.message === "string") {
       return {
+        status: (error as any).status ?? 0,
         message: details.message,
         details: {},
-        status: (error as any).status,
         raw: error,
       };
     }
@@ -94,6 +100,7 @@ export function formatError(error: unknown): FormattedError {
     && typeof (error as any).message === "string"
   ) {
     return {
+      status: (error as any).status || 0,
       message: (error as any).message,
       details: {},
       raw: error,
@@ -102,6 +109,7 @@ export function formatError(error: unknown): FormattedError {
 
   // 5. Fallback for unexpected errors
   return {
+    status: (error as any).status ?? 0,
     message: "An unknown error occurred.",
     details: {},
     raw: error,
@@ -145,12 +153,23 @@ export async function apiClient<T>(
     return [json as T, null];
   }
   catch (e) {
+    if (e instanceof Error) {
+      return [
+        null,
+        {
+          message: e.message,
+          details: {},
+          status: 0,
+          raw: e,
+        },
+      ];
+    }
     return [null, formatError(e)];
   }
 }
 
 export function throwValidationError(
-  error: ZodError<any> | ZodFormattedError<any> | unknown,
+  error: ZodError<any> | ZodFormattedError<any> | Error | unknown,
 ): never {
   throw formatError(error);
 }

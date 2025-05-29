@@ -27,8 +27,6 @@ export const Route = createFileRoute("/forgot-password")({
 
 function ForgotPasswordPage() {
   return (
-    <div>
-      <ForgotPasswordForm />
-    </div>
+    <ForgotPasswordForm />
   );
 }

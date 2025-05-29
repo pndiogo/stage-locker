@@ -5,7 +5,7 @@ import type { RequestParams } from "@/web/types/api";
 import type { SignupRequestBodyType, SignupResponseSuccessType } from "@/web/types/auth";
 
 import { env } from "@/web/env";
-import { SignupRequestBodySchema, SignupResponseSuccessSchema } from "@/web/schemas/auth";
+import { SignupRequestBodySchema, SignupResponseError400Schema, SignupResponseError422Schema, SignupResponseError500Schema, SignupResponseSuccessSchema } from "@/web/schemas/auth";
 
 export async function signupRequest({ body }: RequestParams<SignupRequestBodyType>): Promise<SignupResponseSuccessType> {
   const parsed = SignupRequestBodySchema.safeParse(sanitizeAndTrimObject(body));
@@ -21,7 +21,11 @@ export async function signupRequest({ body }: RequestParams<SignupRequestBodyTyp
         "Content-Type": "application/json",
       },
       body: JSON.stringify(parsed.data),
-    }, SignupResponseSuccessSchema);
+    }, SignupResponseSuccessSchema, {
+      400: SignupResponseError400Schema,
+      422: SignupResponseError422Schema,
+      500: SignupResponseError500Schema,
+    });
 
     if (error) {
       throw throwValidationError(error);

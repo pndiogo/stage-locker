@@ -4,7 +4,7 @@ type Props = {} & PropsWithChildren;
 
 function Layout({ children }: Props) {
   return (
-    <div className="mx-auto w-[100%] min-h-[100dvh] max-w-6xl px-4 py-8 flex flex-col">
+    <div className="mx-auto w-[100%] min-h-[100dvh] px-4 md:px-8 py-4 flex flex-col">
       {children}
     </div>
   );

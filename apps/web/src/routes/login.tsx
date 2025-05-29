@@ -27,8 +27,6 @@ export const Route = createFileRoute("/login")({
 
 function LoginPage() {
   return (
-    <div>
-      <LoginForm />
-    </div>
+    <LoginForm />
   );
 }

@@ -8,19 +8,21 @@ function Footer() {
   const { t } = useTranslation();
 
   return (
-    <footer className="mt-auto">
-      <Separator className="my-4" />
-      <div>
-        <ul>
-          <li>
-            <Link to={Routes.LOGIN}>{t("page.login.title")}</Link>
-          </li>
-          <li>
-            <Link to={Routes.SIGNUP}>{t("page.signup.title")}</Link>
-          </li>
-        </ul>
-      </div>
-    </footer>
+    <>
+      <Separator className="mb-4" />
+      <footer className="mt-auto">
+        <div>
+          <ul>
+            <li>
+              <Link to={Routes.LOGIN}>{t("page.login.title")}</Link>
+            </li>
+            <li>
+              <Link to={Routes.SIGNUP}>{t("page.signup.title")}</Link>
+            </li>
+          </ul>
+        </div>
+      </footer>
+    </>
   );
 }
 

@@ -61,7 +61,7 @@ function ForgotPasswordForm() {
   }
 
   return (
-    <div className="flex p-4">
+    <div className="flex">
       <Card className="mx-auto w-sm">
         <CardHeader>
           <CardTitle className="text-2xl">

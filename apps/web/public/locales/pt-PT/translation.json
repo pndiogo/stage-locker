@@ -2,16 +2,28 @@
   "page": {
     "home": {
       "title": "Início",
-      "description": "Esta é a página inicial"
+      "description": "Uma plataforma para gerir todas as suas necessidades relacionadas com o palco, desde a gestão de performances a recursos de ensaio."
+    },
+    "login": {
+      "title": "Entrar",
+      "description": "Entrar para aceder à sua conta."
+    },
+    "signup": {
+      "title": "Criar Conta",
+      "description": "Criar uma nova conta."
+    },
+    "forgotPassword": {
+      "title": "Recuperar Senha",
+      "description": "Recuperar a sua senha."
     }
   },
   "common": {
-    "home": "Início",
-    "login": "Entrar",
-    "logout": "Sair",
-    "signup": "Registrar",
-    "forgotPassword": "Esqueci a minha senha",
-    "resetPassword": "Redefinir senha"
+    "appName": "Stage Locker",
+    "appSlogan": "Assistente de Performance Musical",
+    "appTitle": "Stage Locker - Assistente de Performance Musical",
+    "appDescription": "Uma plataforma para gerir todas as suas necessidades relacionadas com o palco, desde a gestão de performances a recursos de ensaio.",
+    "appKeywords": "palco, performance, gestão, assistente, partilha, ensaio, locker",
+    "appAuthor": "Equipa Stage Locker"
   },
   "languageSwitcher": {
     "selectLanguage": "Selecionar Idioma"

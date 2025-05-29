@@ -2,16 +2,28 @@
   "page": {
     "home": {
       "title": "Home",
-      "description": "This is the home page"
+      "description": "A platform to manage all your stage-related needs, from performance management to rehearsal resources."
+    },
+    "login": {
+      "title": "Login",
+      "description": "Login to access your account."
+    },
+    "signup": {
+      "title": "Sign Up",
+      "description": "Create a new account."
+    },
+    "forgotPassword": {
+      "title": "Forgot Password",
+      "description": "Reset your password."
     }
   },
   "common": {
-    "home": "Home",
-    "login": "Login",
-    "logout": "Logout",
-    "signup": "Sign Up",
-    "forgotPassword": "Forgot your password?",
-    "resetPassword": "Reset password"
+    "appName": "Stage Locker",
+    "appSlogan": "Music Performance Assistant",
+    "appTitle": "Stage Locker - Music Performance Assistant",
+    "appDescription": "A platform to manage all your stage-related needs, from performance management to rehearsal resources.",
+    "appKeywords": "stage, performance, management, assistant, sharing, rehearsal, locker",
+    "appAuthor": "Stage Locker Team"
   },
   "languageSwitcher": {
     "selectLanguage": "Select Language"

@@ -9,7 +9,7 @@ const detectionOptions = {
   lookupLocalStorage: "stage-locker-lng",
 };
 
-i18n
+const i18nInitPromise = i18n
   .use(Backend)
   .use(LanguageDetector)
   .use(initReactI18next)
@@ -21,9 +21,11 @@ i18n
     detection: detectionOptions,
   });
 
-export default i18n;
-
-export const supportedLanguages = [
+const supportedLanguages = [
   { code: "en-US", name: "English", shortName: "EN" },
   { code: "pt-PT", name: "Português", shortName: "PT" },
 ];
+
+export { i18nInitPromise, supportedLanguages };
+
+export default i18n;

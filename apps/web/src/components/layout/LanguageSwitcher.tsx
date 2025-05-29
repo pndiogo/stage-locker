@@ -1,3 +1,4 @@
+import { useRouter } from "@tanstack/react-router";
 import { t } from "i18next";
 import { Globe } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -14,15 +15,17 @@ import { supportedLanguages } from "@/web/i18n";
 
 function LanguageSwitcher() {
   const { i18n } = useTranslation();
+  const router = useRouter();
   const [currentLanguage, setCurrentLanguage] = useState(i18n.language);
 
   useEffect(() => {
     setCurrentLanguage(i18n.language);
   }, [i18n.language]);
 
-  const handleLanguageChange = (language: string) => {
-    i18n.changeLanguage(language);
+  const handleLanguageChange = async (language: string) => {
+    await i18n.changeLanguage(language);
     setCurrentLanguage(language);
+    router.invalidate();
   };
 
   return (

@@ -1,4 +1,6 @@
-import { apiClient, throwValidationError } from "@stage-locker/api-client";
+import type { FormattedError } from "@stage-locker/api-client";
+
+import { apiClient, isFormattedError, throwValidationError } from "@stage-locker/api-client";
 import { sanitizeAndTrimObject } from "@stage-locker/utils";
 
 import type { RequestParams } from "@/web/types/api";
@@ -8,13 +10,13 @@ import { env } from "@/web/env";
 import { SignupRequestBodySchema, SignupResponseError400Schema, SignupResponseError422Schema, SignupResponseError500Schema, SignupResponseSuccessSchema } from "@/web/schemas/auth";
 
 export async function signupRequest({ body }: RequestParams<SignupRequestBodyType>): Promise<SignupResponseSuccessType> {
-  const parsed = SignupRequestBodySchema.safeParse(sanitizeAndTrimObject(body));
-
-  if (!parsed.success) {
-    throwValidationError(parsed.error);
-  }
-
   try {
+    const parsed = SignupRequestBodySchema.safeParse(sanitizeAndTrimObject(body));
+
+    if (!parsed.success) {
+      throw parsed.error;
+    }
+
     const [data, error] = await apiClient<SignupResponseSuccessType>(`${env.VITE_API_PATH}/auth/signup`, {
       method: "POST",
       headers: {
@@ -28,7 +30,7 @@ export async function signupRequest({ body }: RequestParams<SignupRequestBodyTyp
     });
 
     if (error) {
-      throw throwValidationError(error);
+      throw error;
     }
 
     if (!data) {
@@ -37,7 +39,10 @@ export async function signupRequest({ body }: RequestParams<SignupRequestBodyTyp
 
     return data;
   }
-  catch (error) {
+  catch (error: FormattedError | unknown) {
+    if (isFormattedError(error)) {
+      throw error;
+    }
     throw throwValidationError(error);
   }
 }

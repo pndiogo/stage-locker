@@ -10,21 +10,33 @@ export type FormattedError = {
     [key: string]: unknown;
   };
   status: number;
+  raw: unknown;
+  /**
+   * Indicates if this error was generated from client-side validation (e.g. ZodError).
+   * This can be useful to differentiate between client-side and server-side errors.
+   */
   isClientValidation?: boolean;
-  raw?: unknown;
 };
 
-export function formatError(error: unknown): FormattedError {
-  // 0. If already a FormattedError, return as is
-  if (
-    error
+export function isFormattedError(error: unknown): error is FormattedError {
+  return (
+    Boolean(error)
     && typeof error === "object"
+    && error !== null
     && "message" in error
     && "details" in error
     && "status" in error
     && "raw" in error
     && typeof (error as any).message === "string"
     && typeof (error as any).details === "object"
+  );
+}
+
+export function formatError(error: unknown): FormattedError {
+  // 0. If already a FormattedError, return as is
+  if (
+    error
+    && isFormattedError(error)
   ) {
     return error as FormattedError;
   }

@@ -2,7 +2,8 @@ import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 
-import { getContext, Provider as TanstackQueryProvider } from "./integrations/tanstack-query/root-provider"; import reportWebVitals from "./reportWebVitals.ts";
+import { getContext, Provider as TanstackQueryProvider } from "./integrations/tanstack-query/root-provider";
+import reportWebVitals from "./reportWebVitals.ts";
 import "./i18n";
 import "./styles.css";
 // Import the generated route tree

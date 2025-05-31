@@ -1,4 +1,6 @@
-import { apiClient, throwValidationError } from "@stage-locker/api-client";
+import type { FormattedError } from "@stage-locker/api-client";
+
+import { apiClient, isFormattedError, throwValidationError } from "@stage-locker/api-client";
 import { sanitizeAndTrimObject } from "@stage-locker/utils";
 
 import type { RequestParams } from "@/web/types/api";
@@ -8,13 +10,12 @@ import { env } from "@/web/env";
 import { LoginRequestBodySchema, LoginResponseError400Schema, LoginResponseError401Schema, LoginResponseError403Schema, LoginResponseError404Schema, LoginResponseError422Schema, LoginResponseError500Schema, LoginResponseSuccessSchema } from "@/web/schemas/auth";
 
 export async function loginRequest({ body }: RequestParams<LoginRequestBodyType>): Promise<LoginResponseSuccessType> {
-  const parsed = LoginRequestBodySchema.safeParse(sanitizeAndTrimObject(body));
-
-  if (!parsed.success) {
-    throwValidationError(parsed.error);
-  }
-
   try {
+    const parsed = LoginRequestBodySchema.safeParse(sanitizeAndTrimObject(body));
+
+    if (!parsed.success) {
+      throw parsed.error;
+    }
     const [data, error] = await apiClient<LoginResponseSuccessType>(`${env.VITE_API_PATH}/auth/login`, {
       method: "POST",
       body: JSON.stringify(parsed.data),
@@ -28,7 +29,7 @@ export async function loginRequest({ body }: RequestParams<LoginRequestBodyType>
     });
 
     if (error) {
-      throw throwValidationError(error);
+      throw error;
     }
 
     if (!data) {
@@ -37,7 +38,10 @@ export async function loginRequest({ body }: RequestParams<LoginRequestBodyType>
 
     return data;
   }
-  catch (error) {
+  catch (error: FormattedError | unknown) {
+    if (isFormattedError(error)) {
+      throw error;
+    }
     throw throwValidationError(error);
   }
 }

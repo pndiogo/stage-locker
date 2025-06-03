@@ -1,7 +1,7 @@
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import * as React from "react";
 import type { InputProps } from "@/web/components/ui/input";
-import { Button } from "@/web/components/ui/button";
+import { Button } from "@/web/components/ui/_deprecated-button";
 import { Input } from "@/web/components/ui/input";
 import { cn } from "@/web/lib/utils";
 

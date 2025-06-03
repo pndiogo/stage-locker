@@ -30,7 +30,7 @@ import { Routes } from "@/web/types/router";
 // Todo: Improve schema with additional validation rules for password
 function LoginForm() {
   const { t, i18n } = useTranslation();
-  const { login } = useLogin();
+  const { login, isPending } = useLogin();
 
   const formSchema = z.object({
     email: z.string().email({ message: t("loginForm.email.invalid") }),
@@ -135,7 +135,7 @@ function LoginForm() {
                     </FormItem>
                   )}
                 />
-                <Button type="submit" className="w-full">
+                <Button type="submit" className="w-full" loading={isPending}>
                   {t("loginForm.submit")}
                 </Button>
               </div>

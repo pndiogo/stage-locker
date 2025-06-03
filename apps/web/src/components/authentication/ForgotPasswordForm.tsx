@@ -27,6 +27,9 @@ import { Routes } from "@/web/types/router";
 function ForgotPasswordForm() {
   const { t, i18n } = useTranslation();
 
+  // TODO remove after implementation of forgot password request
+  const isPending = false;
+
   const formSchema = z.object({
     email: z.string().email({ message: t("forgotPasswordForm.email.invalid") }),
   });
@@ -100,7 +103,7 @@ function ForgotPasswordForm() {
                   )}
                 />
 
-                <Button type="submit" className="w-full">
+                <Button type="submit" className="w-full" loading={isPending}>
                   {t("forgotPasswordForm.submit")}
                 </Button>
               </div>

@@ -1,3 +1,3 @@
-export * from "./api/generated/api-types-openapi-zod-client";
-export * from "./jwt";
-export * from "./schemas";
+export * from "./api/generated/index.js";
+export * from "./jwt/index.js";
+export * from "./schemas/index.js";

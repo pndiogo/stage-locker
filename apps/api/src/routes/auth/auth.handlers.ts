@@ -7,7 +7,6 @@ import type { AppRouteHandler } from "@/api/lib/types";
 
 import db from "@/api/db";
 import { selectUserSchema, users } from "@/api/db/schema";
-// import { ZOD_ERROR_CODES, ZOD_ERROR_MESSAGES } from "@/api/lib/constants";
 import { sendPasswordResetEmailToUser, sendVerificationEmailToUser } from "@/api/lib/email";
 import { generateLoginJWT, generateUserVerificationJWT, verifyJWT } from "@/api/lib/jwt";
 
@@ -131,12 +130,11 @@ export const sendVerificationEmail: AppRouteHandler<SendVerificationEmailRoute> 
 
   const verificationToken = await generateUserVerificationJWT({ sub: user.id });
 
-  console.log("🚀 ~ constsendVerificationEmail:AppRouteHandler<SendVerificationEmailRoute>= ~ verificationToken:", verificationToken);
   try {
-    // await sendVerificationEmailToUser({
-    //   email: user.email,
-    //   verificationToken,
-    // });
+    await sendVerificationEmailToUser({
+      email: user.email,
+      verificationToken,
+    });
 
     await db.update(users)
       .set({ verificationToken })

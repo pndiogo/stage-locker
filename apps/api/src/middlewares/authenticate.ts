@@ -1,3 +1,4 @@
+import { emailSchema } from "@stage-locker/types";
 import { createMiddleware } from "hono/factory";
 import * as HttpStatusCodes from "stoker/http-status-codes";
 import * as HttpStatusPhrases from "stoker/http-status-phrases";
@@ -6,7 +7,6 @@ import type { User } from "@/api/lib/types";
 
 import db from "@/api/db";
 import { verifyJWT } from "@/api/lib/jwt";
-import { emailSchema } from "@/api/lib/schemas";
 
 export const authenticate = createMiddleware<{
   Variables: {
@@ -87,7 +87,7 @@ export const verifyUserStatus = createMiddleware(async (c, next) => {
   }
 
   const email = body.email || "";
-  const emailValidation = emailSchema.safeParse(email);
+  const emailValidation = emailSchema().safeParse(email);
 
   if (!emailValidation.success) {
     return c.json(

@@ -34,6 +34,18 @@
         "invalidDescription": "O link de verificação parece ser inválido.",
         "invalidMessage": "Token inválido ou expirado. Por favor, solicite um novo email de verificação."
       },
+      "sendVerificationEmail": {
+        "success": {
+          "title": "Novo Email de Verificação",
+          "description": "Um novo email de verificação foi enviado para o seu endereço de email. Por favor, verifique a sua caixa de entrada, incluindo a pasta de spam. Caso não receba o email, certifique-se de que o endereço de email está correto. Se não for, inscreva-se novamente com o endereço de email correto.",
+          "message": "Email enviado com sucesso."
+        },
+        "error": {
+          "title": "Falha ao enviar email de verificação",
+          "description": "Por favor, tente novamente.",
+          "message": "Houve um erro ao enviar o email de verificação."
+        }
+      },
       "linkRequestNew": "Solicitar novo email de verificação",
       "linkHome": "Voltar ao início"
     }
@@ -44,7 +56,36 @@
     "appTitle": "Stage Locker - Assistente de Performance Musical",
     "appDescription": "Uma plataforma para gerir todas as suas necessidades relacionadas com o palco, desde a gestão de performances a recursos de ensaio.",
     "appKeywords": "palco, performance, gestão, assistente, partilha, ensaio, locker",
-    "appAuthor": "Equipa Stage Locker"
+    "appAuthor": "Equipa Stage Locker",
+    "error": {
+      "auth": "Email ou senha inválidos.",
+      "generic": "Erro ao enviar o formulário. Por favor, tente novamente.",
+      "unverified": "A sua conta não foi verificada. Por favor, verifique o seu endereço de email."
+    },
+    "form": {
+      "email": {
+        "label": "Email",
+        "placeholder": "joaosilva@mail.com",
+        "invalid": "Por favor, insira um endereço de email válido."
+      },
+      "password": {
+        "label": "Senha",
+        "placeholder": "******",
+        "min": "A senha deve ter pelo menos 8 caracteres",
+        "uppercase": "A senha deve conter pelo menos uma letra maiúscula",
+        "lowercase": "A senha deve conter pelo menos uma letra minúscula",
+        "number": "A senha deve conter pelo menos um número",
+        "special": "A senha deve conter pelo menos um caractere especial (@, $, !, %, *, ?, &, #)",
+        "max": "A senha deve ter no máximo 128 caracteres",
+        "noSpaces": "A senha não deve conter espaços",
+        "noPassword": "A senha não deve conter a palavra 'password'"
+      },
+      "confirmPassword": {
+        "label": "Confirmar Senha",
+        "placeholder": "******",
+        "match": "As senhas devem coincidir"
+      }
+    }
   },
   "languageSwitcher": {
     "selectLanguage": "Selecionar Idioma"
@@ -52,24 +93,10 @@
   "loginForm": {
     "title": "Entrar",
     "description": "Insira o seu email e senha para aceder à sua conta.",
-    "email": {
-      "label": "Email",
-      "placeholder": "joaosilva@mail.com",
-      "invalid": "Por favor, insira um endereço de email válido."
-    },
-    "password": {
-      "label": "Senha",
-      "placeholder": "******",
-      "forgot": "Esqueceu a sua senha?",
-      "min": "A senha deve ter pelo menos 6 caracteres",
-      "alphanumeric": "A senha deve ser alfanumérica"
-    },
+    "forgotPassword": "Esqueceu a sua senha?",
     "submit": "Entrar",
     "signupPrompt": "Não tem uma conta?",
     "signupLink": "Criar conta",
-    "error": {
-      "generic": "Erro ao enviar o formulário. Por favor, tente novamente."
-    },
     "success": {
       "generic": "Login com sucesso. A redirecionar..."
     }
@@ -77,28 +104,9 @@
   "signupForm": {
     "title": "Criar Conta",
     "description": "Crie uma nova conta preenchendo as informações abaixo.",
-    "email": {
-      "label": "Email",
-      "placeholder": "joaosilva@mail.com",
-      "invalid": "Por favor, insira um endereço de email válido."
-    },
-    "password": {
-      "label": "Senha",
-      "placeholder": "******",
-      "min": "A senha deve ter pelo menos 6 caracteres",
-      "alphanumeric": "A senha deve ser alfanumérica"
-    },
-    "confirmPassword": {
-      "label": "Confirmar Senha",
-      "placeholder": "******",
-      "match": "As senhas devem coincidir"
-    },
     "submit": "Criar Conta",
     "loginPrompt": "Já tem uma conta?",
     "loginLink": "Entrar",
-    "error": {
-      "generic": "Erro ao enviar o formulário. Por favor, tente novamente."
-    },
     "success": {
       "generic": "Conta criada com sucesso."
     }
@@ -106,18 +114,10 @@
   "forgotPasswordForm": {
     "title": "Recuperar Senha",
     "description": "Insira o seu email para receber um link de redefinição de senha.",
-    "email": {
-      "label": "Email",
-      "placeholder": "joaosilva@mail.com",
-      "invalid": "Por favor, insira um endereço de email válido."
-    },
     "submit": "Enviar link de redefinição",
     "signupPrompt": "Não tem uma conta?",
     "signupLink": "Criar conta",
     "loginPrompt": "Lembrou-se da sua senha?",
-    "loginLink": "Entrar",
-    "error": {
-      "generic": "Erro ao enviar o formulário. Por favor, tente novamente."
-    }
+    "loginLink": "Entrar"
   }
 }

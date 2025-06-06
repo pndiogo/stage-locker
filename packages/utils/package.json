@@ -20,9 +20,11 @@
   },
   "dependencies": {
     "@stage-locker/eslint-config": "workspace:^",
+    "@stage-locker/types": "workspace:^",
     "isomorphic-dompurify": "^2.25.0"
   },
   "devDependencies": {
+    "@types/node": "^22.15.29",
     "eslint": "^9.27.0",
     "typescript": "^5.8.3"
   }

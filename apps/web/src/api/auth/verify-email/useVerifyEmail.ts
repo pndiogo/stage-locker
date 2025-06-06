@@ -2,14 +2,14 @@ import type { FormattedError } from "@stage-locker/api-client";
 
 import { useQuery } from "@tanstack/react-query";
 
-import type { VerifyEmailRequestQueryType, VerifyEmailResponseSuccessType } from "@/web/types/auth";
+import type { PostVerifyEmailRequestQueryType, PostVerifyEmailResponseSuccessType } from "@/web/types/auth";
 
-import { keys } from "@/web/api/auth/keys";
+import { QUERY_KEYS } from "@/web/api/auth/query-keys";
 import { verifyEmailRequest } from "@/web/api/auth/verify-email/verify-email";
 
-export function useVerifyEmail(queryParams: VerifyEmailRequestQueryType) {
-  const query = useQuery<VerifyEmailResponseSuccessType, FormattedError>({
-    queryKey: [keys.verifyEmail(), queryParams],
+export function useVerifyEmail(queryParams: PostVerifyEmailRequestQueryType) {
+  const query = useQuery<PostVerifyEmailResponseSuccessType, FormattedError>({
+    queryKey: [QUERY_KEYS.VERIFY_EMAIL(), queryParams],
     queryFn: () => verifyEmailRequest({
       body: null,
       query: queryParams,

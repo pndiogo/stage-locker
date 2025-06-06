@@ -1,11 +1,11 @@
 import { createRoute, z } from "@hono/zod-openapi";
+import { emailSchema, passwordSchema, tokenSchema } from "@stage-locker/types";
 import * as HttpStatusCodes from "stoker/http-status-codes";
 import { jsonContent, jsonContentRequired } from "stoker/openapi/helpers";
 import { createErrorSchema, IdUUIDParamsSchema } from "stoker/openapi/schemas";
 
 import { insertUserSchema, loginRequestSchema, loginResponseSchema, selectUserSchema } from "@/api/db/schema/auth";
 import { badRequestSchema, forbiddenSchema, internalServerErrorSchema, notFoundSchema, tooManyRequestsSchema, unauthorizedSchema } from "@/api/lib/constants";
-import { passwordSchema, tokenSchema } from "@/api/lib/schemas";
 import { authenticate, verifyUserStatus } from "@/api/middlewares/authenticate";
 import { rateLimit } from "@/api/middlewares/rate-limit";
 
@@ -89,12 +89,7 @@ export const sendVerificationEmail = createRoute({
   summary: "Send a verification email to a user",
   middleware: [rateLimit(3, 5 * 60 * 1000)], // Limit to 3 requests per 5 minutes
   request: {
-    body: jsonContentRequired(
-      z.object({
-        email: z.string().email("Missing email or invalid email format"),
-      }),
-      "The user to send the verification email",
-    ),
+    body: jsonContentRequired(IdUUIDParamsSchema, "The user to send the verification email"),
   },
   responses: {
     [HttpStatusCodes.NO_CONTENT]: {
@@ -102,19 +97,16 @@ export const sendVerificationEmail = createRoute({
     },
     [HttpStatusCodes.BAD_REQUEST]: jsonContent(
       badRequestSchema,
-      "Provided email is already verified or invalid",
+      "Email is already verified or invalid",
     ),
     [HttpStatusCodes.NOT_FOUND]: jsonContent(
       notFoundSchema,
       "User not found",
     ),
     [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
-      createErrorSchema(z.object({
-        email: z.string().email("Invalid email format"),
-      })),
+      createErrorSchema(IdUUIDParamsSchema),
       "The validation error(s)",
     ),
-
     [HttpStatusCodes.TOO_MANY_REQUESTS]: jsonContent(
       tooManyRequestsSchema,
       "Too many requests",
@@ -137,7 +129,7 @@ export const sendPasswordResetEmail = createRoute({
   request: {
     body: jsonContentRequired(
       z.object({
-        email: z.string().email("Missing email or invalid email format"),
+        email: emailSchema(),
       }),
       "The user to send the password reset email",
     ),
@@ -148,7 +140,7 @@ export const sendPasswordResetEmail = createRoute({
     },
     [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
       createErrorSchema(z.object({
-        email: z.string().email("Invalid email format"),
+        email: emailSchema(),
       })),
       "The validation error(s)",
     ),
@@ -173,8 +165,8 @@ export const resetPassword = createRoute({
   request: {
     body: jsonContentRequired(
       z.object({
-        token: tokenSchema,
-        newPassword: passwordSchema,
+        token: tokenSchema(),
+        newPassword: passwordSchema(),
       }),
       "The user to reset the password",
     ),
@@ -228,6 +220,10 @@ export const login = createRoute({
       badRequestSchema,
       "Invalid request",
     ),
+    [HttpStatusCodes.UNAUTHORIZED]: jsonContent(
+      unauthorizedSchema,
+      "Invalid credentials",
+    ),
     [HttpStatusCodes.FORBIDDEN]: jsonContent(
       forbiddenSchema,
       "Account is not activated",
@@ -235,10 +231,6 @@ export const login = createRoute({
     [HttpStatusCodes.NOT_FOUND]: jsonContent(
       notFoundSchema,
       "User not found",
-    ),
-    [HttpStatusCodes.UNAUTHORIZED]: jsonContent(
-      unauthorizedSchema,
-      "Invalid credentials",
     ),
     [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
       createErrorSchema(loginRequestSchema),

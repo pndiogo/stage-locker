@@ -10,11 +10,6 @@ const postSignup_Body = z
   })
   .passthrough(); // e.g., const postAuthSignup_Body = z.object(...);
 export type postSignup_BodyType = z.infer<typeof postSignup_Body>; // Export the TS type
-// Note: The description for this request body (postLogin_Body) is typically found where it's used as an endpoint parameter.
-const postLogin_Body = z
-  .object({ email: z.string().email(), password: z.string() })
-  .passthrough(); // e.g., const postAuthSignup_Body = z.object(...);
-export type postLogin_BodyType = z.infer<typeof postLogin_Body>; // Export the TS type
 // Note: The description for this request body (postResetPassword_Body) is typically found where it's used as an endpoint parameter.
 const postResetPassword_Body = z
   .object({
@@ -27,7 +22,6 @@ export type postResetPassword_BodyType = z.infer<typeof postResetPassword_Body>;
 // Export a map of these request body Zod schemas
 export const requestBodySchemas = {
   postSignup_Body: postSignup_Body, // Refer to the constant defined above
-  postLogin_Body: postLogin_Body, // Refer to the constant defined above
   postResetPassword_Body: postResetPassword_Body, // Refer to the constant defined above
 };
 
@@ -51,7 +45,7 @@ export type getApiv1_ResponseType = z.infer<typeof getApiv1_ResponseSchema>;
  */
 // Response Schema and Type for postLogin
 export const postLogin_ResponseSchema = z
-  .object({ id: z.string(), email: z.string(), token: z.string() })
+  .object({ id: z.string(), email: z.string().email(), token: z.string() })
   .passthrough();
 export type postLogin_ResponseType = z.infer<typeof postLogin_ResponseSchema>;
 
@@ -112,7 +106,7 @@ export type postLogin_500_ErrorResponseType = z.infer<
 // Parameters Schema and Type for postLogin
 export const postLogin_ParametersSchema = z.object({
   /** The user to log in */
-  body: postLogin_Body,
+  body: postSignup_Body,
 });
 export type postLogin_ParametersType = z.infer<
   typeof postLogin_ParametersSchema
@@ -294,7 +288,7 @@ export type postSendVerificationEmail_500_ErrorResponseType = z.infer<
 // Parameters Schema and Type for postSendVerificationEmail
 export const postSendVerificationEmail_ParametersSchema = z.object({
   /** The user to send the verification email */
-  body: z.object({ email: z.string().email() }).passthrough(),
+  body: z.object({ id: z.string().uuid() }).passthrough(),
 });
 export type postSendVerificationEmail_ParametersType = z.infer<
   typeof postSendVerificationEmail_ParametersSchema
@@ -305,7 +299,7 @@ export type postSendVerificationEmail_ParametersType = z.infer<
  */
 // Response Schema and Type for postSignup
 export const postSignup_ResponseSchema = z
-  .object({ id: z.string(), email: z.string() })
+  .object({ id: z.string().uuid(), email: z.string().email() })
   .passthrough();
 export type postSignup_ResponseType = z.infer<typeof postSignup_ResponseSchema>;
 
@@ -359,7 +353,7 @@ export type postSignup_ParametersType = z.infer<
  */
 // Response Schema and Type for getUser
 export const getUser_ResponseSchema = z
-  .object({ id: z.string(), email: z.string() })
+  .object({ id: z.string().uuid(), email: z.string().email() })
   .passthrough();
 export type getUser_ResponseType = z.infer<typeof getUser_ResponseSchema>;
 
@@ -532,7 +526,7 @@ export const apiSchemasByTag = {
       postLogin: {
         parametersSchema: postLogin_ParametersSchema, // Schema for all parameters
 
-        requestBodySchema: postLogin_Body, // Schema name (e.g., postSignup_Body) or inline Zod definition
+        requestBodySchema: postSignup_Body, // Schema name (e.g., postSignup_Body) or inline Zod definition
         responses: {
           // This checks if a main success response schema exists
           successSchema: postLogin_ResponseSchema, // Schema for success response
@@ -577,9 +571,7 @@ export const apiSchemasByTag = {
       postSendVerificationEmail: {
         parametersSchema: postSendVerificationEmail_ParametersSchema, // Schema for all parameters
 
-        requestBodySchema: z
-          .object({ email: z.string().email() })
-          .passthrough(), // Schema name (e.g., postSignup_Body) or inline Zod definition
+        requestBodySchema: z.object({ id: z.string().uuid() }).passthrough(), // Schema name (e.g., postSignup_Body) or inline Zod definition
         responses: {
           // This checks if a main success response schema exists
           successSchema: postSendVerificationEmail_ResponseSchema, // Schema for success response

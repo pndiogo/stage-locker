@@ -3,33 +3,40 @@ import type { FormattedError } from "@stage-locker/api-client";
 import { apiClient, isFormattedError, throwValidationError } from "@stage-locker/api-client";
 
 import type { RequestParams } from "@/web/types/api";
-import type { VerifyEmailRequestQueryType, VerifyEmailResponseSuccessType } from "@/web/types/auth";
+import type { PostVerifyEmailRequestQueryType, PostVerifyEmailResponseSuccessType } from "@/web/types/auth";
 
 import { env } from "@/web/env";
-import { VerifyEmailRequestQuerySchema, VerifyEmailResponseError400Schema, VerifyEmailResponseError401Schema, VerifyEmailResponseError404Schema, VerifyEmailResponseError500Schema, VerifyEmailResponseSuccessSchema } from "@/web/schemas/auth";
+import {
+  PostVerifyEmailRequestQuerySchema,
+  PostVerifyEmailResponseError400Schema,
+  PostVerifyEmailResponseError401Schema,
+  PostVerifyEmailResponseError404Schema,
+  PostVerifyEmailResponseError500Schema,
+  PostVerifyEmailResponseSuccessSchema,
+} from "@/web/types/auth";
 
-export async function verifyEmailRequest({ query }: RequestParams<null, VerifyEmailRequestQueryType>): Promise<VerifyEmailResponseSuccessType> {
+export async function verifyEmailRequest({ query }: RequestParams<null, PostVerifyEmailRequestQueryType>): Promise<PostVerifyEmailResponseSuccessType> {
   try {
-    const parsed = VerifyEmailRequestQuerySchema.safeParse(query);
+    const parsed = PostVerifyEmailRequestQuerySchema.safeParse(query);
 
     if (!parsed.success) {
       throw parsed.error;
     }
 
-    const [data, error] = await apiClient<VerifyEmailResponseSuccessType>(`${env.VITE_API_PATH}/auth/verify-email?${new URLSearchParams(query)}`, {
+    const [data, error] = await apiClient<PostVerifyEmailResponseSuccessType>(`${env.VITE_API_PATH}/auth/verify-email?${new URLSearchParams(query)}`, {
       method: "GET",
-    }, VerifyEmailResponseSuccessSchema, {
-      400: VerifyEmailResponseError400Schema,
-      401: VerifyEmailResponseError401Schema,
-      404: VerifyEmailResponseError404Schema,
-      500: VerifyEmailResponseError500Schema,
+    }, PostVerifyEmailResponseSuccessSchema, {
+      400: PostVerifyEmailResponseError400Schema,
+      401: PostVerifyEmailResponseError401Schema,
+      404: PostVerifyEmailResponseError404Schema,
+      500: PostVerifyEmailResponseError500Schema,
     });
 
     if (error) {
       throw error;
     }
 
-    return data as VerifyEmailResponseSuccessType;
+    return data as PostVerifyEmailResponseSuccessType;
   }
   catch (error: FormattedError | unknown) {
     if (isFormattedError(error)) {

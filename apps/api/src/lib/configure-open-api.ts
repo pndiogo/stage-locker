@@ -7,7 +7,7 @@ import { BASE_PATH } from "./constants";
 
 export default function configureOpenAPI(app: AppOpenAPI) {
   app.doc(`${BASE_PATH}/doc`, {
-    openapi: "3.0.0",
+    openapi: "3.1.0",
     info: {
       version: packageJson.version,
       title: "Stage Locker API V1",

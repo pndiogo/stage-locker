@@ -107,13 +107,11 @@ export const verifyEmail: AppRouteHandler<VerifyEmailRoute> = async (c) => {
 };
 
 export const sendVerificationEmail: AppRouteHandler<SendVerificationEmailRoute> = async (c) => {
-  const { email } = c.req.valid("json");
-
-  const normalizedEmail = email.trim().toLowerCase();
+  const { id } = c.req.valid("json");
 
   const user = await db.query.users.findFirst({
     where(fields, operators) {
-      return operators.eq(fields.email, normalizedEmail);
+      return operators.eq(fields.id, id);
     },
   });
 
@@ -159,9 +157,9 @@ export const sendVerificationEmail: AppRouteHandler<SendVerificationEmailRoute> 
     );
   }
 
-  return c.json(
-    { message: "Verification email sent" },
-    HttpStatusCodes.OK,
+  return c.body(
+    null,
+    HttpStatusCodes.NO_CONTENT,
   );
 };
 

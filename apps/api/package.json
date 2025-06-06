@@ -33,6 +33,7 @@
     "@libsql/client": "^0.15.7",
     "@scalar/hono-api-reference": "^0.9.1",
     "@stage-locker/eslint-config": "workspace:^",
+    "@stage-locker/types": "workspace:^",
     "bcryptjs": "^3.0.2",
     "dotenv": "^16.5.0",
     "dotenv-expand": "^12.0.2",

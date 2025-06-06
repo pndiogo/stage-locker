@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { getApiErrorDetails } from "@stage-locker/api-client";
+import { emailSchema, passwordSchema } from "@stage-locker/types";
 import { Link } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -34,18 +34,24 @@ function SignupForm() {
 
   const formSchema = z
     .object({
-      email: z.string().email({ message: t("signupForm.email.invalid") }),
-      password: z
-        .string()
-        .min(6, { message: t("signupForm.password.min") })
-        .regex(/[a-z0-9]/i, {
-          message: t("signupForm.password.alphanumeric"),
-        }),
+      email: emailSchema({
+        invalid: t("common.form.email.invalid"),
+      }),
+      password: passwordSchema({
+        min: t("common.form.password.min"),
+        uppercase: t("common.form.password.uppercase"),
+        lowercase: t("common.form.password.lowercase"),
+        number: t("common.form.password.number"),
+        special: t("common.form.password.special"),
+        max: t("common.form.password.max"),
+        noSpaces: t("common.form.password.noSpaces"),
+        noPassword: t("common.form.password.noPassword"),
+      }),
       confirmPassword: z.string(),
     })
     .refine(data => data.password === data.confirmPassword, {
       path: ["confirmPassword"],
-      message: t("signupForm.confirmPassword.match"),
+      message: t("common.form.confirmPassword.match"),
     });
 
   type FormSchema = z.infer<typeof formSchema>;
@@ -79,16 +85,20 @@ function SignupForm() {
         },
         onError: (error) => {
           console.error("Signup error: ", error);
-          toast.error(t("signupForm.error.generic"));
+          toast.error(t("common.error.generic"));
 
-          const details = getApiErrorDetails(error);
-          console.log("🚀 ~ onSubmit ~ error details:", details);
+          if (error.status === 400) {
+            form.setError("root", { type: "manual", message: t("common.error.auth") });
+          }
+          else {
+            form.setError("root", { type: "manual", message: t("common.error.generic") });
+          }
         },
       });
     }
     catch (error) {
       console.error("Form submission error", error);
-      toast.error(t("signupForm.error.generic"));
+      toast.error(t("common.error.generic"));
     }
   }
 
@@ -110,12 +120,12 @@ function SignupForm() {
                   render={({ field }) => (
                     <FormItem className="grid gap-2">
                       <FormLabel htmlFor="email">
-                        {t("signupForm.email.label")}
+                        {t("common.form.email.label")}
                       </FormLabel>
                       <FormControl>
                         <Input
                           id="email"
-                          placeholder={t("signupForm.email.placeholder")}
+                          placeholder={t("common.form.email.placeholder")}
                           type="email"
                           autoComplete="email"
                           {...field}
@@ -133,12 +143,12 @@ function SignupForm() {
                   render={({ field }) => (
                     <FormItem className="grid gap-2">
                       <FormLabel htmlFor="password">
-                        {t("signupForm.password.label")}
+                        {t("common.form.password.label")}
                       </FormLabel>
                       <FormControl>
                         <PasswordInput
                           id="password"
-                          placeholder={t("signupForm.password.placeholder")}
+                          placeholder={t("common.form.password.placeholder")}
                           autoComplete="new-password"
                           {...field}
                         />
@@ -155,13 +165,13 @@ function SignupForm() {
                   render={({ field }) => (
                     <FormItem className="grid gap-2">
                       <FormLabel htmlFor="confirmPassword">
-                        {t("signupForm.confirmPassword.label")}
+                        {t("common.form.confirmPassword.label")}
                       </FormLabel>
                       <FormControl>
                         <PasswordInput
                           id="confirmPassword"
                           placeholder={t(
-                            "signupForm.confirmPassword.placeholder",
+                            "common.form.confirmPassword.placeholder",
                           )}
                           autoComplete="new-password"
                           {...field}
@@ -175,6 +185,12 @@ function SignupForm() {
                 <Button type="submit" className="w-full" loading={isPending}>
                   {t("signupForm.submit")}
                 </Button>
+
+                {form.formState.errors.root && (
+                  <div className="text-red-500 text-center text-sm">
+                    {form.formState.errors.root?.message}
+                  </div>
+                )}
               </div>
             </form>
           </Form>

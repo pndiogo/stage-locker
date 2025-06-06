@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { emailSchema } from "@stage-locker/types";
 import { Link } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -31,7 +32,9 @@ function ForgotPasswordForm() {
   const isPending = false;
 
   const formSchema = z.object({
-    email: z.string().email({ message: t("forgotPasswordForm.email.invalid") }),
+    email: emailSchema({
+      invalid: t("common.form.email.invalid"),
+    }),
   });
 
   type FormSchema = z.infer<typeof formSchema>;
@@ -59,7 +62,7 @@ function ForgotPasswordForm() {
     }
     catch (error) {
       console.error("Form submission error", error);
-      toast.error(t("forgotPasswordForm.error.generic"));
+      toast.error(t("common.error.generic"));
     }
   }
 
@@ -85,13 +88,13 @@ function ForgotPasswordForm() {
                   render={({ field }) => (
                     <FormItem className="grid gap-2">
                       <FormLabel htmlFor="email">
-                        {t("forgotPasswordForm.email.label")}
+                        {t("common.form.email.label")}
                       </FormLabel>
                       <FormControl>
                         <Input
                           id="email"
                           placeholder={t(
-                            "forgotPasswordForm.email.placeholder",
+                            "common.form.email.placeholder",
                           )}
                           type="email"
                           autoComplete="email"

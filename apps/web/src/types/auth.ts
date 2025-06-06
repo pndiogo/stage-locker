@@ -1,10 +1,45 @@
-import type { postLogin_BodyType, postLogin_ResponseType, postSignup_BodyType, postSignup_ResponseType, postVerifyEmail_ParametersType, postVerifyEmail_ResponseType } from "@stage-locker/types";
+import type { z } from "zod";
 
-export type LoginRequestBodyType = postLogin_BodyType;
-export type LoginResponseSuccessType = postLogin_ResponseType;
+import { apiSchemasByTag } from "@stage-locker/types";
 
-export type SignupRequestBodyType = postSignup_BodyType;
-export type SignupResponseSuccessType = postSignup_ResponseType;
+export const PostLoginRequestBodySchema = apiSchemasByTag.Auth.endpoints.postLogin.requestBodySchema;
+export const PostLoginResponseSuccessSchema = apiSchemasByTag.Auth.endpoints.postLogin.responses.successSchema;
+export const PostLoginResponseError400Schema = apiSchemasByTag.Auth.endpoints.postLogin.responses.errors["400Schema"];
+export const PostLoginResponseError401Schema = apiSchemasByTag.Auth.endpoints.postLogin.responses.errors["401Schema"];
+export const PostLoginResponseError403Schema = apiSchemasByTag.Auth.endpoints.postLogin.responses.errors["403Schema"];
+export const PostLoginResponseError404Schema = apiSchemasByTag.Auth.endpoints.postLogin.responses.errors["404Schema"];
+export const PostLoginResponseError422Schema = apiSchemasByTag.Auth.endpoints.postLogin.responses.errors["422Schema"];
+export const PostLoginResponseError500Schema = apiSchemasByTag.Auth.endpoints.postLogin.responses.errors["500Schema"];
 
-export type VerifyEmailRequestQueryType = postVerifyEmail_ParametersType;
-export type VerifyEmailResponseSuccessType = postVerifyEmail_ResponseType;
+export type PostLoginRequestBodyType = z.infer<typeof PostLoginRequestBodySchema>;
+export type PostLoginResponseSuccessType = z.infer<typeof PostLoginResponseSuccessSchema>;
+
+export const PostSignupRequestBodySchema = apiSchemasByTag.Auth.endpoints.postSignup.requestBodySchema;
+export const PostSignupResponseSuccessSchema = apiSchemasByTag.Auth.endpoints.postSignup.responses.successSchema;
+export const PostSignupResponseError400Schema = apiSchemasByTag.Auth.endpoints.postSignup.responses.errors["400Schema"];
+export const PostSignupResponseError422Schema = apiSchemasByTag.Auth.endpoints.postSignup.responses.errors["422Schema"];
+export const PostSignupResponseError500Schema = apiSchemasByTag.Auth.endpoints.postSignup.responses.errors["500Schema"];
+
+export type PostSignupRequestBodyType = z.infer<typeof PostSignupRequestBodySchema>;
+export type PostSignupResponseSuccessType = z.infer<typeof PostSignupResponseSuccessSchema>;
+
+export const PostVerifyEmailRequestQuerySchema = apiSchemasByTag.Auth.endpoints.postVerifyEmail.parametersSchema;
+export const PostVerifyEmailResponseSuccessSchema = apiSchemasByTag.Auth.endpoints.postVerifyEmail.responses.successSchema;
+export const PostVerifyEmailResponseError400Schema = apiSchemasByTag.Auth.endpoints.postVerifyEmail.responses.errors["400Schema"];
+export const PostVerifyEmailResponseError401Schema = apiSchemasByTag.Auth.endpoints.postVerifyEmail.responses.errors["401Schema"];
+export const PostVerifyEmailResponseError404Schema = apiSchemasByTag.Auth.endpoints.postVerifyEmail.responses.errors["404Schema"];
+export const PostVerifyEmailResponseError500Schema = apiSchemasByTag.Auth.endpoints.postVerifyEmail.responses.errors["500Schema"];
+
+export type PostVerifyEmailRequestQueryType = z.infer<typeof PostVerifyEmailRequestQuerySchema>;
+export type PostVerifyEmailResponseSuccessType = z.infer<typeof PostVerifyEmailResponseSuccessSchema>;
+
+export const PostSendVerificationEmailRequestBodySchema = apiSchemasByTag.Auth.endpoints.postSendVerificationEmail.requestBodySchema;
+export const PostSendVerificationEmailResponseSuccessSchema = apiSchemasByTag.Auth.endpoints.postSendVerificationEmail.responses.successSchema;
+export const PostSendVerificationEmailResponseError400Schema = apiSchemasByTag.Auth.endpoints.postSendVerificationEmail.responses.errors["400Schema"];
+export const PostSendVerificationEmailResponseError404Schema = apiSchemasByTag.Auth.endpoints.postSendVerificationEmail.responses.errors["404Schema"];
+export const PostSendVerificationEmailResponseError422Schema = apiSchemasByTag.Auth.endpoints.postSendVerificationEmail.responses.errors["422Schema"];
+export const PostSendVerificationEmailResponseError429Schema = apiSchemasByTag.Auth.endpoints.postSendVerificationEmail.responses.errors["429Schema"];
+export const PostSendVerificationEmailResponseError500Schema = apiSchemasByTag.Auth.endpoints.postSendVerificationEmail.responses.errors["500Schema"];
+
+export type PostSendVerificationEmailRequestBodyType = z.infer<typeof PostSendVerificationEmailRequestBodySchema>;
+export type PostSendVerificationEmailResponseSuccessType = z.infer<typeof PostSendVerificationEmailResponseSuccessSchema>;

@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { getApiErrorDetails } from "@stage-locker/api-client";
+import { emailSchema, passwordSchema } from "@stage-locker/types";
 import { Link } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -27,17 +27,24 @@ import { Input } from "@/web/components/ui/input";
 import { PasswordInput } from "@/web/components/ui/password-input";
 import { Routes } from "@/web/types/router";
 
-// Todo: Improve schema with additional validation rules for password
 function LoginForm() {
   const { t, i18n } = useTranslation();
   const { login, isPending } = useLogin();
 
   const formSchema = z.object({
-    email: z.string().email({ message: t("loginForm.email.invalid") }),
-    password: z
-      .string()
-      .min(6, { message: t("loginForm.password.min") })
-      .regex(/[a-z0-9]/i, { message: t("loginForm.password.alphanumeric") }),
+    email: emailSchema({
+      invalid: t("common.form.email.invalid"),
+    }),
+    password: passwordSchema({
+      min: t("common.form.password.min"),
+      uppercase: t("common.form.password.uppercase"),
+      lowercase: t("common.form.password.lowercase"),
+      number: t("common.form.password.number"),
+      special: t("common.form.password.special"),
+      max: t("common.form.password.max"),
+      noSpaces: t("common.form.password.noSpaces"),
+      noPassword: t("common.form.password.noPassword"),
+    }),
   });
 
   type FormSchema = z.infer<typeof formSchema>;
@@ -64,10 +71,17 @@ function LoginForm() {
       },
       onError: (error) => {
         console.error("Login error: ", error);
-        toast.error(t("loginForm.error.generic"));
+        toast.error(t("common.error.generic"));
 
-        const details = getApiErrorDetails(error);
-        console.log("🚀 ~ onSubmit ~ error details:", details);
+        if (error.status === 401 || error.status === 404) {
+          form.setError("root", { type: "manual", message: t("common.error.auth") });
+        }
+        else if (error.status === 403) {
+          form.setError("root", { type: "manual", message: t("common.error.unverified") });
+        }
+        else {
+          form.setError("root", { type: "manual", message: t("common.error.generic") });
+        }
       },
     });
   }
@@ -90,12 +104,12 @@ function LoginForm() {
                   render={({ field }) => (
                     <FormItem className="grid gap-2">
                       <FormLabel htmlFor="email">
-                        {t("loginForm.email.label")}
+                        {t("common.form.email.label")}
                       </FormLabel>
                       <FormControl>
                         <Input
                           id="email"
-                          placeholder={t("loginForm.email.placeholder")}
+                          placeholder={t("common.form.email.placeholder")}
                           type="email"
                           autoComplete="email"
                           {...field}
@@ -105,7 +119,6 @@ function LoginForm() {
                     </FormItem>
                   )}
                 />
-
                 {/* Password Field */}
                 <FormField
                   control={form.control}
@@ -114,19 +127,19 @@ function LoginForm() {
                     <FormItem className="grid gap-2">
                       <div className="flex justify-between items-center">
                         <FormLabel htmlFor="password">
-                          {t("loginForm.password.label")}
+                          {t("common.form.password.label")}
                         </FormLabel>
                         <Link
                           to={Routes.FORGOT_PASSWORD}
                           className="ml-auto inline-block text-sm underline"
                         >
-                          {t("loginForm.password.forgot")}
+                          {t("loginForm.forgotPassword")}
                         </Link>
                       </div>
                       <FormControl>
                         <PasswordInput
                           id="password"
-                          placeholder={t("loginForm.password.placeholder")}
+                          placeholder={t("common.form.password.placeholder")}
                           autoComplete="current-password"
                           {...field}
                         />
@@ -138,6 +151,13 @@ function LoginForm() {
                 <Button type="submit" className="w-full" loading={isPending}>
                   {t("loginForm.submit")}
                 </Button>
+
+                {form.formState.errors.root && (
+                  <div className="text-red-500 text-center text-sm">
+                    {form.formState.errors.root?.message}
+                  </div>
+                )}
+
               </div>
             </form>
           </Form>

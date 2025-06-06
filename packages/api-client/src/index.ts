@@ -152,17 +152,29 @@ export async function apiClient<T>(
       return [null, formatError({ ...(typeof details === "object" && details !== null ? details : {}), status: res.status })];
     }
 
-    const json = await res.json();
+    if (res.headers.get("content-type")?.includes("application/json")) {
+      const json = await res.json();
 
-    if (responseSuccessSchema) {
-      const parsed = responseSuccessSchema.safeParse(json);
-      if (!parsed.success) {
-        return [null, formatError(parsed.error)];
+      if (responseSuccessSchema) {
+        const parsed = responseSuccessSchema.safeParse(json);
+        if (!parsed.success) {
+          return [null, formatError(parsed.error)];
+        }
+        return [parsed.data, null];
       }
-      return [parsed.data, null];
+
+      return [json as T, null];
     }
 
-    return [json as T, null];
+
+    if (res.headers.get("content-type")?.includes("text/plain")) {
+      const text = await res.text();
+      return [text as T, null];
+    }
+
+    // handle other responses
+    return [null, formatError({ message: "Unknown response type" })];
+
   }
   catch (e) {
     if (e instanceof Error) {

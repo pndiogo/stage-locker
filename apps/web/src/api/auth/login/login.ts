@@ -4,28 +4,37 @@ import { apiClient, isFormattedError, throwValidationError } from "@stage-locker
 import { sanitizeAndTrimObject } from "@stage-locker/utils";
 
 import type { RequestParams } from "@/web/types/api";
-import type { LoginRequestBodyType, LoginResponseSuccessType } from "@/web/types/auth";
+import type { PostLoginRequestBodyType, PostLoginResponseSuccessType } from "@/web/types/auth";
 
 import { env } from "@/web/env";
-import { LoginRequestBodySchema, LoginResponseError400Schema, LoginResponseError401Schema, LoginResponseError403Schema, LoginResponseError404Schema, LoginResponseError422Schema, LoginResponseError500Schema, LoginResponseSuccessSchema } from "@/web/schemas/auth";
+import {
+  PostLoginRequestBodySchema,
+  PostLoginResponseError400Schema,
+  PostLoginResponseError401Schema,
+  PostLoginResponseError403Schema,
+  PostLoginResponseError404Schema,
+  PostLoginResponseError422Schema,
+  PostLoginResponseError500Schema,
+  PostLoginResponseSuccessSchema,
+} from "@/web/types/auth";
 
-export async function loginRequest({ body }: RequestParams<LoginRequestBodyType>): Promise<LoginResponseSuccessType> {
+export async function loginRequest({ body }: RequestParams<PostLoginRequestBodyType>): Promise<PostLoginResponseSuccessType> {
   try {
-    const parsed = LoginRequestBodySchema.safeParse(sanitizeAndTrimObject(body));
+    const parsed = PostLoginRequestBodySchema.safeParse(sanitizeAndTrimObject(body));
 
     if (!parsed.success) {
       throw parsed.error;
     }
-    const [data, error] = await apiClient<LoginResponseSuccessType>(`${env.VITE_API_PATH}/auth/login`, {
+    const [data, error] = await apiClient<PostLoginResponseSuccessType>(`${env.VITE_API_PATH}/auth/login`, {
       method: "POST",
       body: JSON.stringify(parsed.data),
-    }, LoginResponseSuccessSchema, {
-      400: LoginResponseError400Schema,
-      401: LoginResponseError401Schema,
-      403: LoginResponseError403Schema,
-      404: LoginResponseError404Schema,
-      422: LoginResponseError422Schema,
-      500: LoginResponseError500Schema,
+    }, PostLoginResponseSuccessSchema, {
+      400: PostLoginResponseError400Schema,
+      401: PostLoginResponseError401Schema,
+      403: PostLoginResponseError403Schema,
+      404: PostLoginResponseError404Schema,
+      422: PostLoginResponseError422Schema,
+      500: PostLoginResponseError500Schema,
     });
 
     if (error) {

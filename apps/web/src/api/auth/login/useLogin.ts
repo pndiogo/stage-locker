@@ -2,15 +2,15 @@ import type { FormattedError } from "@stage-locker/api-client";
 
 import { useMutation } from "@tanstack/react-query";
 
-import type { LoginRequestBodyType, LoginResponseSuccessType } from "@/web/types/auth";
+import type { PostLoginRequestBodyType, PostLoginResponseSuccessType } from "@/web/types/auth";
 
-import { keys } from "@/web/api/auth/keys";
 import { loginRequest } from "@/web/api/auth/login/login";
+import { QUERY_KEYS } from "@/web/api/auth/query-keys";
 
 export function useLogin() {
-  const mutation = useMutation<LoginResponseSuccessType, FormattedError, { body: LoginRequestBodyType }>({
+  const mutation = useMutation<PostLoginResponseSuccessType, FormattedError, { body: PostLoginRequestBodyType }>({
     mutationFn: loginRequest,
-    mutationKey: [keys.login()],
+    mutationKey: [QUERY_KEYS.LOGIN()],
   });
 
   return { ...mutation, login: mutation.mutate };

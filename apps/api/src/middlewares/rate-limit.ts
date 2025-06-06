@@ -1,13 +1,13 @@
+import { z } from "@hono/zod-openapi";
+import { emailSchema } from "@stage-locker/types";
 import { createMiddleware } from "hono/factory";
 import * as HttpStatusCodes from "stoker/http-status-codes";
-
-import { emailSchema } from "@/api/lib/schemas";
 
 const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
 
 export function rateLimit(limit: number, windowMs: number) {
   return createMiddleware(async (c, next) => {
-    let body: { email?: string } = {};
+    let body: { email?: string; id?: string } = {};
 
     try {
       body = await c.req.json();
@@ -19,25 +19,29 @@ export function rateLimit(limit: number, windowMs: number) {
       );
     }
 
-    if (!body.email) {
+    if (!body.email && !body.id) {
       return c.json(
-        { message: "Email is required" },
+        { message: "Invalid request body" },
         HttpStatusCodes.BAD_REQUEST,
       );
     }
 
     const email = body.email || "";
-    const emailValidation = emailSchema.safeParse(email);
+    const id = body.id || "";
 
-    if (!emailValidation.success) {
+    const emailValidation = emailSchema().safeParse(email);
+    const idValidation = z.string().safeParse(id);
+
+    if (!emailValidation.success && !idValidation.success) {
+      const error = emailValidation.success ? idValidation.error : emailValidation.error;
+
       return c.json(
-        { message: emailValidation.error.errors[0].message },
+        { message: error.errors[0].message },
         HttpStatusCodes.BAD_REQUEST,
-
       );
     }
 
-    const key = `rate-limit:${email}`;
+    const key = `rate-limit:${email ?? id}`;
     const now = Date.now();
 
     const entry = rateLimitStore.get(key);

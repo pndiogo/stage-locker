@@ -34,6 +34,18 @@
         "invalidDescription": "The verification link appears to be invalid.",
         "invalidMessage": "Invalid or expired token. Please request a new verification email."
       },
+      "sendVerificationEmail": {
+        "success": {
+          "title": "New Verification Email",
+          "description": "A new verification email has been sent to your email address. Please check your inbox, including your spam folder. In case you don't receive the email, make sure that the email address is correct. If it's not, sign up again with the correct email address.",
+          "message": "Email sent successfully."
+        },
+        "error": {
+          "title": "Failed to send verification email",
+          "description": "Please try again.",
+          "message": "There was an error sending the verification email."
+        }
+      },
       "linkRequestNew": "Request New Verification Email",
       "linkHome": "Return to Home"
     }
@@ -44,32 +56,48 @@
     "appTitle": "Stage Locker - Music Performance Assistant",
     "appDescription": "A platform to manage all your stage-related needs, from performance management to rehearsal resources.",
     "appKeywords": "stage, performance, management, assistant, sharing, rehearsal, locker",
-    "appAuthor": "Stage Locker Team"
+    "appAuthor": "Stage Locker Team",
+    "error": {
+      "auth": "Incorrect email or password.",
+      "generic": "Failed to submit the form. Please try again.",
+      "unverified": "Your account is not verified. Please verify your email address."
+    },
+    "form": {
+      "email": {
+        "label": "Email",
+        "placeholder": "johndoe@mail.com",
+        "invalid": "Please enter a valid email address."
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "******",
+        "min": "Password must be at least 8 characters long",
+        "uppercase": "Password must contain at least one uppercase letter",
+        "lowercase": "Password must contain at least one lowercase letter",
+        "number": "Password must contain at least one number",
+        "special": "Password must contain at least one special character (@, $, !, %, *, ?, &, #)",
+        "max": "Password must be at most 128 characters long",
+        "noSpaces": "Password must not contain spaces",
+        "noPassword": "Password must not contain the word 'password'"
+      },
+      "confirmPassword": {
+        "label": "Confirm Password",
+        "placeholder": "******",
+        "match": "Passwords must match"
+      }
+    }
   },
+
   "languageSwitcher": {
     "selectLanguage": "Select Language"
   },
   "loginForm": {
     "title": "Login",
     "description": "Enter your email and password to login to your account.",
-    "email": {
-      "label": "Email",
-      "placeholder": "johndoe@mail.com",
-      "invalid": "Please enter a valid email address."
-    },
-    "password": {
-      "label": "Password",
-      "placeholder": "******",
-      "forgot": "Forgot your password?",
-      "min": "Password must be at least 6 characters long",
-      "alphanumeric": "Password must be alphanumeric"
-    },
+    "forgotPassword": "Esqueceu a sua senha?",
     "submit": "Login",
     "signupPrompt": "Don't have an account?",
     "signupLink": "Sign Up",
-    "error": {
-      "generic": "Failed to submit the form. Please try again."
-    },
     "success": {
       "generic": "Login successful. Redirecting..."
     }
@@ -77,28 +105,9 @@
   "signupForm": {
     "title": "Sign Up",
     "description": "Create a new account by filling in the information below.",
-    "email": {
-      "label": "Email",
-      "placeholder": "johndoe@mail.com",
-      "invalid": "Please enter a valid email address."
-    },
-    "password": {
-      "label": "Password",
-      "placeholder": "******",
-      "min": "Password must be at least 6 characters long",
-      "alphanumeric": "Password must be alphanumeric"
-    },
-    "confirmPassword": {
-      "label": "Confirm Password",
-      "placeholder": "******",
-      "match": "Passwords must match"
-    },
     "submit": "Sign Up",
     "loginPrompt": "Already have an account?",
     "loginLink": "Login",
-    "error": {
-      "generic": "Failed to submit the form. Please try again."
-    },
     "success": {
       "generic": "Sign up successful."
     }
@@ -106,18 +115,10 @@
   "forgotPasswordForm": {
     "title": "Forgot Password",
     "description": "Enter your email address to receive a password reset link.",
-    "email": {
-      "label": "Email",
-      "placeholder": "johndoe@mail.com",
-      "invalid": "Please enter a valid email address."
-    },
     "submit": "Send Reset Link",
     "signupPrompt": "Don't have an account?",
     "signupLink": "Sign Up",
     "loginPrompt": "Remembered your password?",
-    "loginLink": "Login",
-    "error": {
-      "generic": "Failed to submit the form. Please try again."
-    }
+    "loginLink": "Login"
   }
 }

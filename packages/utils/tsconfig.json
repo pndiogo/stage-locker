@@ -1,9 +1,11 @@
 {
   "extends": "../../tsconfig.json",
+  "lib": ["ESNext", "DOM"],
+  "types": ["node", "dom"],
   "compilerOptions": {
     "declaration": true,
     "emitDeclarationOnly": false,
     "outDir": "./dist"
   },
-  "include": ["src"]
+  "include": ["src", "types.d.ts"]
 }

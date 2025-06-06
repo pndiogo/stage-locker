@@ -94,7 +94,7 @@
   "loginForm": {
     "title": "Login",
     "description": "Enter your email and password to login to your account.",
-    "forgotPassword": "Esqueceu a sua senha?",
+    "forgotPassword": "Forgot Password?",
     "submit": "Login",
     "signupPrompt": "Don't have an account?",
     "signupLink": "Sign Up",

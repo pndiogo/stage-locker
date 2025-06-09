@@ -109,7 +109,9 @@
     "loginPrompt": "Already have an account?",
     "loginLink": "Login",
     "success": {
-      "generic": "Sign up successful."
+      "generic": "Sign up successful.",
+      "title": "Sign up is successful",
+      "description": "Thank you for signing up. You'll now receive a verification email. Please check your inbox, including your spam folder. In case you don't receive the email, make sure that the email address is correct. If it's not, sign up again with the correct email address."
     }
   },
   "forgotPasswordForm": {

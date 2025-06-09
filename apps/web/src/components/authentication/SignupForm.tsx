@@ -1,10 +1,13 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { emailSchema, passwordSchema } from "@stage-locker/types";
 import { Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { z } from "zod";
+
+import type { RequestState } from "@/web/types/api";
 
 import { useSignup } from "@/web/api/auth/signup/useSignup";
 import { Button } from "@/web/components/ui/button";
@@ -15,6 +18,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/web/components/ui/card";
+import { CardActionSuccess } from "@/web/components/ui/card-action-success";
 import {
   Form,
   FormControl,
@@ -31,6 +35,7 @@ import { Routes } from "@/web/types/router";
 function SignupForm() {
   const { t, i18n } = useTranslation();
   const { signup, isPending } = useSignup();
+  const [signupState, setSignupState] = useState<RequestState>("idle");
 
   const formSchema = z
     .object({
@@ -80,8 +85,7 @@ function SignupForm() {
           console.log("Signup successful", data);
           toast.success(t("signupForm.success.generic"));
           form.reset();
-
-          // TODO: show message to check email for verification link
+          setSignupState("success");
         },
         onError: (error) => {
           console.error("Signup error: ", error);
@@ -100,6 +104,17 @@ function SignupForm() {
       console.error("Form submission error", error);
       toast.error(t("common.error.generic"));
     }
+  }
+
+  if (signupState === "success") {
+    return (
+      <CardActionSuccess
+        title={t("signupForm.success.title")}
+        description={t("signupForm.success.description")}
+        link={Routes.ROOT}
+        linkText={t("page.home.title")}
+      />
+    );
   }
 
   return (

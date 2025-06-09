@@ -16,6 +16,7 @@ import i18n, { i18nInitPromise } from "@/web/i18n";
 import { generatePageMeta } from "@/web/lib/pageMeta";
 import { PostVerifyEmailRequestQuerySchema } from "@/web/types/auth";
 
+import { CardActionSuccess } from "../components/ui/card-action-success";
 import { Routes } from "../types/router";
 
 const verifyEmailSearchSchema = PostVerifyEmailRequestQuerySchema.extend({
@@ -48,14 +49,10 @@ function VerifyEmailPage() {
   const { token } = Route.useSearch();
   const { t } = useTranslation();
   const [verificationState, setVerificationState] = useState<RequestState>("loading");
-  console.log("🚀 ~ VerifyEmailPage ~ verificationState:", verificationState);
   const [sendVerificationEmailState, setSendVerificationEmailState] = useState<RequestState>("idle");
-  console.log("🚀 ~ VerifyEmailPage ~ sendVerificationEmailState:", sendVerificationEmailState);
+  const isSendVerificationEmailFlow = (verificationState === "error" || verificationState === "invalid") && sendVerificationEmailState !== "idle";
   const { isError, error, status } = useVerifyEmail({ token });
   const { sendVerificationEmail, isPending: sendVerificationEmailIsPending } = useSendVerificationEmail();
-
-  const isSendVerificationEmailFlow = (verificationState === "error" || verificationState === "invalid") && sendVerificationEmailState !== "idle";
-  console.log("🚀 ~ VerifyEmailPage ~ isSendVerificationEmailFlow:", isSendVerificationEmailFlow);
 
   useEffect(() => {
     if (status === "success") {
@@ -80,12 +77,10 @@ function VerifyEmailPage() {
     setSendVerificationEmailState("loading");
 
     sendVerificationEmail({ body: { id: sub as string } }, {
-      onSuccess: (data) => {
-        console.log("sendVerificationEmail successful", data);
+      onSuccess: () => {
         setSendVerificationEmailState("success");
       },
       onError: (error) => {
-        console.error("sendVerificationEmail error: ", error);
         setSendVerificationEmailState("error");
 
         // TODO check possible errors
@@ -234,26 +229,12 @@ function VerifyEmailPage() {
 
   if (verificationState === "success") {
     return (
-      <div className="flex items-center justify-center md:my-20">
-        <Card className="w-full max-w-md">
-          <CardHeader className="text-center">
-            <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
-              <CircleCheck className="w-8 h-8 text-green-600" />
-            </div>
-            <CardTitle className="text-2xl">{t("page.verifyEmail.success.title")}</CardTitle>
-            <CardDescription>
-              {t("page.verifyEmail.success.description")}
-            </CardDescription>
-          </CardHeader>
-          <CardFooter className="flex flex-col space-y-3">
-            <div className="text-center space-y-4">
-              <Link to={Routes.LOGIN} className="underline">
-                {t("page.login.title")}
-              </Link>
-            </div>
-          </CardFooter>
-        </Card>
-      </div>
+      <CardActionSuccess
+        title={t("page.verifyEmail.success.title")}
+        description={t("page.verifyEmail.success.description")}
+        link={Routes.LOGIN}
+        linkText={t("page.login.title")}
+      />
     );
   }
 

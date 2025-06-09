@@ -108,7 +108,9 @@
     "loginPrompt": "Já tem uma conta?",
     "loginLink": "Entrar",
     "success": {
-      "generic": "Conta criada com sucesso."
+      "generic": "Conta criada com sucesso.",
+      "title": "Conta criada com sucesso",
+      "description": "Obrigado por criar uma conta. Agora receberá um email de verificação. Por favor, verifique a sua caixa de entrada, incluindo a pasta de spam. Caso não receba o email, certifique-se de que o endereço de email está correto. Se não for, inscreva-se novamente com o endereço de email correto."
     }
   },
   "forgotPasswordForm": {

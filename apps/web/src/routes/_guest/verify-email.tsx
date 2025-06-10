@@ -12,18 +12,17 @@ import { useVerifyEmail } from "@/web/api/auth/verify-email/useVerifyEmail";
 import { Alert, AlertDescription } from "@/web/components/ui/alert";
 import { Button } from "@/web/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/web/components/ui/card";
+import { CardActionSuccess } from "@/web/components/ui/card-action-success";
 import i18n, { i18nInitPromise } from "@/web/i18n";
 import { generatePageMeta } from "@/web/lib/pageMeta";
 import { PostVerifyEmailRequestQuerySchema } from "@/web/types/auth";
-
-import { CardActionSuccess } from "../components/ui/card-action-success";
-import { Routes } from "../types/router";
+import { Routes } from "@/web/types/router";
 
 const verifyEmailSearchSchema = PostVerifyEmailRequestQuerySchema.extend({
   token: tokenSchema().optional(),
 });
 
-export const Route = createFileRoute("/verify-email")({
+export const Route = createFileRoute("/_guest/verify-email")({
   component: VerifyEmailPage,
   validateSearch: verifyEmailSearchSchema,
   head: (ctx) => {

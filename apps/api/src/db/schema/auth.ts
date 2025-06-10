@@ -86,6 +86,6 @@ export const loginRequestSchema = z.object({
 
 export const loginResponseSchema = z.object({
   id: z.string(),
-  email: z.string().email(),
+  email: emailSchema,
   token: z.string(),
 });

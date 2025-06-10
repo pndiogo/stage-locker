@@ -1,35 +1,15 @@
-import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 
-import { getContext, Provider as TanstackQueryProvider } from "./integrations/tanstack-query/root-provider";
+import App from "./App";
 import reportWebVitals from "./reportWebVitals.ts";
-import "./i18n";
-import "./styles.css";
-// Import the generated route tree
-import { routeTree } from "./routeTree.gen";
 
-// Create a new router instance
-export const router = createRouter({
-  routeTree,
-  context: {
-    ...getContext(),
-  },
-  defaultPreload: "intent",
-  scrollRestoration: true,
-  defaultStructuralSharing: true,
-  defaultPreloadStaleTime: 0,
-});
-
-// Render the app
 const rootElement = document.getElementById("app");
 if (rootElement && !rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <StrictMode>
-      <TanstackQueryProvider>
-        <RouterProvider router={router} />
-      </TanstackQueryProvider>
+      <App />
     </StrictMode>,
   );
 }

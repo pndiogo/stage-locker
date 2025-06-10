@@ -48,6 +48,14 @@
       },
       "linkRequestNew": "Request New Verification Email",
       "linkHome": "Return to Home"
+    },
+    "profile": {
+      "title": "Profile",
+      "description": "View and edit your profile information."
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "description": "View and manage your dashboard."
     }
   },
   "common": {
@@ -85,7 +93,8 @@
         "placeholder": "******",
         "match": "Passwords must match"
       }
-    }
+    },
+    "logout": "Logout"
   },
 
   "languageSwitcher": {

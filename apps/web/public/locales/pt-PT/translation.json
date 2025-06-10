@@ -48,6 +48,14 @@
       },
       "linkRequestNew": "Solicitar novo email de verificação",
       "linkHome": "Voltar ao início"
+    },
+    "profile": {
+      "title": "Perfil",
+      "description": "Ver e editar as tuas informações de perfil."
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "description": "Ver e gerir o teu dashboard."
     }
   },
   "common": {
@@ -85,7 +93,8 @@
         "placeholder": "******",
         "match": "As senhas devem coincidir"
       }
-    }
+    },
+    "logout": "Terminar sessão"
   },
   "languageSwitcher": {
     "selectLanguage": "Selecionar Idioma"

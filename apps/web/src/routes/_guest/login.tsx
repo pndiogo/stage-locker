@@ -4,7 +4,7 @@ import { LoginForm } from "@/web/components/authentication/LoginForm";
 import i18n, { i18nInitPromise } from "@/web/i18n";
 import { generatePageMeta } from "@/web/lib/pageMeta";
 
-export const Route = createFileRoute("/login")({
+export const Route = createFileRoute("/_guest/login")({
   component: LoginPage,
   head: (ctx) => {
     const { loaderData } = ctx;

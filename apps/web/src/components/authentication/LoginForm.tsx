@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { emailSchema, passwordSchema } from "@stage-locker/types";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
@@ -25,11 +25,14 @@ import {
 } from "@/web/components/ui/form";
 import { Input } from "@/web/components/ui/input";
 import { PasswordInput } from "@/web/components/ui/password-input";
+import { useAuthStore } from "@/web/store/authStore";
 import { Routes } from "@/web/types/router";
 
 function LoginForm() {
   const { t, i18n } = useTranslation();
   const { login, isPending } = useLogin();
+  const setUser = useAuthStore(state => state.setUser);
+  const navigate = useNavigate();
 
   const formSchema = z.object({
     email: emailSchema({
@@ -62,11 +65,10 @@ function LoginForm() {
   });
 
   async function onSubmit(values: FormSchema) {
-    console.log("🚀 ~ onSubmit ~ values:", values);
-
     login({ body: values }, {
       onSuccess: (data) => {
-        console.log("Login successful", data);
+        setUser(data);
+        navigate({ to: Routes.DASHBOARD });
         toast.success(t("loginForm.success.generic"));
       },
       onError: (error) => {

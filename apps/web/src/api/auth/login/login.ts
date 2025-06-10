@@ -27,6 +27,9 @@ export async function loginRequest({ body }: RequestParams<PostLoginRequestBodyT
     }
     const [data, error] = await apiClient<PostLoginResponseSuccessType>(`${env.VITE_API_PATH}/auth/login`, {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(parsed.data),
     }, PostLoginResponseSuccessSchema, {
       400: PostLoginResponseError400Schema,

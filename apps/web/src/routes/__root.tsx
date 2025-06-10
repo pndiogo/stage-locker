@@ -1,7 +1,10 @@
 import type { QueryClient } from "@tanstack/react-query";
+import type { StoreApi, UseBoundStore } from "zustand";
 
 import { createRootRouteWithContext, HeadContent, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+
+import type { AuthStoreType } from "@/web/store/authStore";
 
 import { Breadcrumbs } from "@/web/components/layout/Breadcrumbs";
 import { Footer } from "@/web/components/layout/Footer";
@@ -14,8 +17,9 @@ import { generatePageMeta } from "@/web/lib/pageMeta";
 import { Header } from "../components/layout/Header";
 import TanstackQueryLayout from "../integrations/tanstack-query/layout";
 
-type MyRouterContext = {
+type RouterContext = {
   queryClient: QueryClient;
+  authStore: UseBoundStore<StoreApi<AuthStoreType>>;
   crumb?: string;
   meta?: {
     title: string;
@@ -23,7 +27,7 @@ type MyRouterContext = {
   };
 };
 
-export const Route = createRootRouteWithContext<MyRouterContext>()({
+export const Route = createRootRouteWithContext<RouterContext>()({
   component: () => {
     return (
       <>

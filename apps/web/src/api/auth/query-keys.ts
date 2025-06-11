@@ -3,4 +3,5 @@ export const QUERY_KEYS = {
   SIGNUP: () => ["signup"] as const,
   VERIFY_EMAIL: () => ["verifyEmail"] as const,
   SEND_VERIFICATION_EMAIL: () => ["sendVerificationEmail"] as const,
+  SEND_PASSWORD_RESET_EMAIL: () => ["sendPasswordResetEmail"] as const,
 };

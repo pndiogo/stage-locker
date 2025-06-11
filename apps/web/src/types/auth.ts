@@ -2,6 +2,7 @@ import type { z } from "zod";
 
 import { apiSchemasByTag } from "@stage-locker/types";
 
+// Login
 export const PostLoginRequestBodySchema = apiSchemasByTag.Auth.endpoints.postLogin.requestBodySchema;
 export const PostLoginResponseSuccessSchema = apiSchemasByTag.Auth.endpoints.postLogin.responses.successSchema;
 export const PostLoginResponseError400Schema = apiSchemasByTag.Auth.endpoints.postLogin.responses.errors["400Schema"];
@@ -14,6 +15,7 @@ export const PostLoginResponseError500Schema = apiSchemasByTag.Auth.endpoints.po
 export type PostLoginRequestBodyType = z.infer<typeof PostLoginRequestBodySchema>;
 export type PostLoginResponseSuccessType = z.infer<typeof PostLoginResponseSuccessSchema>;
 
+// Signup
 export const PostSignupRequestBodySchema = apiSchemasByTag.Auth.endpoints.postSignup.requestBodySchema;
 export const PostSignupResponseSuccessSchema = apiSchemasByTag.Auth.endpoints.postSignup.responses.successSchema;
 export const PostSignupResponseError400Schema = apiSchemasByTag.Auth.endpoints.postSignup.responses.errors["400Schema"];
@@ -23,6 +25,7 @@ export const PostSignupResponseError500Schema = apiSchemasByTag.Auth.endpoints.p
 export type PostSignupRequestBodyType = z.infer<typeof PostSignupRequestBodySchema>;
 export type PostSignupResponseSuccessType = z.infer<typeof PostSignupResponseSuccessSchema>;
 
+// Verify Email
 export const PostVerifyEmailRequestQuerySchema = apiSchemasByTag.Auth.endpoints.postVerifyEmail.parametersSchema;
 export const PostVerifyEmailResponseSuccessSchema = apiSchemasByTag.Auth.endpoints.postVerifyEmail.responses.successSchema;
 export const PostVerifyEmailResponseError400Schema = apiSchemasByTag.Auth.endpoints.postVerifyEmail.responses.errors["400Schema"];
@@ -33,6 +36,7 @@ export const PostVerifyEmailResponseError500Schema = apiSchemasByTag.Auth.endpoi
 export type PostVerifyEmailRequestQueryType = z.infer<typeof PostVerifyEmailRequestQuerySchema>;
 export type PostVerifyEmailResponseSuccessType = z.infer<typeof PostVerifyEmailResponseSuccessSchema>;
 
+// Send Verification Email
 export const PostSendVerificationEmailRequestBodySchema = apiSchemasByTag.Auth.endpoints.postSendVerificationEmail.requestBodySchema;
 export const PostSendVerificationEmailResponseSuccessSchema = apiSchemasByTag.Auth.endpoints.postSendVerificationEmail.responses.successSchema;
 export const PostSendVerificationEmailResponseError400Schema = apiSchemasByTag.Auth.endpoints.postSendVerificationEmail.responses.errors["400Schema"];
@@ -43,3 +47,24 @@ export const PostSendVerificationEmailResponseError500Schema = apiSchemasByTag.A
 
 export type PostSendVerificationEmailRequestBodyType = z.infer<typeof PostSendVerificationEmailRequestBodySchema>;
 export type PostSendVerificationEmailResponseSuccessType = z.infer<typeof PostSendVerificationEmailResponseSuccessSchema>;
+
+// Send Password Reset Email
+export const PostSendPasswordResetEmailRequestBodySchema = apiSchemasByTag.Auth.endpoints.postSendPasswordResetEmail.requestBodySchema;
+export const PostSendPasswordResetEmailResponseSuccessSchema = apiSchemasByTag.Auth.endpoints.postSendPasswordResetEmail.responses.successSchema;
+export const PostSendPasswordResetEmailResponseError422Schema = apiSchemasByTag.Auth.endpoints.postSendPasswordResetEmail.responses.errors["422Schema"];
+export const PostSendPasswordResetEmailResponseError429Schema = apiSchemasByTag.Auth.endpoints.postSendPasswordResetEmail.responses.errors["429Schema"];
+export const PostSendPasswordResetEmailResponseError500Schema = apiSchemasByTag.Auth.endpoints.postSendPasswordResetEmail.responses.errors["500Schema"];
+
+export type PostSendPasswordResetEmailRequestBodyType = z.infer<typeof PostSendPasswordResetEmailRequestBodySchema>;
+export type PostSendPasswordResetEmailResponseSuccessType = z.infer<typeof PostSendPasswordResetEmailResponseSuccessSchema>;
+
+// Forgot Password
+export const PostForgotPasswordRequestBodySchema = apiSchemasByTag.Auth.endpoints.postResetPassword.requestBodySchema;
+export const PostForgotPasswordResponseSuccessSchema = apiSchemasByTag.Auth.endpoints.postResetPassword.responses.successSchema;
+export const PostForgotPasswordResponseError401Schema = apiSchemasByTag.Auth.endpoints.postResetPassword.responses.errors["401Schema"];
+export const PostForgotPasswordResponseError404Schema = apiSchemasByTag.Auth.endpoints.postResetPassword.responses.errors["404Schema"];
+export const PostForgotPasswordResponseError422Schema = apiSchemasByTag.Auth.endpoints.postResetPassword.responses.errors["422Schema"];
+export const PostForgotPasswordResponseError500Schema = apiSchemasByTag.Auth.endpoints.postResetPassword.responses.errors["500Schema"];
+
+export type PostForgotPasswordRequestBodyType = z.infer<typeof PostForgotPasswordRequestBodySchema>;
+export type PostForgotPasswordResponseSuccessType = z.infer<typeof PostForgotPasswordResponseSuccessSchema>;

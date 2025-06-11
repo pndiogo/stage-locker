@@ -129,6 +129,10 @@
     "signupPrompt": "Não tem uma conta?",
     "signupLink": "Criar conta",
     "loginPrompt": "Lembrou-se da sua senha?",
-    "loginLink": "Entrar"
+    "loginLink": "Entrar",
+    "success": {
+      "title": "Email enviado com sucesso.",
+      "description": "Um email de redefinição de senha foi enviado para o seu endereço de email. Por favor, verifique a sua caixa de entrada, incluindo a pasta de spam. Caso não receba o email, certifique-se de que o endereço de email está correto. Se não for, inscreva-se novamente com o endereço de email correto."
+    }
   }
 }

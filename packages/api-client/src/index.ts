@@ -133,7 +133,7 @@ export async function apiClient<T>(
   init: RequestInit | undefined,
   responseSuccessSchema?: ZodSchema<T>,
   responseErrorSchemas?: Record<number, ZodSchema<any>>,
-): Promise<[T | null, FormattedError | null]> {
+): Promise<[T | null | undefined, FormattedError | null]> {
   try {
     const res = await fetch(input, init);
 
@@ -166,15 +166,17 @@ export async function apiClient<T>(
       return [json as T, null];
     }
 
-
     if (res.headers.get("content-type")?.includes("text/plain")) {
       const text = await res.text();
       return [text as T, null];
     }
 
+    if (res.status === 204) {
+      return [undefined as T, null];
+    }
+
     // handle other responses
     return [null, formatError({ message: "Unknown response type" })];
-
   }
   catch (e) {
     if (e instanceof Error) {

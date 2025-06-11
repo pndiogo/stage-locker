@@ -1,4 +1,4 @@
-import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/web/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/web/components/ui/card";
 import { CircleCheck } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 
@@ -18,10 +18,12 @@ function CardActionSuccess({ title, description, link, linkText }: Props) {
           <CircleCheck className="w-8 h-8 text-green-600" />
         </div>
         <CardTitle className="text-2xl">{title}</CardTitle>
+      </CardHeader>
+      <CardContent>
         <CardDescription>
           {description}
         </CardDescription>
-      </CardHeader>
+      </CardContent>
       <CardFooter className="flex flex-col space-y-3">
         <div className="text-center space-y-4">
           <Link to={link} className="underline">

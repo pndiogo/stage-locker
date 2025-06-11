@@ -17,7 +17,7 @@ import {
   PostSendVerificationEmailResponseSuccessSchema,
 } from "@/web/types/auth";
 
-export async function sendVerificationEmailRequest({ body }: RequestParams<PostSendVerificationEmailRequestBodyType>): Promise<PostSendVerificationEmailResponseSuccessType | null> {
+export async function sendVerificationEmailRequest({ body }: RequestParams<PostSendVerificationEmailRequestBodyType>): Promise<PostSendVerificationEmailResponseSuccessType> {
   try {
     const parsed = PostSendVerificationEmailRequestBodySchema.safeParse(sanitizeAndTrimObject(body));
 
@@ -43,7 +43,7 @@ export async function sendVerificationEmailRequest({ body }: RequestParams<PostS
       throw error;
     }
 
-    return data;
+    return data as undefined;
   }
   catch (error: FormattedError | unknown) {
     if (isFormattedError(error)) {

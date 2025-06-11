@@ -1,11 +1,14 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { emailSchema } from "@stage-locker/types";
 import { Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { toast } from "sonner";
 import { z } from "zod";
 
+import type { RequestState } from "@/web/types/api";
+
+import { useSendPasswordResetEmail } from "@/web/api/auth/send-password-reset-email/useSendPasswordResetEmail";
 import { Button } from "@/web/components/ui/button";
 import {
   Card,
@@ -14,6 +17,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/web/components/ui/card";
+import { CardActionSuccess } from "@/web/components/ui/card-action-success";
 import {
   Form,
   FormControl,
@@ -27,9 +31,9 @@ import { Routes } from "@/web/types/router";
 
 function ForgotPasswordForm() {
   const { t, i18n } = useTranslation();
+  const [sendPasswordResetEmailState, setSendPasswordResetEmailState] = useState<RequestState>("idle");
 
-  // TODO remove after implementation of forgot password request
-  const isPending = false;
+  const { sendPasswordResetEmail, isPending: sendPasswordResetEmailIsPending } = useSendPasswordResetEmail();
 
   const formSchema = z.object({
     email: emailSchema({
@@ -51,19 +55,25 @@ function ForgotPasswordForm() {
   });
 
   async function onSubmit(values: FormSchema) {
-    try {
-      // Assuming an async login function
-      console.log(values);
-      toast(
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(values, null, 2)}</code>
-        </pre>,
-      );
-    }
-    catch (error) {
-      console.error("Form submission error", error);
-      toast.error(t("common.error.generic"));
-    }
+    sendPasswordResetEmail({ body: values }, {
+      onSuccess: () => {
+        setSendPasswordResetEmailState("success");
+      },
+      onError: () => {
+        form.setError("root", { type: "manual", message: t("common.error.generic") });
+      },
+    });
+  }
+
+  if (sendPasswordResetEmailState === "success") {
+    return (
+      <CardActionSuccess
+        title={t("forgotPasswordForm.success.title")}
+        description={t("forgotPasswordForm.success.description")}
+        link={Routes.ROOT}
+        linkText={t("page.home.title")}
+      />
+    );
   }
 
   return (
@@ -106,9 +116,15 @@ function ForgotPasswordForm() {
                   )}
                 />
 
-                <Button type="submit" className="w-full" loading={isPending}>
+                <Button type="submit" className="w-full" loading={sendPasswordResetEmailIsPending}>
                   {t("forgotPasswordForm.submit")}
                 </Button>
+
+                {form.formState.errors.root && (
+                  <div className="text-red-500 text-center text-sm">
+                    {form.formState.errors.root?.message}
+                  </div>
+                )}
               </div>
             </form>
           </Form>

@@ -130,6 +130,10 @@
     "signupPrompt": "Don't have an account?",
     "signupLink": "Sign Up",
     "loginPrompt": "Remembered your password?",
-    "loginLink": "Login"
+    "loginLink": "Login",
+    "success": {
+      "title": "Password reset email sent",
+      "description": "A password reset email has been sent to your email address. Please check your inbox, including your spam folder. In case you don't receive the email, make sure that the email address is correct. If it's not, sign up again with the correct email address."
+    }
   }
 }

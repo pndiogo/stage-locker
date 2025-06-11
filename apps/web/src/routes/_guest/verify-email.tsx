@@ -69,8 +69,8 @@ function VerifyEmailPage() {
     const { sub } = decodeJwt(token);
 
     if (!sub) {
-      // do something
-      console.error("No sub found in token");
+      setVerificationState("error");
+      return;
     }
 
     setSendVerificationEmailState("loading");
@@ -79,19 +79,8 @@ function VerifyEmailPage() {
       onSuccess: () => {
         setSendVerificationEmailState("success");
       },
-      onError: (error) => {
+      onError: () => {
         setSendVerificationEmailState("error");
-
-        // TODO check possible errors
-        if (error.status === 401 || error.status === 404) {
-          console.error("sendVerificationEmail error: ", error);
-        }
-        else if (error.status === 403) {
-          console.error("sendVerificationEmail error: ", error);
-        }
-        else {
-          console.error("sendVerificationEmail error: ", error);
-        }
       },
     });
   };

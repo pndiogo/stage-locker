@@ -74,10 +74,15 @@ function SignupForm() {
   });
 
   async function onSubmit(values: FormSchema) {
-    signup({ body: {
-      email: values.email,
-      password: values.password,
-    } }, {
+    signup({
+      headers: {
+        "Accept-Language": i18n.language,
+      },
+      body: {
+        email: values.email,
+        password: values.password,
+      },
+    }, {
       onSuccess: () => {
         form.reset();
         setSignupState("success");

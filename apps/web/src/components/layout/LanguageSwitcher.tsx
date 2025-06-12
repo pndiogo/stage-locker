@@ -1,3 +1,4 @@
+import { supportedLanguages } from "@stage-locker/types";
 import { useRouter } from "@tanstack/react-router";
 import { t } from "i18next";
 import { Globe } from "lucide-react";
@@ -11,7 +12,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/web/components/ui/select";
-import { supportedLanguages } from "@/web/i18n";
 
 function LanguageSwitcher() {
   const { i18n } = useTranslation();

@@ -15,6 +15,7 @@ import type { GetUserRoute, LoginRoute, ResetPasswordRoute, SendPasswordResetEma
 export const signup: AppRouteHandler<SignupRoute> = async (c) => {
   const user = c.req.valid("json");
   const { email, password } = user;
+  const language = c.var.language;
 
   const normalizedEmail = email.trim().toLowerCase();
 
@@ -49,6 +50,7 @@ export const signup: AppRouteHandler<SignupRoute> = async (c) => {
     await sendVerificationEmailToUser({
       email: sanitizedUser.email,
       verificationToken,
+      language,
     });
 
     await db.update(users)
@@ -107,6 +109,7 @@ export const verifyEmail: AppRouteHandler<VerifyEmailRoute> = async (c) => {
 
 export const sendVerificationEmail: AppRouteHandler<SendVerificationEmailRoute> = async (c) => {
   const { id } = c.req.valid("json");
+  const language = c.var.language;
 
   const user = await db.query.users.findFirst({
     where(fields, operators) {
@@ -134,6 +137,7 @@ export const sendVerificationEmail: AppRouteHandler<SendVerificationEmailRoute> 
     await sendVerificationEmailToUser({
       email: user.email,
       verificationToken,
+      language,
     });
 
     await db.update(users)
@@ -163,6 +167,7 @@ export const sendVerificationEmail: AppRouteHandler<SendVerificationEmailRoute> 
 
 export const sendPasswordResetEmail: AppRouteHandler<SendPasswordResetEmailRoute> = async (c) => {
   const { email } = c.req.valid("json");
+  const language = c.var.language;
 
   const normalizedEmail = email.trim().toLowerCase();
 
@@ -182,6 +187,7 @@ export const sendPasswordResetEmail: AppRouteHandler<SendPasswordResetEmailRoute
     await sendPasswordResetEmailToUser({
       email: user.email,
       passwordResetToken,
+      language,
     });
 
     await db.update(users)
@@ -262,6 +268,10 @@ export const login: AppRouteHandler<LoginRoute> = async (c) => {
       HttpStatusCodes.UNAUTHORIZED,
     );
   }
+
+  await db.update(users)
+    .set({ passwordResetToken: null })
+    .where(eq(users.id, user.id));
 
   const token = await generateLoginJWT({ sub: user.id });
 

@@ -3,7 +3,7 @@ import type { FormattedError } from "@stage-locker/api-client";
 import { apiClient, isFormattedError, throwValidationError } from "@stage-locker/api-client";
 import { sanitizeAndTrimObject } from "@stage-locker/utils";
 
-import type { RequestParams } from "@/web/types/api";
+import type { Headers, RequestParams } from "@/web/types/api";
 import type { PostLoginRequestBodyType, PostLoginResponseSuccessType } from "@/web/types/auth";
 
 import { env } from "@/web/env";
@@ -18,7 +18,7 @@ import {
   PostLoginResponseSuccessSchema,
 } from "@/web/types/auth";
 
-export async function loginRequest({ body }: RequestParams<PostLoginRequestBodyType>): Promise<PostLoginResponseSuccessType> {
+export async function loginRequest({ body, headers }: RequestParams<PostLoginRequestBodyType, Headers>): Promise<PostLoginResponseSuccessType> {
   try {
     const parsed = PostLoginRequestBodySchema.safeParse(sanitizeAndTrimObject(body));
 
@@ -29,6 +29,7 @@ export async function loginRequest({ body }: RequestParams<PostLoginRequestBodyT
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        ...headers,
       },
       body: JSON.stringify(parsed.data),
     }, PostLoginResponseSuccessSchema, {

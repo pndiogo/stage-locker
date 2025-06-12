@@ -3,7 +3,7 @@ import type { FormattedError } from "@stage-locker/api-client";
 import { apiClient, isFormattedError, throwValidationError } from "@stage-locker/api-client";
 import { sanitizeAndTrimObject } from "@stage-locker/utils";
 
-import type { RequestParams } from "@/web/types/api";
+import type { Headers, RequestParams } from "@/web/types/api";
 import type { PostSignupRequestBodyType, PostSignupResponseSuccessType } from "@/web/types/auth";
 
 import { env } from "@/web/env";
@@ -15,7 +15,7 @@ import {
   PostSignupResponseSuccessSchema,
 } from "@/web/types/auth";
 
-export async function signupRequest({ body }: RequestParams<PostSignupRequestBodyType>): Promise<PostSignupResponseSuccessType> {
+export async function signupRequest({ body, headers }: RequestParams<PostSignupRequestBodyType, Headers>): Promise<PostSignupResponseSuccessType> {
   try {
     const parsed = PostSignupRequestBodySchema.safeParse(sanitizeAndTrimObject(body));
 
@@ -27,6 +27,7 @@ export async function signupRequest({ body }: RequestParams<PostSignupRequestBod
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        ...headers,
       },
       body: JSON.stringify(parsed.data),
     }, PostSignupResponseSuccessSchema, {

@@ -1,4 +1,5 @@
 import type { OpenAPIHono, RouteConfig, RouteHandler } from "@hono/zod-openapi";
+import type { SupportedLanguagesCode } from "@stage-locker/types";
 import type { InferSelectModel } from "drizzle-orm";
 import type { Schema } from "hono";
 import type { PinoLogger } from "hono-pino";
@@ -11,6 +12,7 @@ export type AppEnv = {
   Variables: {
     logger: PinoLogger;
     user: User;
+    language: SupportedLanguagesCode;
   };
 };
 

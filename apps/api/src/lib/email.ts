@@ -1,4 +1,7 @@
 import "dotenv/config";
+
+import type { SupportedLanguagesCode } from "@stage-locker/types";
+
 import { EmailParams, MailerSend, Recipient, Sender } from "mailersend";
 
 import env from "@/api/env";
@@ -49,14 +52,30 @@ async function sendEmail({
 export async function sendVerificationEmailToUser({
   email,
   verificationToken,
+  language,
 }: {
   email: string;
   verificationToken: string;
+  language: SupportedLanguagesCode;
 }) {
+  let templateId;
+
+  switch (language) {
+    case "en-US":
+      templateId = env.MAILERSEND_EN_VERIFY_EMAIL_TEMPLATE_ID;
+      break;
+    case "pt-PT":
+      templateId = env.MAILERSEND_PT_VERIFY_EMAIL_TEMPLATE_ID;
+      break;
+    default:
+      templateId = env.MAILERSEND_EN_VERIFY_EMAIL_TEMPLATE_ID;
+      break;
+  }
+
   await sendEmail({
     email,
     token: verificationToken,
-    templateId: env.MAILERSEND_VERIFY_EMAIL_TEMPLATE_ID,
+    templateId,
     linkPath: "verify-email",
     personalizationData: {
       verify_email_link: `${env.FRONTEND_URL}/verify-email?token=${verificationToken}`,
@@ -67,14 +86,30 @@ export async function sendVerificationEmailToUser({
 export async function sendPasswordResetEmailToUser({
   email,
   passwordResetToken,
+  language,
 }: {
   email: string;
   passwordResetToken: string;
+  language: SupportedLanguagesCode;
 }) {
+  let templateId;
+
+  switch (language) {
+    case "en-US":
+      templateId = env.MAILERSEND_EN_PASSWORD_RESET_TEMPLATE_ID;
+      break;
+    case "pt-PT":
+      templateId = env.MAILERSEND_PT_PASSWORD_RESET_TEMPLATE_ID;
+      break;
+    default:
+      templateId = env.MAILERSEND_EN_PASSWORD_RESET_TEMPLATE_ID;
+      break;
+  }
+
   await sendEmail({
     email,
     token: passwordResetToken,
-    templateId: env.MAILERSEND_RESET_PASSWORD_TEMPLATE_ID,
+    templateId,
     linkPath: "reset-password",
     personalizationData: {
       reset_password_link: `${env.FRONTEND_URL}/reset-password?token=${passwordResetToken}`,

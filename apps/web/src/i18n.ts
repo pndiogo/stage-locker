@@ -1,3 +1,4 @@
+import { defaultLanguage } from "@stage-locker/types";
 import i18n from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import Backend from "i18next-http-backend";
@@ -14,18 +15,13 @@ const i18nInitPromise = i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    fallbackLng: "en-US",
+    fallbackLng: defaultLanguage.code,
     interpolation: {
       escapeValue: false,
     },
     detection: detectionOptions,
   });
 
-const supportedLanguages = [
-  { code: "en-US", name: "English", shortName: "EN" },
-  { code: "pt-PT", name: "Português", shortName: "PT" },
-];
-
-export { i18nInitPromise, supportedLanguages };
+export { i18nInitPromise };
 
 export default i18n;

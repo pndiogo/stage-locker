@@ -23,7 +23,7 @@ const verifyEmailSearchSchema = PostVerifyEmailRequestQuerySchema.extend({
 });
 
 export const Route = createFileRoute("/_guest/verify-email")({
-  component: VerifyEmailPage,
+  component: VerifyEmail,
   validateSearch: verifyEmailSearchSchema,
   head: (ctx) => {
     const { loaderData } = ctx;
@@ -44,7 +44,7 @@ export const Route = createFileRoute("/_guest/verify-email")({
   },
 });
 
-function VerifyEmailPage() {
+function VerifyEmail() {
   const { token } = Route.useSearch();
   const { t } = useTranslation();
   const [verificationState, setVerificationState] = useState<RequestState>("loading");

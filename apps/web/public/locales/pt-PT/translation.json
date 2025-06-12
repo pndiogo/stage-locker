@@ -49,6 +49,10 @@
       "linkRequestNew": "Solicitar novo email de verificação",
       "linkHome": "Voltar ao início"
     },
+    "resetPassword": {
+      "title": "Recuperar Senha",
+      "description": "Recuperar a sua senha."
+    },
     "profile": {
       "title": "Perfil",
       "description": "Ver e editar as tuas informações de perfil."
@@ -133,6 +137,18 @@
     "success": {
       "title": "Email enviado com sucesso.",
       "description": "Um email de redefinição de senha foi enviado para o seu endereço de email. Por favor, verifique a sua caixa de entrada, incluindo a pasta de spam. Caso não receba o email, certifique-se de que o endereço de email está correto. Se não for, inscreva-se novamente com o endereço de email correto."
+    }
+  },
+  "resetPasswordForm": {
+    "title": "Repor Senha",
+    "description": "Insira a nova senha para redefini-la.",
+    "submit": "Repor Senha",
+    "success": {
+      "title": "Senha redefinida com sucesso.",
+      "description": "A sua senha foi redefinida com sucesso. Agora pode aceder à sua conta."
+    },
+    "error": {
+      "expired": "Token expirado. Por favor, solicite um novo link de redefinição de senha."
     }
   }
 }

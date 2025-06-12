@@ -51,7 +51,7 @@ function Header() {
         <nav className="flex flex-row items-center justify-between w-full">
           <div className="font-bold">
             <Link to={Routes.ROOT} className="flex items-center gap-2">
-              <svg width="100%" height="100%" viewBox="0 0 187 156" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" xmlSpace="preserve" style={{ fillRule: "evenodd", clipRule: "evenodd", strokeLinejoin: "round", strokeMiterlimit: 2, height: "20px", width: "auto", flex: "0 0 20px" }}>
+              <svg width="100%" height="100%" viewBox="0 0 187 156" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" xmlSpace="preserve" style={{ fillRule: "evenodd", clipRule: "evenodd", strokeLinejoin: "round", strokeMiterlimit: 2, flex: "0 0 22px" }}>
                 <g transform="matrix(1,0,0,1,-2183.38,-972.854)">
                   <g transform="matrix(1,0,0,1,2100,700)">
                     <g transform="matrix(4.58236e-16,7.48357,-7.48357,4.58236e-16,4023.02,-5337.04)">

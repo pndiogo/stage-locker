@@ -3,7 +3,6 @@ import { emailSchema, passwordSchema } from "@stage-locker/types";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { toast } from "sonner";
 import { z } from "zod";
 
 import { useLogin } from "@/web/api/auth/login/useLogin";
@@ -69,12 +68,8 @@ function LoginForm() {
       onSuccess: (data) => {
         setUser(data);
         navigate({ to: Routes.DASHBOARD });
-        toast.success(t("loginForm.success.generic"));
       },
       onError: (error) => {
-        console.error("Login error: ", error);
-        toast.error(t("common.error.generic"));
-
         if (error.status === 401 || error.status === 404) {
           form.setError("root", { type: "manual", message: t("common.error.auth") });
         }

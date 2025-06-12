@@ -5,7 +5,7 @@ import i18n, { i18nInitPromise } from "@/web/i18n";
 import { generatePageMeta } from "@/web/lib/pageMeta";
 
 export const Route = createFileRoute("/_guest/forgot-password")({
-  component: ForgotPasswordPage,
+  component: ForgotPassword,
   head: (ctx) => {
     const { loaderData } = ctx;
     const { meta } = loaderData || {};
@@ -25,7 +25,7 @@ export const Route = createFileRoute("/_guest/forgot-password")({
   },
 });
 
-function ForgotPasswordPage() {
+function ForgotPassword() {
   return (
     <ForgotPasswordForm />
   );

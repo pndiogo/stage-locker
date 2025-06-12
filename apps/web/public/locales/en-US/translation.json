@@ -49,6 +49,10 @@
       "linkRequestNew": "Request New Verification Email",
       "linkHome": "Return to Home"
     },
+    "resetPassword": {
+      "title": "Reset Password",
+      "description": "Reset your password."
+    },
     "profile": {
       "title": "Profile",
       "description": "View and edit your profile information."
@@ -134,6 +138,18 @@
     "success": {
       "title": "Password reset email sent",
       "description": "A password reset email has been sent to your email address. Please check your inbox, including your spam folder. In case you don't receive the email, make sure that the email address is correct. If it's not, sign up again with the correct email address."
+    }
+  },
+  "resetPasswordForm": {
+    "title": "Reset Password",
+    "description": "Enter you new password to reset it.",
+    "submit": "Reset Password",
+    "success": {
+      "title": "Password reset successful",
+      "description": "Your password has been reset successfully. You can now login with your new password."
+    },
+    "error": {
+      "expired": "Token expired. Please request a new password reset link."
     }
   }
 }

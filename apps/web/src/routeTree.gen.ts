@@ -17,6 +17,7 @@ import { Route as IndexImport } from './routes/index'
 import { Route as DemoTanstackQueryImport } from './routes/demo.tanstack-query'
 import { Route as GuestVerifyEmailImport } from './routes/_guest/verify-email'
 import { Route as GuestSignupImport } from './routes/_guest/signup'
+import { Route as GuestResetPasswordImport } from './routes/_guest/reset-password'
 import { Route as GuestLoginImport } from './routes/_guest/login'
 import { Route as GuestForgotPasswordImport } from './routes/_guest/forgot-password'
 import { Route as AuthenticatedProfileImport } from './routes/_authenticated/profile'
@@ -55,6 +56,12 @@ const GuestVerifyEmailRoute = GuestVerifyEmailImport.update({
 const GuestSignupRoute = GuestSignupImport.update({
   id: '/signup',
   path: '/signup',
+  getParentRoute: () => GuestRoute,
+} as any)
+
+const GuestResetPasswordRoute = GuestResetPasswordImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => GuestRoute,
 } as any)
 
@@ -135,6 +142,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuestLoginImport
       parentRoute: typeof GuestImport
     }
+    '/_guest/reset-password': {
+      id: '/_guest/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof GuestResetPasswordImport
+      parentRoute: typeof GuestImport
+    }
     '/_guest/signup': {
       id: '/_guest/signup'
       path: '/signup'
@@ -178,6 +192,7 @@ const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
 interface GuestRouteChildren {
   GuestForgotPasswordRoute: typeof GuestForgotPasswordRoute
   GuestLoginRoute: typeof GuestLoginRoute
+  GuestResetPasswordRoute: typeof GuestResetPasswordRoute
   GuestSignupRoute: typeof GuestSignupRoute
   GuestVerifyEmailRoute: typeof GuestVerifyEmailRoute
 }
@@ -185,6 +200,7 @@ interface GuestRouteChildren {
 const GuestRouteChildren: GuestRouteChildren = {
   GuestForgotPasswordRoute: GuestForgotPasswordRoute,
   GuestLoginRoute: GuestLoginRoute,
+  GuestResetPasswordRoute: GuestResetPasswordRoute,
   GuestSignupRoute: GuestSignupRoute,
   GuestVerifyEmailRoute: GuestVerifyEmailRoute,
 }
@@ -198,6 +214,7 @@ export interface FileRoutesByFullPath {
   '/profile': typeof AuthenticatedProfileRoute
   '/forgot-password': typeof GuestForgotPasswordRoute
   '/login': typeof GuestLoginRoute
+  '/reset-password': typeof GuestResetPasswordRoute
   '/signup': typeof GuestSignupRoute
   '/verify-email': typeof GuestVerifyEmailRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
@@ -210,6 +227,7 @@ export interface FileRoutesByTo {
   '/profile': typeof AuthenticatedProfileRoute
   '/forgot-password': typeof GuestForgotPasswordRoute
   '/login': typeof GuestLoginRoute
+  '/reset-password': typeof GuestResetPasswordRoute
   '/signup': typeof GuestSignupRoute
   '/verify-email': typeof GuestVerifyEmailRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
@@ -224,6 +242,7 @@ export interface FileRoutesById {
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_guest/forgot-password': typeof GuestForgotPasswordRoute
   '/_guest/login': typeof GuestLoginRoute
+  '/_guest/reset-password': typeof GuestResetPasswordRoute
   '/_guest/signup': typeof GuestSignupRoute
   '/_guest/verify-email': typeof GuestVerifyEmailRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
@@ -238,6 +257,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/forgot-password'
     | '/login'
+    | '/reset-password'
     | '/signup'
     | '/verify-email'
     | '/demo/tanstack-query'
@@ -249,6 +269,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/forgot-password'
     | '/login'
+    | '/reset-password'
     | '/signup'
     | '/verify-email'
     | '/demo/tanstack-query'
@@ -261,6 +282,7 @@ export interface FileRouteTypes {
     | '/_authenticated/profile'
     | '/_guest/forgot-password'
     | '/_guest/login'
+    | '/_guest/reset-password'
     | '/_guest/signup'
     | '/_guest/verify-email'
     | '/demo/tanstack-query'
@@ -312,6 +334,7 @@ export const routeTree = rootRoute
       "children": [
         "/_guest/forgot-password",
         "/_guest/login",
+        "/_guest/reset-password",
         "/_guest/signup",
         "/_guest/verify-email"
       ]
@@ -330,6 +353,10 @@ export const routeTree = rootRoute
     },
     "/_guest/login": {
       "filePath": "_guest/login.tsx",
+      "parent": "/_guest"
+    },
+    "/_guest/reset-password": {
+      "filePath": "_guest/reset-password.tsx",
       "parent": "/_guest"
     },
     "/_guest/signup": {

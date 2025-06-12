@@ -58,13 +58,13 @@ export const PostSendPasswordResetEmailResponseError500Schema = apiSchemasByTag.
 export type PostSendPasswordResetEmailRequestBodyType = z.infer<typeof PostSendPasswordResetEmailRequestBodySchema>;
 export type PostSendPasswordResetEmailResponseSuccessType = z.infer<typeof PostSendPasswordResetEmailResponseSuccessSchema>;
 
-// Forgot Password
-export const PostForgotPasswordRequestBodySchema = apiSchemasByTag.Auth.endpoints.postResetPassword.requestBodySchema;
-export const PostForgotPasswordResponseSuccessSchema = apiSchemasByTag.Auth.endpoints.postResetPassword.responses.successSchema;
-export const PostForgotPasswordResponseError401Schema = apiSchemasByTag.Auth.endpoints.postResetPassword.responses.errors["401Schema"];
-export const PostForgotPasswordResponseError404Schema = apiSchemasByTag.Auth.endpoints.postResetPassword.responses.errors["404Schema"];
-export const PostForgotPasswordResponseError422Schema = apiSchemasByTag.Auth.endpoints.postResetPassword.responses.errors["422Schema"];
-export const PostForgotPasswordResponseError500Schema = apiSchemasByTag.Auth.endpoints.postResetPassword.responses.errors["500Schema"];
+// Reset Password
+export const PostResetPasswordRequestBodySchema = apiSchemasByTag.Auth.endpoints.postResetPassword.requestBodySchema;
+export const PostResetPasswordResponseSuccessSchema = apiSchemasByTag.Auth.endpoints.postResetPassword.responses.successSchema;
+export const PostResetPasswordResponseError401Schema = apiSchemasByTag.Auth.endpoints.postResetPassword.responses.errors["401Schema"];
+export const PostResetPasswordResponseError404Schema = apiSchemasByTag.Auth.endpoints.postResetPassword.responses.errors["404Schema"];
+export const PostResetPasswordResponseError422Schema = apiSchemasByTag.Auth.endpoints.postResetPassword.responses.errors["422Schema"];
+export const PostResetPasswordResponseError500Schema = apiSchemasByTag.Auth.endpoints.postResetPassword.responses.errors["500Schema"];
 
-export type PostForgotPasswordRequestBodyType = z.infer<typeof PostForgotPasswordRequestBodySchema>;
-export type PostForgotPasswordResponseSuccessType = z.infer<typeof PostForgotPasswordResponseSuccessSchema>;
+export type PostResetPasswordRequestBodyType = z.infer<typeof PostResetPasswordRequestBodySchema>;
+export type PostResetPasswordResponseSuccessType = z.infer<typeof PostResetPasswordResponseSuccessSchema>;

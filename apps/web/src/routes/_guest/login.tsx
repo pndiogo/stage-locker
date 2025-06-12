@@ -5,7 +5,7 @@ import i18n, { i18nInitPromise } from "@/web/i18n";
 import { generatePageMeta } from "@/web/lib/pageMeta";
 
 export const Route = createFileRoute("/_guest/login")({
-  component: LoginPage,
+  component: Login,
   head: (ctx) => {
     const { loaderData } = ctx;
     const { meta } = loaderData || {};
@@ -25,7 +25,7 @@ export const Route = createFileRoute("/_guest/login")({
   },
 });
 
-function LoginPage() {
+function Login() {
   return (
     <LoginForm />
   );

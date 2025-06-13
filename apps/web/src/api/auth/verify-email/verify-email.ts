@@ -2,7 +2,7 @@ import type { FormattedError } from "@stage-locker/api-client";
 
 import { apiClient, isFormattedError, throwValidationError } from "@stage-locker/api-client";
 
-import type { RequestParams } from "@/web/types/api";
+import type { Headers, RequestParams } from "@/web/types/api";
 import type { PostVerifyEmailRequestQueryType, PostVerifyEmailResponseSuccessType } from "@/web/types/auth";
 
 import { env } from "@/web/env";
@@ -15,7 +15,7 @@ import {
   PostVerifyEmailResponseSuccessSchema,
 } from "@/web/types/auth";
 
-export async function verifyEmailRequest({ query }: RequestParams<null, PostVerifyEmailRequestQueryType>): Promise<PostVerifyEmailResponseSuccessType> {
+export async function verifyEmailRequest({ query, headers }: RequestParams<null, Headers, PostVerifyEmailRequestQueryType>): Promise<PostVerifyEmailResponseSuccessType> {
   try {
     const parsed = PostVerifyEmailRequestQuerySchema.safeParse(query);
 
@@ -25,6 +25,9 @@ export async function verifyEmailRequest({ query }: RequestParams<null, PostVeri
 
     const [data, error] = await apiClient<PostVerifyEmailResponseSuccessType>(`${env.VITE_API_PATH}/auth/verify-email?${new URLSearchParams(query)}`, {
       method: "GET",
+      headers: {
+        ...headers,
+      },
     }, PostVerifyEmailResponseSuccessSchema, {
       400: PostVerifyEmailResponseError400Schema,
       401: PostVerifyEmailResponseError401Schema,

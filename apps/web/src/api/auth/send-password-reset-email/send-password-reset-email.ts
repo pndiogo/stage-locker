@@ -3,7 +3,7 @@ import type { FormattedError } from "@stage-locker/api-client";
 import { apiClient, isFormattedError, throwValidationError } from "@stage-locker/api-client";
 import { sanitizeAndTrimObject } from "@stage-locker/utils";
 
-import type { RequestParams } from "@/web/types/api";
+import type { Headers, RequestParams } from "@/web/types/api";
 import type { PostSendPasswordResetEmailRequestBodyType, PostSendPasswordResetEmailResponseSuccessType } from "@/web/types/auth";
 
 import { env } from "@/web/env";
@@ -15,7 +15,7 @@ import {
   PostSendPasswordResetEmailResponseSuccessSchema,
 } from "@/web/types/auth";
 
-export async function sendPasswordResetEmailRequest({ body }: RequestParams<PostSendPasswordResetEmailRequestBodyType>): Promise<PostSendPasswordResetEmailResponseSuccessType> {
+export async function sendPasswordResetEmailRequest({ body, headers }: RequestParams<PostSendPasswordResetEmailRequestBodyType, Headers>): Promise<PostSendPasswordResetEmailResponseSuccessType> {
   try {
     const parsed = PostSendPasswordResetEmailRequestBodySchema.safeParse(sanitizeAndTrimObject(body));
 
@@ -26,6 +26,7 @@ export async function sendPasswordResetEmailRequest({ body }: RequestParams<Post
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        ...headers,
       },
       body: JSON.stringify(parsed.data),
     }, PostSendPasswordResetEmailResponseSuccessSchema, {

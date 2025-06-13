@@ -60,8 +60,7 @@ export const signup: AppRouteHandler<SignupRoute> = async (c) => {
   catch (error) {
     console.error("Error sending verification email:", error);
 
-    await db.update(users)
-      .set({ verificationToken: null })
+    await db.delete(users)
       .where(eq(users.id, sanitizedUser.id));
 
     return c.json(

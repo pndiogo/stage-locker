@@ -3,7 +3,7 @@ import type { FormattedError } from "@stage-locker/api-client";
 import { apiClient, isFormattedError, throwValidationError } from "@stage-locker/api-client";
 import { sanitizeAndTrimObject } from "@stage-locker/utils";
 
-import type { RequestParams } from "@/web/types/api";
+import type { Headers, RequestParams } from "@/web/types/api";
 import type { PostSendVerificationEmailRequestBodyType, PostSendVerificationEmailResponseSuccessType } from "@/web/types/auth";
 
 import { env } from "@/web/env";
@@ -17,7 +17,7 @@ import {
   PostSendVerificationEmailResponseSuccessSchema,
 } from "@/web/types/auth";
 
-export async function sendVerificationEmailRequest({ body }: RequestParams<PostSendVerificationEmailRequestBodyType>): Promise<PostSendVerificationEmailResponseSuccessType> {
+export async function sendVerificationEmailRequest({ body, headers }: RequestParams<PostSendVerificationEmailRequestBodyType, Headers>): Promise<PostSendVerificationEmailResponseSuccessType> {
   try {
     const parsed = PostSendVerificationEmailRequestBodySchema.safeParse(sanitizeAndTrimObject(body));
 
@@ -29,6 +29,7 @@ export async function sendVerificationEmailRequest({ body }: RequestParams<PostS
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        ...headers,
       },
       body: JSON.stringify(parsed.data),
     }, PostSendVerificationEmailResponseSuccessSchema, {

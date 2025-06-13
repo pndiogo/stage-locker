@@ -75,9 +75,6 @@ function SignupForm() {
 
   async function onSubmit(values: FormSchema) {
     signup({
-      headers: {
-        "Accept-Language": i18n.language,
-      },
       body: {
         email: values.email,
         password: values.password,

@@ -22,10 +22,7 @@ const EnvSchema = z.object({
   JWT_SECRET: z.string(),
   MAILERSEND_API_TOKEN: z.string(),
   MAILERSEND_EMAIL: z.string().email(),
-  MAILERSEND_EN_VERIFY_EMAIL_TEMPLATE_ID: z.string(),
-  MAILERSEND_PT_VERIFY_EMAIL_TEMPLATE_ID: z.string(),
-  MAILERSEND_EN_PASSWORD_RESET_TEMPLATE_ID: z.string(),
-  MAILERSEND_PT_PASSWORD_RESET_TEMPLATE_ID: z.string(),
+  MAILERSEND_TEMPLATE_1_ID: z.string(),
 }).superRefine((input, ctx) => {
   if (input.NODE_ENV === "production" && !input.DATABASE_AUTH_TOKEN) {
     ctx.addIssue({

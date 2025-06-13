@@ -6,17 +6,17 @@ import { EmailParams, MailerSend, Recipient, Sender } from "mailersend";
 
 import env from "@/api/env";
 
+import { translations } from "./i18n";
+
 async function sendEmail({
   email,
-  token,
   templateId,
-  linkPath,
+  subject,
   personalizationData,
 }: {
   email: string;
-  token: string;
   templateId: string;
-  linkPath: string;
+  subject: string;
   personalizationData: Record<string, string>;
 }) {
   const mailerSend = new MailerSend({
@@ -27,15 +27,11 @@ async function sendEmail({
 
   const recipients = [new Recipient(email)];
 
-  const link = `${env.FRONTEND_URL}/${linkPath}?token=${token}`;
-
   const personalization = [
     {
       email,
       data: {
         ...personalizationData,
-        support_email: "test@test.com", // TODO: add a real support email
-        link,
       },
     },
   ];
@@ -44,6 +40,7 @@ async function sendEmail({
     .setFrom(sentFrom)
     .setTo(recipients)
     .setTemplateId(templateId)
+    .setSubject(subject)
     .setPersonalization(personalization);
 
   await mailerSend.email.send(emailParams);
@@ -58,27 +55,25 @@ export async function sendVerificationEmailToUser({
   verificationToken: string;
   language: SupportedLanguagesCode;
 }) {
-  let templateId;
-
-  switch (language) {
-    case "en-US":
-      templateId = env.MAILERSEND_EN_VERIFY_EMAIL_TEMPLATE_ID;
-      break;
-    case "pt-PT":
-      templateId = env.MAILERSEND_PT_VERIFY_EMAIL_TEMPLATE_ID;
-      break;
-    default:
-      templateId = env.MAILERSEND_EN_VERIFY_EMAIL_TEMPLATE_ID;
-      break;
-  }
-
   await sendEmail({
     email,
-    token: verificationToken,
-    templateId,
-    linkPath: "verify-email",
+    templateId: env.MAILERSEND_TEMPLATE_1_ID,
+    subject: translations[language].email.emailVerification.subject,
     personalizationData: {
-      verify_email_link: `${env.FRONTEND_URL}/verify-email?token=${verificationToken}`,
+      link: `${env.FRONTEND_URL}/verify-email?token=${verificationToken}`,
+      supportEmail: "support@stagelocker.com",
+      ctaText: translations[language].email.emailVerification.ctaText,
+      subText: translations[language].email.emailVerification.subText,
+      topText: translations[language].email.emailVerification.topText,
+      ctaLabel: translations[language].email.emailVerification.ctaLabel,
+      bottomText: translations[language].email.emailVerification.bottomText,
+      disclaimer: translations[language].email.emailVerification.disclaimer,
+      footerText: translations[language].email.emailVerification.footerText,
+      subHeading: translations[language].email.emailVerification.subHeading,
+      topHeading: translations[language].email.emailVerification.topHeading,
+      subTextBold: translations[language].email.emailVerification.subTextBold,
+      bottomHeading: translations[language].email.emailVerification.bottomHeading,
+      footerHeading: translations[language].email.emailVerification.footerHeading,
     },
   });
 }
@@ -92,27 +87,25 @@ export async function sendPasswordResetEmailToUser({
   passwordResetToken: string;
   language: SupportedLanguagesCode;
 }) {
-  let templateId;
-
-  switch (language) {
-    case "en-US":
-      templateId = env.MAILERSEND_EN_PASSWORD_RESET_TEMPLATE_ID;
-      break;
-    case "pt-PT":
-      templateId = env.MAILERSEND_PT_PASSWORD_RESET_TEMPLATE_ID;
-      break;
-    default:
-      templateId = env.MAILERSEND_EN_PASSWORD_RESET_TEMPLATE_ID;
-      break;
-  }
-
   await sendEmail({
     email,
-    token: passwordResetToken,
-    templateId,
-    linkPath: "reset-password",
+    templateId: env.MAILERSEND_TEMPLATE_1_ID,
+    subject: translations[language].email.passwordReset.subject,
     personalizationData: {
-      reset_password_link: `${env.FRONTEND_URL}/reset-password?token=${passwordResetToken}`,
+      link: `${env.FRONTEND_URL}/reset-password?token=${passwordResetToken}`,
+      supportEmail: "support@stagelocker.com",
+      ctaText: translations[language].email.passwordReset.ctaText,
+      subText: translations[language].email.passwordReset.subText,
+      topText: translations[language].email.passwordReset.topText,
+      ctaLabel: translations[language].email.passwordReset.ctaLabel,
+      bottomText: translations[language].email.passwordReset.bottomText,
+      disclaimer: translations[language].email.passwordReset.disclaimer,
+      footerText: translations[language].email.passwordReset.footerText,
+      subHeading: translations[language].email.passwordReset.subHeading,
+      topHeading: translations[language].email.passwordReset.topHeading,
+      subTextBold: translations[language].email.passwordReset.subTextBold,
+      bottomHeading: translations[language].email.passwordReset.bottomHeading,
+      footerHeading: translations[language].email.passwordReset.footerHeading,
     },
   });
 }

@@ -7,7 +7,6 @@ import { createErrorSchema, IdUUIDParamsSchema } from "stoker/openapi/schemas";
 import { insertUserSchema, loginRequestSchema, loginResponseSchema, selectUserSchema } from "@/api/db/schema/auth";
 import { badRequestSchema, forbiddenSchema, internalServerErrorSchema, notFoundSchema, tooManyRequestsSchema, unauthorizedSchema } from "@/api/lib/constants";
 import { authenticate, verifyUserStatus } from "@/api/middlewares/authenticate";
-import { getLanguage } from "@/api/middlewares/language";
 import { rateLimit } from "@/api/middlewares/rate-limit";
 
 const tags = ["Auth"];
@@ -205,7 +204,7 @@ export const login = createRoute({
   operationId: "postLogin",
   description: "Login a user",
   summary: "Login a user",
-  middleware: [verifyUserStatus, getLanguage], // TODO Limit to 3 requests per 5 minutes?
+  middleware: [verifyUserStatus], // TODO Limit to 3 requests per 5 minutes?
   request: {
     body: jsonContentRequired(
       loginRequestSchema,

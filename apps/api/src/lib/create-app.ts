@@ -1,3 +1,5 @@
+import { defaultLanguage, supportedLanguages } from "@stage-locker/types";
+import { languageDetector } from "hono/language";
 import { requestId } from "hono/request-id";
 import { notFound, onError } from "stoker/middlewares";
 
@@ -9,6 +11,11 @@ export default function createApp() {
   const app = createRouter();
 
   app
+    .use(languageDetector({
+      order: ["header"],
+      supportedLanguages: supportedLanguages.map(lang => lang.code),
+      fallbackLanguage: defaultLanguage.code,
+    }))
     .use(requestId())
     .use(pinoLogger());
 

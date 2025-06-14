@@ -417,45 +417,45 @@ export type getUser_ParametersType = z.infer<typeof getUser_ParametersSchema>;
  * get /api/v1/auth/verify-email
  * Verify a user&#x27;s email
  */
-// Response Schema and Type for postVerifyEmail
-export const postVerifyEmail_ResponseSchema = z.void();
-export type postVerifyEmail_ResponseType = z.infer<
-  typeof postVerifyEmail_ResponseSchema
+// Response Schema and Type for getVerifyEmail
+export const getVerifyEmail_ResponseSchema = z.void();
+export type getVerifyEmail_ResponseType = z.infer<
+  typeof getVerifyEmail_ResponseSchema
 >;
 
-// Error Response Schemas and Types for postVerifyEmail
-export const postVerifyEmail_400_ErrorResponseSchema = z
+// Error Response Schemas and Types for getVerifyEmail
+export const getVerifyEmail_400_ErrorResponseSchema = z
   .object({ message: z.string() })
   .passthrough();
-export type postVerifyEmail_400_ErrorResponseType = z.infer<
-  typeof postVerifyEmail_400_ErrorResponseSchema
+export type getVerifyEmail_400_ErrorResponseType = z.infer<
+  typeof getVerifyEmail_400_ErrorResponseSchema
 >;
-export const postVerifyEmail_401_ErrorResponseSchema = z
+export const getVerifyEmail_401_ErrorResponseSchema = z
   .object({ message: z.string() })
   .passthrough();
-export type postVerifyEmail_401_ErrorResponseType = z.infer<
-  typeof postVerifyEmail_401_ErrorResponseSchema
+export type getVerifyEmail_401_ErrorResponseType = z.infer<
+  typeof getVerifyEmail_401_ErrorResponseSchema
 >;
-export const postVerifyEmail_404_ErrorResponseSchema = z
+export const getVerifyEmail_404_ErrorResponseSchema = z
   .object({ message: z.string() })
   .passthrough();
-export type postVerifyEmail_404_ErrorResponseType = z.infer<
-  typeof postVerifyEmail_404_ErrorResponseSchema
+export type getVerifyEmail_404_ErrorResponseType = z.infer<
+  typeof getVerifyEmail_404_ErrorResponseSchema
 >;
-export const postVerifyEmail_500_ErrorResponseSchema = z
+export const getVerifyEmail_500_ErrorResponseSchema = z
   .object({ message: z.string() })
   .passthrough();
-export type postVerifyEmail_500_ErrorResponseType = z.infer<
-  typeof postVerifyEmail_500_ErrorResponseSchema
+export type getVerifyEmail_500_ErrorResponseType = z.infer<
+  typeof getVerifyEmail_500_ErrorResponseSchema
 >;
 
-// Parameters Schema and Type for postVerifyEmail
-export const postVerifyEmail_ParametersSchema = z.object({
+// Parameters Schema and Type for getVerifyEmail
+export const getVerifyEmail_ParametersSchema = z.object({
   /** Parameter: token */
   token: z.string(),
 });
-export type postVerifyEmail_ParametersType = z.infer<
-  typeof postVerifyEmail_ParametersSchema
+export type getVerifyEmail_ParametersType = z.infer<
+  typeof getVerifyEmail_ParametersSchema
 >;
 /**
  * get /api/v1/health
@@ -548,22 +548,22 @@ export const apiSchemasByTag = {
         },
       },
       // 'this.endpoints' is the array of endpoint objects for the current tag
-      postVerifyEmail: {
-        parametersSchema: postVerifyEmail_ParametersSchema, // Schema for all parameters
+      getVerifyEmail: {
+        parametersSchema: getVerifyEmail_ParametersSchema, // Schema for all parameters
 
         responses: {
           // This checks if a main success response schema exists
-          successSchema: postVerifyEmail_ResponseSchema, // Schema for success response
+          successSchema: getVerifyEmail_ResponseSchema, // Schema for success response
           // Check if there are any error responses defined
           errors: {
             // Iterate over error responses
-            "400Schema": postVerifyEmail_400_ErrorResponseSchema, // Schema for this error status
+            "400Schema": getVerifyEmail_400_ErrorResponseSchema, // Schema for this error status
             // Iterate over error responses
-            "401Schema": postVerifyEmail_401_ErrorResponseSchema, // Schema for this error status
+            "401Schema": getVerifyEmail_401_ErrorResponseSchema, // Schema for this error status
             // Iterate over error responses
-            "404Schema": postVerifyEmail_404_ErrorResponseSchema, // Schema for this error status
+            "404Schema": getVerifyEmail_404_ErrorResponseSchema, // Schema for this error status
             // Iterate over error responses
-            "500Schema": postVerifyEmail_500_ErrorResponseSchema, // Schema for this error status
+            "500Schema": getVerifyEmail_500_ErrorResponseSchema, // Schema for this error status
           },
         },
       },

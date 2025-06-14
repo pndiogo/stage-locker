@@ -15,10 +15,10 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { CardActionSuccess } from "@/web/components/ui/card-action-success";
 import i18n, { i18nInitPromise } from "@/web/i18n";
 import { generatePageMeta } from "@/web/lib/pageMeta";
-import { PostVerifyEmailRequestQuerySchema } from "@/web/types/auth";
+import { GetVerifyEmailRequestQuerySchema } from "@/web/types/auth";
 import { Routes } from "@/web/types/router";
 
-const verifyEmailSearchSchema = PostVerifyEmailRequestQuerySchema.extend({
+const verifyEmailSearchSchema = GetVerifyEmailRequestQuerySchema.extend({
   token: tokenSchema().optional(),
 });
 

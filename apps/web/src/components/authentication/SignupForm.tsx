@@ -202,7 +202,7 @@ function SignupForm() {
             {t("signupForm.loginPrompt")}
             {" "}
             <Link to={Routes.LOGIN} className="underline">
-              {t("signupForm.loginLink")}
+              {t("page.login.title")}
             </Link>
           </div>
         </CardContent>

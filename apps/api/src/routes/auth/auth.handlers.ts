@@ -10,7 +10,7 @@ import { selectUserSchema, users } from "@/api/db/schema";
 import { sendPasswordResetEmailToUser, sendVerificationEmailToUser } from "@/api/lib/email";
 import { generateLoginJWT, generateUserVerificationJWT, verifyJWT } from "@/api/lib/jwt";
 
-import type { GetUserRoute, LoginRoute, ResetPasswordRoute, SendPasswordResetEmailRoute, SendVerificationEmailRoute, SignupRoute, VerifyEmailRoute } from "./auth.routes";
+import type { GetUserRoute, LoginRoute, ResetPasswordRoute, SendPasswordResetEmailRoute, SendVerificationEmailWithEmailRoute, SendVerificationEmailWithIdRoute, SignupRoute, VerifyEmailRoute } from "./auth.routes";
 
 export const signup: AppRouteHandler<SignupRoute> = async (c) => {
   const user = c.req.valid("json");
@@ -106,13 +106,73 @@ export const verifyEmail: AppRouteHandler<VerifyEmailRoute> = async (c) => {
   return c.body(null, HttpStatusCodes.NO_CONTENT);
 };
 
-export const sendVerificationEmail: AppRouteHandler<SendVerificationEmailRoute> = async (c) => {
+export const sendVerificationEmailWithId: AppRouteHandler<SendVerificationEmailWithIdRoute> = async (c) => {
   const { id } = c.req.valid("json");
   const language = c.var.language;
 
   const user = await db.query.users.findFirst({
     where(fields, operators) {
       return operators.eq(fields.id, id);
+    },
+  });
+
+  if (!user) {
+    return c.json(
+      { message: "User not found" },
+      HttpStatusCodes.NOT_FOUND,
+    );
+  }
+
+  if (user.verified) {
+    return c.json(
+      { message: "Email is already verified" },
+      HttpStatusCodes.BAD_REQUEST,
+    );
+  }
+
+  const verificationToken = await generateUserVerificationJWT({ sub: user.id });
+
+  try {
+    await sendVerificationEmailToUser({
+      email: user.email,
+      verificationToken,
+      language,
+    });
+
+    await db.update(users)
+      .set({ verificationToken })
+      .where(eq(users.id, user.id));
+  }
+  catch (error) {
+    console.error("Error sending verification email:", error);
+
+    await db.update(users)
+      .set({ verificationToken: null })
+      .where(eq(users.id, user.id));
+
+    return c.json(
+      {
+        message: "Error sending verification email",
+      },
+      HttpStatusCodes.INTERNAL_SERVER_ERROR,
+    );
+  }
+
+  return c.body(
+    null,
+    HttpStatusCodes.NO_CONTENT,
+  );
+};
+
+export const sendVerificationEmailWithEmail: AppRouteHandler<SendVerificationEmailWithEmailRoute> = async (c) => {
+  const { email } = c.req.valid("json");
+  const language = c.var.language;
+
+  const normalizedEmail = email.trim().toLowerCase();
+
+  const user = await db.query.users.findFirst({
+    where(fields, operators) {
+      return operators.eq(fields.email, normalizedEmail);
     },
   });
 

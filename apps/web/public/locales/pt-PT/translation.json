@@ -49,6 +49,10 @@
       "linkRequestNew": "Solicitar novo email de verificação",
       "linkHome": "Voltar ao início"
     },
+    "resendVerificationEmail": {
+      "title": "Reenviar Email de Verificação",
+      "description": "Reenviar email de verificação."
+    },
     "resetPassword": {
       "title": "Recuperar Senha",
       "description": "Recuperar a tua senha."
@@ -72,7 +76,7 @@
     "error": {
       "auth": "Email ou senha inválidos.",
       "generic": "Erro ao enviar o formulário. Por favor, tente novamente.",
-      "unverified": "A tua conta não foi verificada. Por favor, verifique o teu endereço de email."
+      "unverified": "A tua conta não foi verificada. Por favor, verifique o teu endereço de email com o link enviado ou solicita um novo email de verificação."
     },
     "form": {
       "email": {
@@ -109,7 +113,7 @@
     "forgotPassword": "Esqueceu a tua senha?",
     "submit": "Entrar",
     "signupPrompt": "Não tens uma conta?",
-    "signupLink": "Criar conta",
+    "linkRequestNewVerificationEmail": "Solicitar novo email de verificação",
     "success": {
       "generic": "Login com sucesso. A redirecionar..."
     }
@@ -119,7 +123,6 @@
     "description": "Crie uma nova conta preenchendo as informações abaixo.",
     "submit": "Criar Conta",
     "loginPrompt": "Já tem uma conta?",
-    "loginLink": "Entrar",
     "success": {
       "generic": "Conta criada com sucesso.",
       "title": "Conta criada com sucesso",
@@ -131,9 +134,7 @@
     "description": "Insira o teu email para receber um link de redefinição de senha.",
     "submit": "Enviar link de redefinição",
     "signupPrompt": "Não tens uma conta?",
-    "signupLink": "Criar conta",
     "loginPrompt": "Lembrou-se da tua senha?",
-    "loginLink": "Entrar",
     "success": {
       "title": "Email enviado com sucesso.",
       "description": "Um email de redefinição de senha foi enviado para o teu endereço de email. Por favor, verifica a tua caixa de entrada, incluindo a pasta de spam. Caso não recebas o email, certifica-te de que o endereço de email está correto. Se não for, inscreve-te novamente com o endereço de email correto."
@@ -149,6 +150,15 @@
     },
     "error": {
       "expired": "Token expirado. Por favor, solicita um novo link de redefinição de senha."
+    }
+  },
+  "verifyEmailWithEmailForm": {
+    "title": "Verificar Email",
+    "description": "Insire o teu email para receber um email de verificação.",
+    "submit": "Enviar Email de Verificação",
+    "success": {
+      "title": "Email de verificação enviado",
+      "description": "Um email de verificação foi enviado para o teu endereço de email. Por favor, verifica a tua caixa de entrada, incluindo a pasta de spam. Caso não recebas o email, certifica-te de que o endereço de email está correto. Se não for, inscreve-te novamente com o endereço de email correto."
     }
   }
 }

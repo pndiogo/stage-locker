@@ -80,11 +80,11 @@ export const verifyEmail = createRoute({
   },
 });
 
-export const sendVerificationEmail = createRoute({
+export const sendVerificationEmailWithId = createRoute({
   method: "post",
   tags,
-  path: "/auth/send-verification-email",
-  operationId: "postSendVerificationEmail",
+  path: "/auth/send-verification-email-with-id",
+  operationId: "postSendVerificationEmailWithId",
   description: "Send a verification email to a user",
   summary: "Send a verification email to a user",
   middleware: [rateLimit(3, 5 * 60 * 1000)], // Limit to 3 requests per 5 minutes
@@ -105,6 +105,44 @@ export const sendVerificationEmail = createRoute({
     ),
     [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
       createErrorSchema(IdUUIDParamsSchema),
+      "The validation error(s)",
+    ),
+    [HttpStatusCodes.TOO_MANY_REQUESTS]: jsonContent(
+      tooManyRequestsSchema,
+      "Too many requests",
+    ),
+    [HttpStatusCodes.INTERNAL_SERVER_ERROR]: jsonContent(
+      internalServerErrorSchema,
+      "Internal server error",
+    ),
+  },
+});
+
+export const sendVerificationEmailWithEmail = createRoute({
+  method: "post",
+  tags,
+  path: "/auth/send-verification-email-with-email",
+  operationId: "postSendVerificationEmailWithEmail",
+  description: "Send a verification email to a user",
+  summary: "Send a verification email to a user",
+  middleware: [rateLimit(3, 5 * 60 * 1000)], // Limit to 3 requests per 5 minutes
+  request: {
+    body: jsonContentRequired(z.object({ email: emailSchema() }), "The user to send the verification email"),
+  },
+  responses: {
+    [HttpStatusCodes.NO_CONTENT]: {
+      description: "Verification email sent",
+    },
+    [HttpStatusCodes.BAD_REQUEST]: jsonContent(
+      badRequestSchema,
+      "Email is already verified or invalid",
+    ),
+    [HttpStatusCodes.NOT_FOUND]: jsonContent(
+      notFoundSchema,
+      "User not found",
+    ),
+    [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
+      createErrorSchema(z.object({ email: emailSchema() })),
       "The validation error(s)",
     ),
     [HttpStatusCodes.TOO_MANY_REQUESTS]: jsonContent(
@@ -350,7 +388,8 @@ export const getUser = createRoute({
 export type SignupRoute = typeof signup;
 export type LoginRoute = typeof login;
 export type VerifyEmailRoute = typeof verifyEmail;
-export type SendVerificationEmailRoute = typeof sendVerificationEmail;
+export type SendVerificationEmailWithIdRoute = typeof sendVerificationEmailWithId;
+export type SendVerificationEmailWithEmailRoute = typeof sendVerificationEmailWithEmail;
 export type SendPasswordResetEmailRoute = typeof sendPasswordResetEmail;
 export type ResetPasswordRoute = typeof resetPassword;
 export type GetUserRoute = typeof getUser;

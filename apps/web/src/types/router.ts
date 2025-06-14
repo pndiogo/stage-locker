@@ -6,4 +6,5 @@ export enum Routes {
   DEMO_TANSTACK_QUERY = "/demo/tanstack-query",
   PROFILE = "/profile",
   ROOT = "/",
+  RESEND_VERIFICATION_EMAIL = "/resend-verification-email",
 }

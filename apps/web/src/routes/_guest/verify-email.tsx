@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 
 import type { RequestState } from "@/web/types/api";
 
-import { useSendVerificationEmail } from "@/web/api/auth/send-verification-email/useSendVerificationEmail";
+import { useSendVerificationEmailWithId } from "@/web/api/auth/send-verification-email-with-id/useSendVerificationEmailWithId";
 import { useVerifyEmail } from "@/web/api/auth/verify-email/useVerifyEmail";
 import { Alert, AlertDescription } from "@/web/components/ui/alert";
 import { Button } from "@/web/components/ui/button";
@@ -51,7 +51,7 @@ function VerifyEmail() {
   const [sendVerificationEmailState, setSendVerificationEmailState] = useState<RequestState>("idle");
   const isSendVerificationEmailFlow = (verificationState === "error" || verificationState === "invalid") && sendVerificationEmailState !== "idle";
   const { isError, error, status } = useVerifyEmail({ token });
-  const { sendVerificationEmail, isPending: sendVerificationEmailIsPending } = useSendVerificationEmail();
+  const { sendVerificationEmailWithId, isPending: sendVerificationEmailWithIdIsPending } = useSendVerificationEmailWithId();
 
   useEffect(() => {
     if (status === "success") {
@@ -75,7 +75,7 @@ function VerifyEmail() {
 
     setSendVerificationEmailState("loading");
 
-    sendVerificationEmail({ body: { id: sub as string } }, {
+    sendVerificationEmailWithId({ body: { id: sub as string } }, {
       onSuccess: () => {
         setSendVerificationEmailState("success");
       },
@@ -248,7 +248,7 @@ function VerifyEmail() {
           {renderErrorAlert()}
         </CardContent>
         <CardFooter className="flex flex-col space-y-3">
-          <Button onClick={handleRequestNewVerification} disabled={sendVerificationEmailIsPending}>
+          <Button onClick={handleRequestNewVerification} disabled={sendVerificationEmailWithIdIsPending}>
             {t("page.verifyEmail.linkRequestNew")}
           </Button>
           <div className="text-sm">

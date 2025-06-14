@@ -8,7 +8,7 @@ import { z } from "zod";
 
 import type { RequestState } from "@/web/types/api";
 
-import { useSendPasswordResetEmail } from "@/web/api/auth/send-password-reset-email/useSendPasswordResetEmail";
+import { useSendVerificationEmailWithEmail } from "@/web/api/auth/send-verification-email-with-email/useSendVerificationEmailWithEmail";
 import { Button } from "@/web/components/ui/button";
 import {
   Card,
@@ -29,11 +29,11 @@ import {
 import { Input } from "@/web/components/ui/input";
 import { Routes } from "@/web/types/router";
 
-function ForgotPasswordForm() {
+function ResendVerificationEmailWithEmailForm() {
   const { t, i18n } = useTranslation();
-  const [sendPasswordResetEmailState, setSendPasswordResetEmailState] = useState<RequestState>("idle");
+  const [sendVerificationEmailWithEmailState, setSendVerificationEmailWithEmailState] = useState<RequestState>("idle");
 
-  const { sendPasswordResetEmail, isPending: sendPasswordResetEmailIsPending } = useSendPasswordResetEmail();
+  const { sendVerificationEmailWithEmail, isPending: sendVerificationEmailWithEmailIsPending } = useSendVerificationEmailWithEmail();
 
   const formSchema = z.object({
     email: emailSchema({
@@ -55,9 +55,9 @@ function ForgotPasswordForm() {
   });
 
   async function onSubmit(values: FormSchema) {
-    sendPasswordResetEmail({ body: values }, {
+    sendVerificationEmailWithEmail({ body: values }, {
       onSuccess: () => {
-        setSendPasswordResetEmailState("success");
+        setSendVerificationEmailWithEmailState("success");
       },
       onError: () => {
         form.setError("root", { type: "manual", message: t("common.error.generic") });
@@ -65,11 +65,11 @@ function ForgotPasswordForm() {
     });
   }
 
-  if (sendPasswordResetEmailState === "success") {
+  if (sendVerificationEmailWithEmailState === "success") {
     return (
       <CardActionSuccess
-        title={t("forgotPasswordForm.success.title")}
-        description={t("forgotPasswordForm.success.description")}
+        title={t("verifyEmailWithEmailForm.success.title")}
+        description={t("verifyEmailWithEmailForm.success.description")}
         link={Routes.ROOT}
         linkText={t("page.home.title")}
       />
@@ -81,10 +81,10 @@ function ForgotPasswordForm() {
       <Card className="mx-auto w-sm">
         <CardHeader>
           <CardTitle className="text-2xl">
-            {t("forgotPasswordForm.title")}
+            {t("verifyEmailWithEmailForm.title")}
           </CardTitle>
           <CardDescription>
-            {t("forgotPasswordForm.description")}
+            {t("verifyEmailWithEmailForm.description")}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -116,8 +116,8 @@ function ForgotPasswordForm() {
                   )}
                 />
 
-                <Button type="submit" className="w-full" loading={sendPasswordResetEmailIsPending}>
-                  {t("forgotPasswordForm.submit")}
+                <Button type="submit" className="w-full" loading={sendVerificationEmailWithEmailIsPending}>
+                  {t("verifyEmailWithEmailForm.submit")}
                 </Button>
 
                 {form.formState.errors.root && (
@@ -129,17 +129,8 @@ function ForgotPasswordForm() {
             </form>
           </Form>
           <div className="mt-4 text-center text-sm">
-            {t("forgotPasswordForm.signupPrompt")}
-            {" "}
-            <Link to={Routes.SIGNUP} className="underline">
-              {t("page.signup.title")}
-            </Link>
-          </div>
-          <div className="mt-4 text-center text-sm">
-            {t("forgotPasswordForm.loginPrompt")}
-            {" "}
-            <Link to={Routes.LOGIN} className="underline">
-              {t("page.login.title")}
+            <Link to={Routes.ROOT} className="underline">
+              {t("page.home.title")}
             </Link>
           </div>
         </CardContent>
@@ -148,4 +139,4 @@ function ForgotPasswordForm() {
   );
 }
 
-export { ForgotPasswordForm };
+export { ResendVerificationEmailWithEmailForm };

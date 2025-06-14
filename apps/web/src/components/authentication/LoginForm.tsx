@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { emailSchema, passwordSchema } from "@stage-locker/types";
 import { Link, useNavigate } from "@tanstack/react-router";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { z } from "zod";
@@ -33,6 +34,8 @@ function LoginForm() {
   const setUser = useAuthStore(state => state.setUser);
   const navigate = useNavigate();
 
+  const [showSendVerificationEmail, setShowSendVerificationEmail] = useState(false);
+
   const formSchema = z.object({
     email: emailSchema({
       invalid: t("common.form.email.invalid"),
@@ -64,6 +67,8 @@ function LoginForm() {
   });
 
   async function onSubmit(values: FormSchema) {
+    setShowSendVerificationEmail(false);
+
     login({ body: values }, {
       onSuccess: (data) => {
         setUser(data);
@@ -75,6 +80,7 @@ function LoginForm() {
         }
         else if (error.status === 403) {
           form.setError("root", { type: "manual", message: t("common.error.unverified") });
+          setShowSendVerificationEmail(true);
         }
         else {
           form.setError("root", { type: "manual", message: t("common.error.generic") });
@@ -155,6 +161,16 @@ function LoginForm() {
                   </div>
                 )}
 
+                {showSendVerificationEmail && (
+                  <div className="text-center text-sm">
+                    <Button asChild variant="tertiary">
+                      <Link to={Routes.RESEND_VERIFICATION_EMAIL}>
+                        {t("loginForm.linkRequestNewVerificationEmail")}
+                      </Link>
+                    </Button>
+                  </div>
+                )}
+
               </div>
             </form>
           </Form>
@@ -162,7 +178,7 @@ function LoginForm() {
             {t("loginForm.signupPrompt")}
             {" "}
             <Link to={Routes.SIGNUP} className="underline">
-              {t("loginForm.signupLink")}
+              {t("page.signup.title")}
             </Link>
           </div>
         </CardContent>

@@ -228,29 +228,29 @@ export type postSendPasswordResetEmail_ParametersType = z.infer<
   typeof postSendPasswordResetEmail_ParametersSchema
 >;
 /**
- * post /api/v1/auth/send-verification-email
+ * post /api/v1/auth/send-verification-email-with-email
  * Send a verification email to a user
  */
-// Response Schema and Type for postSendVerificationEmail
-export const postSendVerificationEmail_ResponseSchema = z.void();
-export type postSendVerificationEmail_ResponseType = z.infer<
-  typeof postSendVerificationEmail_ResponseSchema
+// Response Schema and Type for postSendVerificationEmailWithEmail
+export const postSendVerificationEmailWithEmail_ResponseSchema = z.void();
+export type postSendVerificationEmailWithEmail_ResponseType = z.infer<
+  typeof postSendVerificationEmailWithEmail_ResponseSchema
 >;
 
-// Error Response Schemas and Types for postSendVerificationEmail
-export const postSendVerificationEmail_400_ErrorResponseSchema = z
+// Error Response Schemas and Types for postSendVerificationEmailWithEmail
+export const postSendVerificationEmailWithEmail_400_ErrorResponseSchema = z
   .object({ message: z.string() })
   .passthrough();
-export type postSendVerificationEmail_400_ErrorResponseType = z.infer<
-  typeof postSendVerificationEmail_400_ErrorResponseSchema
+export type postSendVerificationEmailWithEmail_400_ErrorResponseType = z.infer<
+  typeof postSendVerificationEmailWithEmail_400_ErrorResponseSchema
 >;
-export const postSendVerificationEmail_404_ErrorResponseSchema = z
+export const postSendVerificationEmailWithEmail_404_ErrorResponseSchema = z
   .object({ message: z.string() })
   .passthrough();
-export type postSendVerificationEmail_404_ErrorResponseType = z.infer<
-  typeof postSendVerificationEmail_404_ErrorResponseSchema
+export type postSendVerificationEmailWithEmail_404_ErrorResponseType = z.infer<
+  typeof postSendVerificationEmailWithEmail_404_ErrorResponseSchema
 >;
-export const postSendVerificationEmail_422_ErrorResponseSchema = z
+export const postSendVerificationEmailWithEmail_422_ErrorResponseSchema = z
   .object({
     success: z.boolean(),
     error: z
@@ -269,29 +269,95 @@ export const postSendVerificationEmail_422_ErrorResponseSchema = z
       .passthrough(),
   })
   .passthrough();
-export type postSendVerificationEmail_422_ErrorResponseType = z.infer<
-  typeof postSendVerificationEmail_422_ErrorResponseSchema
+export type postSendVerificationEmailWithEmail_422_ErrorResponseType = z.infer<
+  typeof postSendVerificationEmailWithEmail_422_ErrorResponseSchema
 >;
-export const postSendVerificationEmail_429_ErrorResponseSchema = z
+export const postSendVerificationEmailWithEmail_429_ErrorResponseSchema = z
   .object({ message: z.string() })
   .passthrough();
-export type postSendVerificationEmail_429_ErrorResponseType = z.infer<
-  typeof postSendVerificationEmail_429_ErrorResponseSchema
+export type postSendVerificationEmailWithEmail_429_ErrorResponseType = z.infer<
+  typeof postSendVerificationEmailWithEmail_429_ErrorResponseSchema
 >;
-export const postSendVerificationEmail_500_ErrorResponseSchema = z
+export const postSendVerificationEmailWithEmail_500_ErrorResponseSchema = z
   .object({ message: z.string() })
   .passthrough();
-export type postSendVerificationEmail_500_ErrorResponseType = z.infer<
-  typeof postSendVerificationEmail_500_ErrorResponseSchema
+export type postSendVerificationEmailWithEmail_500_ErrorResponseType = z.infer<
+  typeof postSendVerificationEmailWithEmail_500_ErrorResponseSchema
 >;
 
-// Parameters Schema and Type for postSendVerificationEmail
-export const postSendVerificationEmail_ParametersSchema = z.object({
+// Parameters Schema and Type for postSendVerificationEmailWithEmail
+export const postSendVerificationEmailWithEmail_ParametersSchema = z.object({
+  /** The user to send the verification email */
+  body: z.object({ email: z.string().email() }).passthrough(),
+});
+export type postSendVerificationEmailWithEmail_ParametersType = z.infer<
+  typeof postSendVerificationEmailWithEmail_ParametersSchema
+>;
+/**
+ * post /api/v1/auth/send-verification-email-with-id
+ * Send a verification email to a user
+ */
+// Response Schema and Type for postSendVerificationEmailWithId
+export const postSendVerificationEmailWithId_ResponseSchema = z.void();
+export type postSendVerificationEmailWithId_ResponseType = z.infer<
+  typeof postSendVerificationEmailWithId_ResponseSchema
+>;
+
+// Error Response Schemas and Types for postSendVerificationEmailWithId
+export const postSendVerificationEmailWithId_400_ErrorResponseSchema = z
+  .object({ message: z.string() })
+  .passthrough();
+export type postSendVerificationEmailWithId_400_ErrorResponseType = z.infer<
+  typeof postSendVerificationEmailWithId_400_ErrorResponseSchema
+>;
+export const postSendVerificationEmailWithId_404_ErrorResponseSchema = z
+  .object({ message: z.string() })
+  .passthrough();
+export type postSendVerificationEmailWithId_404_ErrorResponseType = z.infer<
+  typeof postSendVerificationEmailWithId_404_ErrorResponseSchema
+>;
+export const postSendVerificationEmailWithId_422_ErrorResponseSchema = z
+  .object({
+    success: z.boolean(),
+    error: z
+      .object({
+        issues: z.array(
+          z
+            .object({
+              code: z.string(),
+              path: z.array(z.union([z.string(), z.number()])),
+              message: z.string().optional(),
+            })
+            .passthrough()
+        ),
+        name: z.string(),
+      })
+      .passthrough(),
+  })
+  .passthrough();
+export type postSendVerificationEmailWithId_422_ErrorResponseType = z.infer<
+  typeof postSendVerificationEmailWithId_422_ErrorResponseSchema
+>;
+export const postSendVerificationEmailWithId_429_ErrorResponseSchema = z
+  .object({ message: z.string() })
+  .passthrough();
+export type postSendVerificationEmailWithId_429_ErrorResponseType = z.infer<
+  typeof postSendVerificationEmailWithId_429_ErrorResponseSchema
+>;
+export const postSendVerificationEmailWithId_500_ErrorResponseSchema = z
+  .object({ message: z.string() })
+  .passthrough();
+export type postSendVerificationEmailWithId_500_ErrorResponseType = z.infer<
+  typeof postSendVerificationEmailWithId_500_ErrorResponseSchema
+>;
+
+// Parameters Schema and Type for postSendVerificationEmailWithId
+export const postSendVerificationEmailWithId_ParametersSchema = z.object({
   /** The user to send the verification email */
   body: z.object({ id: z.string().uuid() }).passthrough(),
 });
-export type postSendVerificationEmail_ParametersType = z.infer<
-  typeof postSendVerificationEmail_ParametersSchema
+export type postSendVerificationEmailWithId_ParametersType = z.infer<
+  typeof postSendVerificationEmailWithId_ParametersSchema
 >;
 /**
  * post /api/v1/auth/signup
@@ -568,25 +634,60 @@ export const apiSchemasByTag = {
         },
       },
       // 'this.endpoints' is the array of endpoint objects for the current tag
-      postSendVerificationEmail: {
-        parametersSchema: postSendVerificationEmail_ParametersSchema, // Schema for all parameters
+      postSendVerificationEmailWithId: {
+        parametersSchema: postSendVerificationEmailWithId_ParametersSchema, // Schema for all parameters
 
         requestBodySchema: z.object({ id: z.string().uuid() }).passthrough(), // Schema name (e.g., postSignup_Body) or inline Zod definition
         responses: {
           // This checks if a main success response schema exists
-          successSchema: postSendVerificationEmail_ResponseSchema, // Schema for success response
+          successSchema: postSendVerificationEmailWithId_ResponseSchema, // Schema for success response
           // Check if there are any error responses defined
           errors: {
             // Iterate over error responses
-            "400Schema": postSendVerificationEmail_400_ErrorResponseSchema, // Schema for this error status
+            "400Schema":
+              postSendVerificationEmailWithId_400_ErrorResponseSchema, // Schema for this error status
             // Iterate over error responses
-            "404Schema": postSendVerificationEmail_404_ErrorResponseSchema, // Schema for this error status
+            "404Schema":
+              postSendVerificationEmailWithId_404_ErrorResponseSchema, // Schema for this error status
             // Iterate over error responses
-            "422Schema": postSendVerificationEmail_422_ErrorResponseSchema, // Schema for this error status
+            "422Schema":
+              postSendVerificationEmailWithId_422_ErrorResponseSchema, // Schema for this error status
             // Iterate over error responses
-            "429Schema": postSendVerificationEmail_429_ErrorResponseSchema, // Schema for this error status
+            "429Schema":
+              postSendVerificationEmailWithId_429_ErrorResponseSchema, // Schema for this error status
             // Iterate over error responses
-            "500Schema": postSendVerificationEmail_500_ErrorResponseSchema, // Schema for this error status
+            "500Schema":
+              postSendVerificationEmailWithId_500_ErrorResponseSchema, // Schema for this error status
+          },
+        },
+      },
+      // 'this.endpoints' is the array of endpoint objects for the current tag
+      postSendVerificationEmailWithEmail: {
+        parametersSchema: postSendVerificationEmailWithEmail_ParametersSchema, // Schema for all parameters
+
+        requestBodySchema: z
+          .object({ email: z.string().email() })
+          .passthrough(), // Schema name (e.g., postSignup_Body) or inline Zod definition
+        responses: {
+          // This checks if a main success response schema exists
+          successSchema: postSendVerificationEmailWithEmail_ResponseSchema, // Schema for success response
+          // Check if there are any error responses defined
+          errors: {
+            // Iterate over error responses
+            "400Schema":
+              postSendVerificationEmailWithEmail_400_ErrorResponseSchema, // Schema for this error status
+            // Iterate over error responses
+            "404Schema":
+              postSendVerificationEmailWithEmail_404_ErrorResponseSchema, // Schema for this error status
+            // Iterate over error responses
+            "422Schema":
+              postSendVerificationEmailWithEmail_422_ErrorResponseSchema, // Schema for this error status
+            // Iterate over error responses
+            "429Schema":
+              postSendVerificationEmailWithEmail_429_ErrorResponseSchema, // Schema for this error status
+            // Iterate over error responses
+            "500Schema":
+              postSendVerificationEmailWithEmail_500_ErrorResponseSchema, // Schema for this error status
           },
         },
       },

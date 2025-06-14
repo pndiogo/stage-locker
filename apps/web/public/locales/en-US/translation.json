@@ -49,6 +49,10 @@
       "linkRequestNew": "Request New Verification Email",
       "linkHome": "Return to Home"
     },
+    "resendVerificationEmail": {
+      "title": "Resend Verification Email",
+      "description": "Resend verification email."
+    },
     "resetPassword": {
       "title": "Reset Password",
       "description": "Reset your password."
@@ -72,7 +76,7 @@
     "error": {
       "auth": "Incorrect email or password.",
       "generic": "Failed to submit the form. Please try again.",
-      "unverified": "Your account is not verified. Please verify your email address."
+      "unverified": "Your account is not verified. Please verify your email address with the link sent to your email or request a new verification email."
     },
     "form": {
       "email": {
@@ -100,7 +104,6 @@
     },
     "logout": "Logout"
   },
-
   "languageSwitcher": {
     "selectLanguage": "Select Language"
   },
@@ -110,7 +113,7 @@
     "forgotPassword": "Forgot Password?",
     "submit": "Login",
     "signupPrompt": "Don't have an account?",
-    "signupLink": "Sign Up",
+    "linkRequestNewVerificationEmail": "Request New Verification Email",
     "success": {
       "generic": "Login successful. Redirecting..."
     }
@@ -120,7 +123,6 @@
     "description": "Create a new account by filling in the information below.",
     "submit": "Sign Up",
     "loginPrompt": "Already have an account?",
-    "loginLink": "Login",
     "success": {
       "generic": "Sign up successful.",
       "title": "Sign up is successful",
@@ -132,9 +134,7 @@
     "description": "Enter your email address to receive a password reset link.",
     "submit": "Send Reset Link",
     "signupPrompt": "Don't have an account?",
-    "signupLink": "Sign Up",
     "loginPrompt": "Remembered your password?",
-    "loginLink": "Login",
     "success": {
       "title": "Password reset email sent",
       "description": "A password reset email has been sent to your email address. Please check your inbox, including your spam folder. In case you don't receive the email, make sure that the email address is correct. If it's not, sign up again with the correct email address."
@@ -150,6 +150,15 @@
     },
     "error": {
       "expired": "Token expired. Please request a new password reset link."
+    }
+  },
+  "verifyEmailWithEmailForm": {
+    "title": "Verify Email",
+    "description": "Enter your email address to receive a verification email.",
+    "submit": "Send Verification Email",
+    "success": {
+      "title": "Verification email sent",
+      "description": "A verification email has been sent to your email address. Please check your inbox, including your spam folder. In case you don't receive the email, make sure that the email address is correct. If it's not, sign up again with the correct email address."
     }
   }
 }

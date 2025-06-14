@@ -23,15 +23,12 @@ function Header() {
                   </g>
                 </g>
               </svg>
-
               <div className="shrink-0 text-2xl font-black uppercase">
                 {t("common.appName")}
               </div>
             </Link>
           </div>
-          <div className="flex items-center">
-            <NavMenu />
-          </div>
+          <NavMenu />
         </nav>
       </header>
       <Separator className="my-4" />

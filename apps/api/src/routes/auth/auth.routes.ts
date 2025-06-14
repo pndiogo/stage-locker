@@ -48,7 +48,7 @@ export const verifyEmail = createRoute({
   method: "get",
   tags,
   path: "/auth/verify-email",
-  operationId: "postVerifyEmail",
+  operationId: "getVerifyEmail",
   description: "Verify a user's email",
   summary: "Verify a user's email",
   request: {

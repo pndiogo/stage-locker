@@ -76,6 +76,7 @@ export const signup: AppRouteHandler<SignupRoute> = async (c) => {
 
 export const verifyEmail: AppRouteHandler<VerifyEmailRoute> = async (c) => {
   const token = c.req.valid("query").token;
+  console.log("🚀 ~ constverifyEmail:AppRouteHandler<VerifyEmailRoute>= ~ token:", token);
 
   const payload = await verifyJWT(token);
 

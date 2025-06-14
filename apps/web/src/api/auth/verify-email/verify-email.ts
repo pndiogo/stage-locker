@@ -35,6 +35,8 @@ export async function verifyEmailRequest({ query, headers }: RequestParams<null,
       500: PostVerifyEmailResponseError500Schema,
     });
 
+    console.log("🚀 ~ const[data,error]=awaitapiClient<PostVerifyEmailResponseSuccessType> ~ data:", data);
+    console.log("🚀 ~ const[data,error]=awaitapiClient<PostVerifyEmailResponseSuccessType> ~ error:", error);
     if (error) {
       throw error;
     }

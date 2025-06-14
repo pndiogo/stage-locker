@@ -1,49 +1,12 @@
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 
-import { Button } from "@/web/components/ui/button";
+import NavMenu from "@/web/components/layout/NavMenu";
 import { Separator } from "@/web/components/ui/separator";
-import { useAuthStore } from "@/web/store/authStore";
 import { Routes } from "@/web/types/router";
 
 function Header() {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const isUserLoggedIn = useAuthStore(state => state.isUserLoggedIn());
-
-  const logout = () => {
-    useAuthStore.setState({ user: null });
-    navigate({ to: Routes.ROOT });
-  };
-
-  const renderLoggedInLinks = () => {
-    return (
-      <>
-        <Button asChild variant="link" className="font-bold">
-          <Link to={Routes.DASHBOARD}>{t("page.dashboard.title")}</Link>
-        </Button>
-        <Button asChild variant="link" className="font-bold">
-          <Link to={Routes.PROFILE}>{t("page.profile.title")}</Link>
-        </Button>
-        <Button variant="link" onClick={logout} className="font-bold">
-          {t("common.logout")}
-        </Button>
-      </>
-    );
-  };
-
-  const renderLoggedOutLinks = () => {
-    return (
-      <>
-        <Button asChild variant="link" className="font-bold">
-          <Link to={Routes.SIGNUP}>{t("page.signup.title")}</Link>
-        </Button>
-        <Button asChild variant="link" className="font-bold">
-          <Link to={Routes.LOGIN}>{t("page.login.title")}</Link>
-        </Button>
-      </>
-    );
-  };
 
   return (
     <>
@@ -67,7 +30,7 @@ function Header() {
             </Link>
           </div>
           <div className="flex items-center">
-            {isUserLoggedIn ? renderLoggedInLinks() : renderLoggedOutLinks()}
+            <NavMenu />
           </div>
         </nav>
       </header>

@@ -3,6 +3,8 @@ import { persist } from "zustand/middleware";
 
 import type { PostLoginResponseSuccessType } from "@/web/types/auth";
 
+export const AUTH_STORAGE_KEY = 'stage-locker-user-storage';
+
 export type AuthStoreType = {
   user: {
     id: PostLoginResponseSuccessType["id"];
@@ -27,7 +29,7 @@ export const useAuthStore = create<AuthStoreType>()(
       token: () => get().user?.token || null,
     }),
     {
-      name: "stage-locker-user-storage",
+      name: AUTH_STORAGE_KEY,
     },
   ),
 );

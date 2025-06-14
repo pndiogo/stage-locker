@@ -52,8 +52,6 @@ function VerifyEmail() {
   const isSendVerificationEmailFlow = (verificationState === "error" || verificationState === "invalid") && sendVerificationEmailState !== "idle";
   const { isError, error, status } = useVerifyEmail({ token });
   const { sendVerificationEmail, isPending: sendVerificationEmailIsPending } = useSendVerificationEmail();
-  console.log("🚀 ~ VerifyEmail ~ token:", token);
-  console.log("🚀 ~ VerifyEmail ~ error:", error);
 
   useEffect(() => {
     if (status === "success") {

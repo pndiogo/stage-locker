@@ -184,6 +184,12 @@ export type postSendPasswordResetEmail_ResponseType = z.infer<
 >;
 
 // Error Response Schemas and Types for postSendPasswordResetEmail
+export const postSendPasswordResetEmail_403_ErrorResponseSchema = z
+  .object({ message: z.string() })
+  .passthrough();
+export type postSendPasswordResetEmail_403_ErrorResponseType = z.infer<
+  typeof postSendPasswordResetEmail_403_ErrorResponseSchema
+>;
 export const postSendPasswordResetEmail_422_ErrorResponseSchema = z
   .object({
     success: z.boolean(),
@@ -703,6 +709,8 @@ export const apiSchemasByTag = {
           successSchema: postSendPasswordResetEmail_ResponseSchema, // Schema for success response
           // Check if there are any error responses defined
           errors: {
+            // Iterate over error responses
+            "403Schema": postSendPasswordResetEmail_403_ErrorResponseSchema, // Schema for this error status
             // Iterate over error responses
             "422Schema": postSendPasswordResetEmail_422_ErrorResponseSchema, // Schema for this error status
             // Iterate over error responses

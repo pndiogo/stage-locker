@@ -9,6 +9,7 @@ import type { PostSendPasswordResetEmailRequestBodyType, PostSendPasswordResetEm
 import { env } from "@/web/env";
 import {
   PostSendPasswordResetEmailRequestBodySchema,
+  PostSendPasswordResetEmailResponseError403Schema,
   PostSendPasswordResetEmailResponseError422Schema,
   PostSendPasswordResetEmailResponseError429Schema,
   PostSendPasswordResetEmailResponseError500Schema,
@@ -30,6 +31,7 @@ export async function sendPasswordResetEmailRequest({ body, headers }: RequestPa
       },
       body: JSON.stringify(parsed.data),
     }, PostSendPasswordResetEmailResponseSuccessSchema, {
+      403: PostSendPasswordResetEmailResponseError403Schema,
       422: PostSendPasswordResetEmailResponseError422Schema,
       429: PostSendPasswordResetEmailResponseError429Schema,
       500: PostSendPasswordResetEmailResponseError500Schema,

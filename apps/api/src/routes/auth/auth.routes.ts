@@ -163,7 +163,7 @@ export const sendPasswordResetEmail = createRoute({
   operationId: "postSendPasswordResetEmail",
   description: "Send a password reset email to a user",
   summary: "Send a password reset email to a user",
-  middleware: [rateLimit(3, 5 * 60 * 1000)], // Limit to 3 requests per 5 minutes
+  middleware: [rateLimit(3, 5 * 60 * 1000), verifyUserStatus], // Limit to 3 requests per 5 minutes
   request: {
     body: jsonContentRequired(
       z.object({
@@ -176,6 +176,10 @@ export const sendPasswordResetEmail = createRoute({
     [HttpStatusCodes.NO_CONTENT]: {
       description: "Password reset email sent",
     },
+    [HttpStatusCodes.FORBIDDEN]: jsonContent(
+      forbiddenSchema,
+      "Account is not activated",
+    ),
     [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
       createErrorSchema(z.object({
         email: emailSchema(),
@@ -242,7 +246,7 @@ export const login = createRoute({
   operationId: "postLogin",
   description: "Login a user",
   summary: "Login a user",
-  middleware: [verifyUserStatus], // TODO Limit to 3 requests per 5 minutes?
+  middleware: [verifyUserStatus],
   request: {
     body: jsonContentRequired(
       loginRequestSchema,

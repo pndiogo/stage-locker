@@ -63,6 +63,7 @@ export type PostSendVerificationEmailWithEmailResponseSuccessType = z.infer<type
 // Send Password Reset Email
 export const PostSendPasswordResetEmailRequestBodySchema = apiSchemasByTag.Auth.endpoints.postSendPasswordResetEmail.requestBodySchema;
 export const PostSendPasswordResetEmailResponseSuccessSchema = apiSchemasByTag.Auth.endpoints.postSendPasswordResetEmail.responses.successSchema;
+export const PostSendPasswordResetEmailResponseError403Schema = apiSchemasByTag.Auth.endpoints.postSendPasswordResetEmail.responses.errors["403Schema"];
 export const PostSendPasswordResetEmailResponseError422Schema = apiSchemasByTag.Auth.endpoints.postSendPasswordResetEmail.responses.errors["422Schema"];
 export const PostSendPasswordResetEmailResponseError429Schema = apiSchemasByTag.Auth.endpoints.postSendPasswordResetEmail.responses.errors["429Schema"];
 export const PostSendPasswordResetEmailResponseError500Schema = apiSchemasByTag.Auth.endpoints.postSendPasswordResetEmail.responses.errors["500Schema"];

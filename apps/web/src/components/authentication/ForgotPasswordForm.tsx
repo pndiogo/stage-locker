@@ -32,6 +32,7 @@ import { Routes } from "@/web/types/router";
 function ForgotPasswordForm() {
   const { t, i18n } = useTranslation();
   const [sendPasswordResetEmailState, setSendPasswordResetEmailState] = useState<RequestState>("idle");
+  const [showSendVerificationEmail, setShowSendVerificationEmail] = useState(false);
 
   const { sendPasswordResetEmail, isPending: sendPasswordResetEmailIsPending } = useSendPasswordResetEmail();
 
@@ -55,12 +56,19 @@ function ForgotPasswordForm() {
   });
 
   async function onSubmit(values: FormSchema) {
+    setShowSendVerificationEmail(false);
+
     sendPasswordResetEmail({ body: values }, {
       onSuccess: () => {
         setSendPasswordResetEmailState("success");
       },
-      onError: () => {
-        form.setError("root", { type: "manual", message: t("common.error.generic") });
+      onError: (error) => {
+        if (error.status === 403) {
+          form.setError("root", { type: "manual", message: t("common.error.unverified") });
+          setShowSendVerificationEmail(true);
+        } else {
+          form.setError("root", { type: "manual", message: t("common.error.generic") });
+        }
       },
     });
   }
@@ -123,6 +131,16 @@ function ForgotPasswordForm() {
                 {form.formState.errors.root && (
                   <div className="text-red-500 text-center text-sm">
                     {form.formState.errors.root?.message}
+                  </div>
+                )}
+
+                {showSendVerificationEmail && (
+                  <div className="text-center text-sm">
+                    <Button asChild variant="tertiary">
+                      <Link to={Routes.RESEND_VERIFICATION_EMAIL}>
+                        {t("loginForm.linkRequestNewVerificationEmail")}
+                      </Link>
+                    </Button>
                   </div>
                 )}
               </div>
